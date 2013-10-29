@@ -1,5 +1,13 @@
 <?php 
   class AppController extends Controller{
+
+    public function filters()
+    {
+        return array(
+            'rights', // perform access control for CRUD operations
+ 
+        );
+    }
     public function actionTicketingBooth(){
       $this->render('ticketingBooth');
     }

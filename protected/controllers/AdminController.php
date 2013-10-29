@@ -1,6 +1,14 @@
 <?php 
   class AdminController extends Controller{
 
+    public function filters()
+    {
+        return array(
+            'rights', // perform access control for CRUD operations
+ 
+        );
+    }
+
    //vessel
     public function actionVessel(){
       $vessel=new Vessel('search');
