@@ -1,0 +1,101 @@
+@font-face{
+    font-family: 'barcode';
+    src: url('IDAutomationHC39M.ttf');
+}
+#page {
+    padding-top: 60px;
+	min-width:1000px;
+}
+.homeHero {
+  background:url("../img/arc.png") no-repeat;
+  height:218px;
+  width:617px;
+}
+.arcName {
+  font-family:Verdana;
+  text-shadow: 0 2px 2px #222;
+  color:#fff;
+  font-size:50px;
+  margin-right:150px
+}
+.navbar .brand {
+	padding:0 10px;
+	background:url("../img/logo_small.png") no-repeat 15px 0;
+	height:40px;
+	width:200px;
+}
+.navbar .sub-brand {
+	background:url("../img/fast_cat_small.png") no-repeat 10px 0;
+	height:40px;
+	width:150px;
+}
+.navbar .divider-vertical {
+	margin:0;
+}
+.navbar {
+	min-width:1050px;
+}
+.navbar .container {
+	min-width:1300px;
+}
+
+
+.footer {
+     text-align: center;
+     padding: 30px 0px;
+     margin: 10px -20px 0 -20px;
+     border-top: 1px solid rgb(229, 229, 229);
+     background-color: rgb(245, 245, 245);
+}
+
+.footer p {
+    margin-bottom: 0px;
+    color: rgb(119, 119, 119);
+}
+
+.popover-content {
+    overflow-y: hidden;
+    max-height: 496px;
+    width: 250px;
+}
+.popover {
+    max-width: 300px;
+}
+.gb_t, .gb_t , .gb_s, .gb_u ,.gb_s, .gb_u, .gb_q {
+    display: block;
+}
+.gb_q {
+    background: none repeat scroll 0% 0% rgb(255, 255, 255);
+    padding: 5px 0px 5px 5px;
+    text-align: left;
+    white-space: normal;
+    margin: 0px;
+}
+.gb_i {
+    display: inline-block;
+}
+#gb,#gb, a.gb_a, #gb,#gb, a.gb_b {
+    color: rgb(64, 64, 64);
+    text-decoration: none;
+}
+.gb_a {
+    display: inline-block;
+    font-size: 13px;
+    margin: 8px 2px;
+    text-align: center;
+    outline: medium none;
+}
+.gb_a .gb_c {
+    display: inline-block;
+    vertical-align: top;
+    height: 54px;
+    width: 54px;
+}
+.gb_d {
+    display: block;
+    line-height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 74px;
+    text-overflow: ellipsis;
+}
