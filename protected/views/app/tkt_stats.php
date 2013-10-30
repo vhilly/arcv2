@@ -7,7 +7,8 @@
 ?>
 <?php 
    foreach($tkts as $t){
-     array_push($tkt_details,$classes[$t->seating_class_id].' '.$t->ticket_no.' '.$t->price_paid);
+     array_push($tkt_details,$classes[$t->seating_class_id].' '.$t->ticket_no.' '.$t->price_paid.CHtml::link('print',
+       array('app/print','id'=>$t->id),array('target'=>'_blank')));
      @$cnt_perclass['cnt'][$t->seating_class_id]+=1;
      @$cnt_perclass['amt'][$t->seating_class_id]+=$t->price_paid;
      $total_amt+=$t->price_paid;

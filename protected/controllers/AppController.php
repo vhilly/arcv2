@@ -78,25 +78,45 @@
     }
     public function actionCheckin($tns=null,$print=null){
       $ticket=new Ticket;
-      if(isset($_GET['Ticket'])){
+      if(isset($_GET['Ticket']) || $print){
         $pass = isset($_SESSION['checklist']) ? $_SESSION['checklist'] : Array();
         $add = isset($_GET['Ticket']['ticket_no']) ? $_GET['Ticket']['ticket_no'] : "";
         array_push($pass,$add);
         $_SESSION['checklist'] = $pass;
         $tns = implode("','",$pass);
+        $pass = Ticket::model()->findAll(array('condition'=>"ticket_no IN ('$tns') AND status_id < 6"));
       }else{
         $pass = Array();
         unset($_SESSION['checklist']);
-      }
-
-      if(isset($_GET['Ticket']) || $print){
-        $pass = Ticket::model()->findAll(array('condition'=>"ticket_no IN ('$tns') AND status_id < 6"));
       }
       if($print){
         Ticket::model()->updateAll(array('status_id'=>4),"ticket_no IN ('{$tns}')");
         $this->renderPartial('checkin',compact('pass','tns','print'));
       }else{
         $this->render('checkin',compact('pass','tns','ticket'));
+      }
+    }
+    public function actionAdvCheckin($tns=null,$print=null){
+      $ticket=new Ticket;
+      if(isset($_GET['Ticket'])){
+        $pass = isset($_SESSION['checklist']) ? $_SESSION['checklist'] : Array();
+        $add = isset($_GET['Ticket']['ticket_no']) ? $_GET['Ticket']['ticket_no'] : "";
+        $vid = isset($_GET['Ticket']['voyage_id']) ? $_GET['Ticket']['voyage_id'] : "";
+        $advance_tkt = AdvanceTicket::model()->findByAttributes(array('tkt_no'=>$add,'status'=>1));
+        if($advance_tkt && $vid)
+          array_push($pass,$add);
+        $_SESSION['checklist'] = $pass;
+        $tns = implode("','",$pass);
+        $pass = Ticket::model()->findAll(array('condition'=>"ticket_no IN ('$tns') AND status_id  < 6"));
+      }else{
+        $pass = Array();
+        unset($_SESSION['checklist']);
+      }
+      if($print){
+        Ticket::model()->updateAll(array('status_id'=>4),"ticket_no IN ('{$tns}')");
+        $this->renderPartial('checkin',compact('pass','tns','print'));
+      }else{
+        $this->render('advCheckin',compact('pass','tns','ticket'));
       }
     }
     public function actionTickets(){

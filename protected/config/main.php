@@ -180,6 +180,16 @@ return array(
          'enableParamLogging'=>true,
          'enableProfiling'=>true,
        ),
+       'syncdb'=>array(
+	 'connectionString' => 'mysql:host=localhost;dbname=sync',
+	 'emulatePrepare' => true,
+	 'username' => 'root',
+	 'password' => 'mysqladmin',
+	 'charset' => 'utf8',
+         'enableParamLogging'=>true,
+         'enableProfiling'=>true,
+         'class'=>'CDbConnection'
+       ),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',

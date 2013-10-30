@@ -53,8 +53,9 @@ div.normal {font-style:normal;}
   'htmlOptions'=>array('class'=>'well'),
 )); ?>
 <?php
-echo $form->textFieldRow($ticket, 'ticket_no',
+  echo $form->textFieldRow($ticket, 'ticket_no',
 array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"></i>'));
+  echo $form->dropDownListRow($ticket,'voyage_id',CHtml::listData(Voyage::model()->findAll(array('condition'=>"departure_date=CURDATE() AND voyage_status_id < 3 ORDER BY id desc")),'id','voyage_number'));
 ?>
 <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'Go')); ?>
 <br>
@@ -91,7 +92,7 @@ array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"><
 
     <?php $this->endWidget(); ?>
     <?php $this->endWidget();?>
-<?php $this->widget('bootstrap.widgets.TbButton', array('type'=>'inverse','buttonType'=>'link','icon'=>'','url'=>Yii::app()->createUrl('app/advCheckin'),'label'=>'Advance Ticket'));?>
+    <?php $this->widget('bootstrap.widgets.TbButton', array('type'=>'inverse','buttonType'=>'link','icon'=>'','url'=>Yii::app()->createUrl('app/checkin'),'label'=>'Walk-In'));?>
 <?php else:?>
       <script>
         //window.print();
