@@ -9,6 +9,7 @@
         );
     }
     public function actionTicketingBooth(){
+      $this->layout='tktBooth';
       $this->render('ticketingBooth');
     }
     public function actionPassengerTicket($vid=null,$bn=null){
@@ -16,7 +17,6 @@
       $tickets='';
       $voyages=Voyage::model()->findAll(array('condition'=>'departure_date=CURDATE() AND voyage_status_id=1'));
       $fname=Yii::app()->db->createCommand("SELECT first_name FROM passenger WHERE first_name !='' GROUP BY first_name")->queryColumn();
-      session_start();
       if($vid)
         $_SESSION['vid']=$vid;
       $vid=isset($_SESSION['vid'])?$_SESSION['vid']:'';
@@ -32,6 +32,10 @@
       if(isset($_POST['Passenger'])){
         if(!isset($selected_voyage->id))
           $this->redirect(array('app/passengerTicket'));
+        if(count($_POST['PassengerType']['id']) > $selected_voyage->available_seats){
+          Yii::app()->user->setFlash('error', '<center>'.Yii::t('app','notice.failed.ticket.emptySeat').'<center>');
+          $this->redirect(array('app/passengerTicket'));
+        }
         $class->attributes=$_POST['SeatingClass'];
         $booking_no = numberGenerator(1);
         $fares=CHtml::listData(PassengerFare::model()->findAll(array('condition'=>"class={$class->id} AND route={$selected_voyage->route_id}")),'type','price');
@@ -51,10 +55,13 @@
           $ticket->seating_class_id=$class->id;
           $ticket->passenger_type_id=$v;
           $ticket->price_paid=$fares[$v];
+          $ticket->created_by=Yii::app()->user->id;
           $ticket->save();
           $selected_voyage->available_seats -=1;
           $selected_voyage->save();
+          @$total_amt+=$fares[$v];
         }
+        Yii::app()->user->setFlash('success', '<center>'.Yii::t('app','notice.success.ticket.create').$total_amt.'<center>');
         $this->redirect(array('app/passengerTicket','bn'=>$booking_no));
       }
       $this->render('passengerTicket',compact('vid','passenger','selected_voyage','voyages','tickets','ptype','ptypes','classes','class','fname','bn'));
@@ -70,7 +77,6 @@
       }
     }
     public function actionCheckin($tns=null,$print=null){
-      session_start();
       $ticket=new Ticket;
       if(isset($_GET['Ticket'])){
         $pass = isset($_SESSION['checklist']) ? $_SESSION['checklist'] : Array();
@@ -107,6 +113,11 @@
     public function actionTicketCancel($id){
       Ticket::model()->updateByPk($id,array('status_id'=>7));
       return true;
+    }
+    public function actionTicketStats(){
+      $vid=isset($_SESSION['vid'])?$_SESSION['vid']:'';
+      $tkts = Ticket::model()->findAll(array('condition'=>"voyage_id = '{$vid}'",'order'=>'id DESC'));
+      $this->renderPartial('tkt_stats',compact('tkts'));
     }
     public function actionEditableSaver($mName){
       Yii::import('bootstrap.widgets.TbEditableSaver');

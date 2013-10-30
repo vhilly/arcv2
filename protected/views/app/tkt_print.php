@@ -12,6 +12,12 @@
   </style>
   <body>
    <div style="clear:both"> </div><br>
+   <?php
+     $user=Yii::app()->getModule('user')->user()->profile;
+     $createdBy = $user->firstname.' '.$user->lastname;
+     $left_x = '';
+     $left_x1 = '178px';
+   ?>
    <?php foreach($result as $key=>$b):?>
    <?php if($key>0):?>
    <br><br>
@@ -37,14 +43,6 @@
    <?php $amt = $b->price_paid?>
    <?php $NS = number_format($amt / 1.12,2)?>
    <?php $VAT = number_format($NS * 0.12 ,2)?>
-   <?php
-     $user = Yii::app()->user->getUserByName(Yii::app()->user->name);
-     $createdBy = isset($user) ? $user->profile->firstname.' '.$user->profile->lastname:'';
-   ?>
-   <?php 
-     $left_x = '';
-     $left_x1 = '178px';
-   ?>
    <table height=140px; width=980px;>
      <tr>
        <td>

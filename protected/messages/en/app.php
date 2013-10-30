@@ -36,6 +36,7 @@
 
     'label.vessel'=>'Vessel',
     'label.port'=>'Port',
+    'label.port.add'=>'Add Port',
     'label.route'=>'Route',
     'label.vessel.update'=>'Update Vessel',
     'label.passengerFare'=>'Fares',

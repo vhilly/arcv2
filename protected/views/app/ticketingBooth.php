@@ -7,7 +7,7 @@
   )
 );?>
 
-<iframe frameborder="0" id=ticketWindow src='<?=Yii::app()->createUrl('app/passengerTicket',compact('vid'))?>' width=900 height=400>
+<iframe frameborder="0" id=ticketWindow src='<?=Yii::app()->createUrl('app/passengerTicket',compact('vid'))?>' width=850 height=400>
 </iframe>
 <?php $this->endWidget(); ?>
 <script>

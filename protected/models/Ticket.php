@@ -46,7 +46,7 @@ class Ticket extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('', 'required'),
-			array('passenger_id, voyage_id, seat_id, seating_class_id, ticket_type_id, passenger_type_id', 'numerical', 'integerOnly'=>true),
+			array('passenger_id, voyage_id, seat_id, seating_class_id,created_by, ticket_type_id, passenger_type_id', 'numerical', 'integerOnly'=>true),
 			array('transaction_no, ticket_no, series_no, booking_no', 'length', 'max'=>32),
 			array('price_paid', 'length', 'max'=>20),
 			// The following rule is used by search().
@@ -67,6 +67,7 @@ class Ticket extends CActiveRecord
 			'voyage' => array(self::BELONGS_TO, 'Voyage', 'voyage_id'),
 			'seatingClass' => array(self::BELONGS_TO, 'SeatingClass', 'seating_class_id'),
 			'passenger' => array(self::BELONGS_TO, 'Passenger', 'passenger_id'),
+			'createdby' => array(self::BELONGS_TO, 'Users', 'created_by'),
 		);
 	}
 
