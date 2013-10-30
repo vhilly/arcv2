@@ -112,6 +112,7 @@
                     array('icon'=>'cog','label'=>'SETTINGS'),
                     '---',
                     array('','label'=>'Vessel', 'url'=>array('/admin/vessel')), 
+                    array('','label'=>'Seat', 'url'=>array('/admin/seat')), 
                     array('icon'=>'off','label'=>'Logout', 'url'=>array('/site/logout')), 
                 ),'visible'=>!Yii::app()->user->isGuest ),
             ),

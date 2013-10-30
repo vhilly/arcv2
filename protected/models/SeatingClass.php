@@ -28,8 +28,8 @@ class SeatingClass extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, code', 'required'),
-			array('id,active', 'numerical', 'integerOnly'=>true),
+			array('name, code, rows, cols', 'required'),
+			array('id,active,rows,cols', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>100),
 			array('code', 'length', 'max'=>10),
 			array('description', 'safe'),

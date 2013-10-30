@@ -163,6 +163,38 @@
       }
       $this->render('update',compact('model'));
     }
+	//seat
+	public function actionSeat(){
+	  $model=new Seat;
+      if(isset($_POST['Seat']))
+      {
+		//print_r($_POST);
+		//die();
+		if(!empty($_POST['Seat']['id'])){
+		  $model=Seat::model()->findByPk($_POST['Seat']['id']);
+		}
+        $model->attributes=$_POST['Seat'];
+		if(isset($_POST['remove']))
+		{
+		  $model->active = 0;
+		  $notif = "Seat No. {$model->name} is now remove.";
+		}
+		else
+		{
+			$notif = "Seat No. {$model->name} is now available.";
+		}
+        if($model->save())
+		  Yii::app()->user->setFlash('success', $notif);
+		
+      }
+      $list= Seat::model()->findAll(array('condition'=>"active = 1"));
+      $class= SeatingClass::model()->findAll(array('condition'=>"active = 1"));
+      $this->render('seat',array(
+	    'model'=>$model,
+        'list'=>$list,
+		'class'=>$class
+      ));
+    }
     //passenger type
     public function actionPassengerType(){
       $pt=new PassengerType('search');

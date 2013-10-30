@@ -99,3 +99,60 @@
     width: 74px;
     text-overflow: ellipsis;
 }
+/* sign-in*/
+.center-align-text {
+	text-align: center !important;
+}
+.signin {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 380px;
+	height: 300px;
+	margin-left: -190px;
+	margin-top: -150px;
+}
+
+.signin h2 {
+	line-height: 32px;
+	font-weight: 500;
+	margin-bottom: 20px;
+	color: #e6e6e6;
+	background:url("../img/fast_cat_small.png") no-repeat;
+	width:117px;
+	height:40px;
+	
+}
+
+.signin .signin-wrapper {
+	background: white;
+	border: 5px solid rgba(0, 0, 0, 0.1);
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	padding: 10px;
+}
+
+.signin .signin-wrapper .content {
+	padding: 10px;
+}
+.signin .signin-wrapper .content .input {
+	margin-top: 5px;
+	font-weight: 400;
+	background: #fafafa;
+	border: 1px solid #d9d9d9;
+}
+
+.signin .signin-wrapper .actions a {
+color: #b3b3b3;
+}
+a:hover {
+color: #428bca;
+text-decoration: none;
+}
+a:hover, a:active {
+outline: 0;
+}
+.signin .signin-wrapper .actions {
+padding: 5px 10px;
+}
