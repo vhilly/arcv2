@@ -29,6 +29,8 @@
 <?php if($mName=='SeatingClass'):?>
   <?php echo $form->textFieldRow($model,'name',array('class'=>'span3','maxlength'=>100)); ?>
   <?php echo $form->textFieldRow($model,'code',array('class'=>'span2')); ?>
+  <?php echo $form->textFieldRow($model,'rows',array('class'=>'span3','maxlength'=>100)); ?>
+  <?php echo $form->textFieldRow($model,'cols',array('class'=>'span3','maxlength'=>100)); ?>
   <?php echo $form->textAreaRow($model,'description',array('class'=>'span3')); ?>
   <?php echo $form->dropDownListRow($model,'active',$active,array('class'=>'span3','maxlength'=>100)); ?>
 <?php endif;?>
