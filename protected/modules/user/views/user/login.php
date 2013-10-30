@@ -24,7 +24,7 @@
                 <!--<input class="btn btn-info pull-right" value="Login" type="submit">-->
 				<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit','type'=>'primary', 'label'=>'Login','htmlOptions'=>array('class'=>'btn btn-info pull-right'))); ?>
                 <span class="checkbox-wrapper">
-                  <a href="">Forgot Password</a><br><a href="#" class="pull-left">Register</a>
+                  <a href="">Forgot Password</a><br><?php echo CHtml::link('Register',array('/user/registration'),array('class'=>'pull-left')); ?>
                 </span>
                 <div class="clearfix"></div>
               </div>
