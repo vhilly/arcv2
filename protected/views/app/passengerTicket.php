@@ -1,3 +1,10 @@
+<style>
+@media (min-height: 650px) {
+	.sell-body {
+		min-height:500px;
+	}
+}
+</style>
 <?php
   $this->beginWidget(
    'bootstrap.widgets.TbModal',
@@ -19,7 +26,7 @@
 </div>
 <?php $this->endWidget(); ?>
 
-<div class=well>
+<div class="well side-space">
   <?php if($voyages):?>
     <?php foreach($voyages as $v):?>
       <?php $selected=@$selected_voyage->id == $v->id ? 'btn-primary' : ''?>
@@ -35,14 +42,14 @@
 </div>
 <?php if($selected_voyage):?>
   <?php foreach($classes as $k=>$c):?>
-  <span class='label label-info pull-right'>
+  <span class='label label-info pull-right side-space' >
     <?=$c.': '.($seats_per_class[$k][0]-$seats_per_class[$k][1]);?>
   </span>
   <?php endforeach;?>
-  <span class='label label-info pull-right'>
+  <span class='label label-info pull-right side-space'>
     <?=Yii::t('app','label.ticketing.seatsAvailable')?>: <?=$selected_voyage->available_seats?>
   </span>
-<div class=well>
+<div class="well side-space  sell-body">
   <?php $form = $this->beginWidget(
     'bootstrap.widgets.TbActiveForm',
       array(
