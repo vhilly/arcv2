@@ -138,6 +138,13 @@
         $ticket->attributes=$_GET['Ticket'];
       $this->render('ticket',compact('ticket'));
     }
+    public function actionWaybills(){
+      $waybill=new Waybill('search');
+      $waybill->unsetAttributes();  // clear any default values
+      if(isset($_GET['Waybill']))
+        $waybill->attributes=$_GET['Waybill'];
+      $this->render('waybill',compact('waybill'));
+    }
     public function actionTicketRefund($id){
       $tkt = Ticket::model()->findByPk($id);
       if($tkt->status_id<6){

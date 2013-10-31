@@ -308,6 +308,35 @@
       $model->arrival_time=date('g:i A',strtotime($model->arrival_time));
       $this->render('update',compact('model'));
     }
+    public function actionCargoClass(){
+      $cc=new CargoClass('search');
+      $cc->unsetAttributes();  // clear any default values
+      if(isset($_GET['CargoClass']))
+        $cc->attributes=$_GET['CargoClass'];
+      $this->render('cargoclass',compact('cc'));
+    }
+    public function actionCargoClassUpdate($id){
+      $model=CargoClass::model()->findByPk($id);
+      if(isset($_POST['CargoClass'])){
+        $model->attributes=$_POST['CargoClass'];
+        if($model->save()){
+          Yii::app()->user->setFlash('success', Yii::t('app','notice.success.cargoclass.update'));
+          $this->redirect(array('admin/cargoclass'));
+        }
+      }
+      $this->render('update',compact('model'));
+    }
+    public function actionCargoClassAdd(){
+      $model=new CargoClass();
+      if(isset($_POST['CargoClass'])){
+        $model->attributes=$_POST['CargoClass'];
+        if($model->save()){
+          Yii::app()->user->setFlash('success', Yii::t('app','notice.success.cargoclass.create'));
+          $this->redirect(array('admin/cargoclass'));
+        }
+      }
+      $this->render('add',compact('model'));
+    }
   }
 ?>
 

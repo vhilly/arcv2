@@ -35,6 +35,13 @@
   <?php echo $form->dropDownListRow($model,'active',$active,array('class'=>'span3','maxlength'=>100)); ?>
 <?php endif;?>
 
+<?php if($mName=='CargoClass'):?>
+  <?php echo $form->textFieldRow($model,'name',array('class'=>'span3','maxlength'=>100)); ?>
+  <?php echo $form->textAreaRow($model,'description',array('class'=>'span3')); ?>
+  <?php echo $form->textFieldRow($model,'lane_meter',array('class'=>'span1')); ?>
+  <?php echo $form->dropDownListRow($model,'active',$active,array('class'=>'span3','maxlength'=>100)); ?>
+<?php endif;?>
+
 <?php if($mName=='PassengerType'):?>
   <?php echo $form->textFieldRow($model,'name',array('class'=>'span3','maxlength'=>100)); ?>
   <?php echo $form->textFieldRow($model,'code',array('class'=>'span2')); ?>
