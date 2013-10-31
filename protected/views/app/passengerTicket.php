@@ -34,7 +34,6 @@
  <div class='clearfix'></div>
 </div>
 <?php if($selected_voyage):?>
-  <div class=hidden><h4><?=Yii::t('app','label.ticketing.seriesBeginAt')?>: </h4><input type=text id=series value=1><input class='btn btn-primary' type=button id=setSeries value=Save></div>
   <?php foreach($classes as $k=>$c):?>
   <span class='label label-info pull-right'>
     <?=$c.': '.($seats_per_class[$k][0]-$seats_per_class[$k][1]);?>
@@ -52,6 +51,7 @@
       )
     );
   ?>
+  <div><?=Yii::t('app','label.ticketing.seriesBeginAt')?>: <input type=text id=series value='<?=$sn?>' class='span3'>&nbsp;<input class='btn btn-primary btn-small' type=button id=setSeries value=Save></div>
    <div id=passengers>
      <?php echo $form->dropDownListRow($class,'id',$classes,array('id'=>'class'));?><br><br>
      <div id=container1>
@@ -127,7 +127,7 @@
     $('#fname_'+current).focus();
   }
   $('#setSeries').click(function(){
-    $.post('<?=Yii::app()->controller->createUrl('quickTicket/seriesNumber')?>',{'value':$('#series').val()},
+    $.post('<?=Yii::app()->controller->createUrl('app/seriesNumber')?>',{'value':$('#series').val()},
       function(data){
         if(data.error){
            alert('<?=Yii::t('app','alert.ticketing.series.invalidNumber')?>');

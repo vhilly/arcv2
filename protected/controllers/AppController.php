@@ -13,6 +13,7 @@
       $this->render('ticketingBooth');
     }
     public function actionPassengerTicket($vid=null,$bn=null){
+      $sn = Counter::model()->findByPk(4)->value;
       $selected_voyage='';
       $tickets='';
       $voyages=Voyage::model()->findAll(array('condition'=>'departure_date>CURDATE() - INTERVAL 3 HOUR AND voyage_status_id < 3'));
@@ -56,12 +57,12 @@
           $passenger->last_name=$_POST['Passenger']['last_name'][$k];
           $passenger->age=$_POST['Passenger']['age'][$k];
           $passenger->save();
-          $ticket_no = numberGenerator(2);
           $ticket= new Ticket;
           $ticket->passenger_id=$passenger->id;
           $ticket->voyage_id=$selected_voyage->id;
           $ticket->booking_no=$booking_no;
-          $ticket->ticket_no=$ticket_no;
+          $ticket->ticket_no= numberGenerator(2);;
+          $ticket->series_no= numberGenerator(4,0);;
           $ticket->ticket_type_id=2;
           $ticket->seating_class_id=$class->id;
           $ticket->seat_id=$sl[$k];
@@ -76,7 +77,8 @@
         Yii::app()->user->setFlash('success', '<center>'.Yii::t('app','notice.success.ticket.create').$total_amt.'<center>');
         $this->redirect(array('app/passengerTicket','bn'=>$booking_no));
       }
-      $this->render('passengerTicket',compact('vid','passenger','selected_voyage','voyages','tickets','ptype','ptypes','classes','class','fname','bn','seats_per_class'));
+      $this->render('passengerTicket',compact('vid','passenger','selected_voyage','voyages','tickets','ptype','ptypes','classes','class','fname','bn',
+      'seats_per_class','sn'));
     }
     public function actionRollingCargo(){
       $wb=new Waybill;
@@ -236,6 +238,20 @@
       }
       
       return $seat_list;
+    }
+    public function actionSeriesNumber(){
+       $value=isset($_POST['value']) ? $_POST['value'] :'';
+       $series = Counter::model()->findByPk(4);
+       $old = $series->value;
+       $series->value=$value;
+       $error;
+       if($series->save()){
+         $value = $series->value;
+       }else{
+         $value = $old;
+         $error=1;
+       }
+       echo json_encode(compact('value','error'));
     }
   }
 ?>
