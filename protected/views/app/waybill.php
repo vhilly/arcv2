@@ -28,13 +28,13 @@
         'print' => array(
            'label'=>'print',
            'icon'=>'icon-print',
-           'url'=>'Yii::app()->createUrl("app/print",array("id"=>"$data->id","type"=>"tkt"))',
+           'url'=>'Yii::app()->createUrl("app/print",array("id"=>"$data->id","type"=>"wb"))',
             'options'=>array('target'=>'_blank'),
          ),
         'refund' => array(
            'label'=>'refund',
            'icon'=>'icon-undo',
-           'url'=>'Yii::app()->createUrl("app/ticketRefund",array("id"=>"$data->id"))',
+           'url'=>'Yii::app()->createUrl("app/waybillRefund",array("id"=>"$data->id"))',
            'options'=>array(
              'confirm'=>'Are you sure?',
              'ajax'=>array(
@@ -47,7 +47,7 @@
         'cancel' => array(
            'label'=>'cancel',
            'icon'=>'icon-trash',
-           'url'=>'Yii::app()->createUrl("app/ticketCancel",array("id"=>"$data->id"))',
+           'url'=>'Yii::app()->createUrl("app/waybillCancel",array("id"=>"$data->id"))',
            'options'=>array(
              'confirm'=>'Are you sure?',
              'ajax'=>array(
