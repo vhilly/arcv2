@@ -29,9 +29,10 @@ class CargoClass extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, lane_meter', 'required'),
+			array('name, lane_meter,description', 'required'),
 			array('lane_meter, bundled_passenger, active', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>100),
+			
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, name, description, lane_meter, bundled_passenger, active', 'safe', 'on'=>'search'),

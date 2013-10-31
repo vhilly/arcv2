@@ -107,14 +107,23 @@ array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"><
           </tr>
         <?php endforeach?>
     </table>
-    <?php $this->widget('bootstrap.widgets.TbButton', array('label'=>'Check-In and Print Boarding Pass','type'=>'info','buttonType'=>'link','url'=>Yii::app()->createUrl('app/checkin',array('success'=>true)),'icon'=>'icon-print','htmlOptions'=>array('name'=>'print','class'=>'ticket_print_box','width'=>'' ,
-      'onclick'=>'window.open("'.Yii::app()->createUrl('app/checkin',array('tns'=>$tns,'print'=>1)).'");this.submit();')))
+    <?php $this->widget('bootstrap.widgets.TbButton', array('label'=>Yii::t('app','Check-In and Print Boarding Pass'),
+						'type'=>'info',
+						'buttonType'=>'link',
+						'url'=>Yii::app()->createUrl('app/checkin',array('success'=>true)),
+						'icon'=>'icon-print','htmlOptions'=>array('name'=>'print','class'=>'ticket_print_box','width'=>'' ,
+      						'onclick'=>'window.open("'.Yii::app()->createUrl('app/checkin',array('tns'=>$tns,'print'=>1)).'");this.submit();')))
     ?>
     <?php endif;?>
 
     <?php $this->endWidget(); ?>
     <?php $this->endWidget();?>
-<?php $this->widget('bootstrap.widgets.TbButton', array('type'=>'inverse','buttonType'=>'link','icon'=>'','url'=>Yii::app()->createUrl('app/advCheckin'),'label'=>'Advance Ticket'));?>
+<?php $this->widget('bootstrap.widgets.TbButton', array('type'=>'inverse',
+			'buttonType'=>'link',
+			'icon'=>'',
+			'url'=>Yii::app()->createUrl('app/advCheckin'),
+			'label'=>Yii::t('app','label.advanceticket')));?>
+
 <?php else:?>
       <script>
         //window.print();
