@@ -51,7 +51,7 @@
      <div style="position:absolute;top:5px;"><?=$b->voyage->vessel->name?></div>
      <div style=position:absolute;top:5px;left:<?=$left_x1?>><?=$b->voyage->voyage_number?></div>
      <div style=position:absolute;top:25px;left:<?=$left_x?>><?=$b->voyage->departure_date.' '.date('g:i A',strtotime($b->voyage->departure_time))?></div>
-     <div style=position:absolute;top:25px;left:<?=$left_x1?>></div>
+     <div style=position:absolute;top:25px;left:<?=$left_x1?>><?=isset($b->seat->name) ? $b->seat->name : ''?></div>
      <div style=position:absolute;top:50px;><?=$b->passenger->first_name?> <?=$b->passenger->last_name?></div>
      <div style=position:absolute;top:70px;><?=$b->passenger->contact?></div>
      <div style=position:absolute;top:95px;left:<?=$left_x?>>Net Sales &nbsp;<?=$NS?></div>
@@ -66,7 +66,7 @@
      <div style="position:absolute;top:5px;"><?=$b->voyage->vessel->name?></div>
      <div style=position:absolute;top:5px;left:<?=$left_x1?>><?=$b->voyage->voyage_number?></div>
      <div style=position:absolute;top:25px;left:<?=$left_x?>><?=$b->voyage->departure_date.' '.date('g:i A',strtotime($b->voyage->departure_time))?></div>
-     <div style=position:absolute;top:25px;left:<?=$left_x1?>></div>
+     <div style=position:absolute;top:25px;left:<?=$left_x1?>><?=isset($b->seat->name) ? $b->seat->name : ''?></div>
      <div style=position:absolute;top:50px;><?=$b->passenger->first_name?> <?=$b->passenger->last_name?></div>
      <div style=position:absolute;top:70px;><?=$b->passenger->contact?></div>
      <div style=position:absolute;top:95px;left:<?=$left_x?>>Net Sales &nbsp;<?=$NS?></div>

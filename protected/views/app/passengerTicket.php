@@ -35,7 +35,14 @@
 </div>
 <?php if($selected_voyage):?>
   <div class=hidden><h4><?=Yii::t('app','label.ticketing.seriesBeginAt')?>: </h4><input type=text id=series value=1><input class='btn btn-primary' type=button id=setSeries value=Save></div>
-  <span class='label label-info pull-right'><?=Yii::t('app','label.ticketing.seatsAvailable')?>: <?=$selected_voyage->available_seats?></span>
+  <?php foreach($classes as $k=>$c):?>
+  <span class='label label-info pull-right'>
+    <?=$c.': '.($seats_per_class[$k][0]-$seats_per_class[$k][1]);?>
+  </span>
+  <?php endforeach;?>
+  <span class='label label-info pull-right'>
+    <?=Yii::t('app','label.ticketing.seatsAvailable')?>: <?=$selected_voyage->available_seats?>
+  </span>
 <div class=well>
   <?php $form = $this->beginWidget(
     'bootstrap.widgets.TbActiveForm',

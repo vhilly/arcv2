@@ -36,7 +36,10 @@
     public function actionVesselUpdate($id){
       $model=Vessel::model()->findByPk($id);
       if(isset($_POST['Vessel'])){
+        $sql = "SELECT COUNT(*) FROM seat WHERE active=1";
+        $seats = Yii::app()->db->createCommand($sql)->queryScalar();
         $model->attributes=$_POST['Vessel'];
+        $model->capacity=$seats;
         try{
           if($model->save()){
             Yii::app()->user->setFlash('success', Yii::t('app','notice.success.vessel.update'));
@@ -273,8 +276,6 @@
             Yii::app()->user->setFlash('success', Yii::t('app','notice.success.voyage.create'));
             $this->redirect(array('admin/voyage'));
           }
-          print_r($model->getErrors());
-          die();
         }catch (Exception $e){
           Yii::app()->user->setFlash('error', Yii::t('app','notice.failed.seatingclass.voyage'));
         }
@@ -291,6 +292,9 @@
         $_POST['Voyage']['departure_time'] = date('H:i:s',strtotime($dt));
         $_POST['Voyage']['arrival_time'] = date('H:i:s',strtotime($da));
         $model->attributes=$_POST['Voyage'];
+        $capacity=Vessel::model()->findByPk($model->vessel_id)->capacity;
+        $model->capacity=$capacity;
+        $model->available_seats=$capacity;
         try{
           if($model->save()){
             Yii::app()->user->setFlash('success', Yii::t('app','notice.success.voyage.update'));

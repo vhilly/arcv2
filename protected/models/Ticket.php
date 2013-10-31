@@ -68,6 +68,7 @@ class Ticket extends CActiveRecord
 			'seatingClass' => array(self::BELONGS_TO, 'SeatingClass', 'seating_class_id'),
 			'passenger' => array(self::BELONGS_TO, 'Passenger', 'passenger_id'),
 			'createdby' => array(self::BELONGS_TO, 'Users', 'created_by'),
+			'seat' => array(self::BELONGS_TO, 'Seat', 'seat_id'),
 		);
 	}
 

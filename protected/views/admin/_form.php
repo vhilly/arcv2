@@ -11,7 +11,7 @@
 <?php if($mName=='Vessel'):?>
   <?php echo $form->textFieldRow($model,'name',array('class'=>'span3','maxlength'=>100)); ?>
   <?php echo $form->textFieldRow($model,'code',array('class'=>'span2')); ?>
-  <?php echo $form->textFieldRow($model,'capacity',array('class'=>'span1')); ?>
+  <?php echo $form->textFieldRow($model,'capacity',array('class'=>'span1','readonly'=>true)); ?>
 <?php endif;?>
 
 <?php if($mName=='Port'):?>
