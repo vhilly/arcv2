@@ -32,12 +32,12 @@ class Port extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('code, name', 'required'),
-			array('default', 'numerical', 'integerOnly'=>true),
+			array('default_port', 'numerical', 'integerOnly'=>true),
 			array('code', 'length', 'max'=>32),
 			array('name', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, code, name, default', 'safe', 'on'=>'search'),
+			array('id, code, name, default_port', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,7 +63,7 @@ class Port extends CActiveRecord
 			'id' => 'ID',
 			'name' => Yii::t('app','model.port.name'),
 			'code' => Yii::t('app','model.port.code'),
-			'default' => Yii::t('app','model.port.default'),
+			'default_port' => Yii::t('app','model.port.default'),
 		);
 	}
 
@@ -88,7 +88,7 @@ class Port extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('code',$this->code,true);
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('default',$this->default);
+		$criteria->compare('default_port',$this->default_port);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
