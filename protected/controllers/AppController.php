@@ -149,17 +149,40 @@
         $ticket->attributes=$_GET['Ticket'];
       $this->render('ticket',compact('ticket'));
     }
+    public function actionWaybills(){
+      $waybill=new Waybill('search');
+      $waybill->unsetAttributes();  // clear any default values
+      if(isset($_GET['Waybill']))
+        $waybill->attributes=$_GET['Waybill'];
+      $this->render('waybill',compact('waybill'));
+    }
     public function actionTicketRefund($id){
-      Ticket::model()->updateByPk($id,array('status_id'=>6));
+      $tkt = Ticket::model()->findByPk($id);
+      if($tkt->status_id<6){
+        $voy=Voyage::model()->findByPk($tkt->voyage_id);
+        $voy->available_seats+=1;
+        $voy->save();
+      }
+      $tkt->status_id=6;
+      $tkt->seat_id=NULL;
+      $tkt->save(false);
       return true;
     }
     public function actionTicketCancel($id){
-      Ticket::model()->updateByPk($id,array('status_id'=>7));
+      $tkt = Ticket::model()->findByPk($id);
+      if($tkt->status_id<6){
+        $voy=Voyage::model()->findByPk($tkt->voyage_id);
+        $voy->available_seats+=1;
+        $voy->save();
+      }
+      $tkt->status_id=7;
+      $tkt->seat_id=NULL;
+      $tkt->save(false);
       return true;
     }
     public function actionTicketStats(){
       $vid=isset($_SESSION['vid'])?$_SESSION['vid']:'';
-      $tkts = Ticket::model()->findAll(array('condition'=>"voyage_id = '{$vid}'",'order'=>'id DESC'));
+      $tkts = Ticket::model()->findAll(array('condition'=>"voyage_id = '{$vid}' AND status_id<6",'order'=>'id DESC'));
       $this->renderPartial('tkt_stats',compact('tkts'));
     }
     public function actionEditableSaver($mName){

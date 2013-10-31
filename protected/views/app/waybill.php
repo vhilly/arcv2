@@ -1,50 +1,24 @@
-<h1>Tickets</h1>
-<?php $sc=CHtml::listData(SeatingClass::model()->findAll(),'id','name');?>
-<?php $ptype=CHtml::listData(PassengerType::model()->findAll(),'id','name');?>
+<h1>Waybills</h1>
+<?php $sc=CHtml::listData(CargoClass::model()->findAll(),'id','name');?>
 <?php $voyage=CHtml::listData(Voyage::model()->findAll(array('order'=>'id DESC')),'id','voyage_number');?>
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
-  'id'=>'ticket-grid',
-  'dataProvider'=>$ticket->search(),
-  'filter'=>$ticket,
+  'id'=>'waybill-grid',
+  'dataProvider'=>$waybill->search(),
+  'filter'=>$waybill,
   'columns'=>array(
-  'ticket_no',
+  'lading_no',
   array('name'=>'series_no',
     'class' => 'bootstrap.widgets.TbEditableColumn',
     'editable' => array(
-      'url' => $this->createUrl('app/editableSaver',array('mName'=>'Ticket')),
+      'url' => $this->createUrl('app/editableSaver',array('mName'=>'Waybill')),
       'placement' => 'right',
       'inputclass' => 'span1'
     )
   ),
   array('name'=>'voyage_id','value'=>'$data->voyage->voyage_number','filter'=>$voyage),
-  array('name'=>'passenger.first_name',
-    'class' => 'bootstrap.widgets.TbEditableColumn',
-    'editable' => array(
-      'url' => $this->createUrl('app/editableSaver',array('mName'=>'Passenger')),
-      'placement' => 'right',
-      'inputclass' => 'span1'
-    )
-  ),
-  array('name'=>'passenger.last_name',
-    'class' => 'bootstrap.widgets.TbEditableColumn',
-    'editable' => array(
-      'url' => $this->createUrl('app/editableSaver',array('mName'=>'Passenger')),
-      'placement' => 'right',
-      'inputclass' => 'span1'
-    )
-  ),
-  array('name'=>'passenger.age',
-    'class' => 'bootstrap.widgets.TbEditableColumn',
-    'editable' => array(
-      'url' => $this->createUrl('app/editableSaver',array('mName'=>'Passenger')),
-      'placement' => 'right',
-      'inputclass' => 'span1'
-    )
-  ),
-  array('name'=>'passenger_type_id','value'=>'$data->passengerType->name','filter'=>$ptype),
-  array('name'=>'seating_class_id','value'=>'$data->seatingClass->name','filter'=>$sc),
-  array('name'=>'ticket_type_id','value'=>'$data->ticket_type_id==1?"Advance":"Walk-in"','filter'=>array(1=>'Advance',2=>'Walk-in')),
+  array('name'=>'cargo_class_id','value'=>'$data->cargoClass->name','filter'=>$sc),
+  array('name'=>'waybill_type_id','value'=>'$data->waybill_type_id==1?"Advance":"Walk-in"','filter'=>array(1=>'Advance',2=>'Walk-in')),
   'price_paid',
   'status_id',
     array(

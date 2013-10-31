@@ -37,6 +37,12 @@
             <span class='gb_d'>".Yii::t('app','label.tickets')."</span>
           </a>
         </li>
+        <li class='gb_i'>
+          <a class='gb_a' href=".Yii::app()->createUrl('app/waybills').">
+            <span class='gb_c icon-credit-card icon-3x'></span>
+            <span class='gb_d'>".Yii::t('app','label.waybills')."</span>
+          </a>
+        </li>
       </ul>
    ";
    $settings = "
@@ -81,6 +87,12 @@
           <a class='gb_a' href=".Yii::app()->createUrl('admin/passengerFare').">
             <span class='gb_c icon-tag icon-3x'></span>
             <span class='gb_d'>".Yii::t('app','label.passengertype')."</span>
+          </a>
+        </li>
+        <li class='gb_i'>
+          <a class='gb_a' href=".Yii::app()->createUrl('admin/cargoClass').">
+            <span class='gb_c icon-tag icon-3x'></span>
+            <span class='gb_d'>".Yii::t('app','label.cargoclass')."</span>
           </a>
         </li>
       </ul>
