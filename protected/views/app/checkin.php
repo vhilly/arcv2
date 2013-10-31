@@ -79,7 +79,7 @@ array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"><
             <td><?=$p->ticket_no?></td>
             <td><?=$p->passenger->first_name?></td>
             <td><?=$p->passenger->last_name?></td>
-	    <td><?=$p->seat_id?></td>
+	    <td><?=@$p->seat->name?></td>
 	    <td><?=$p->voyage->voyage_number?></td>
           </tr>
         <?php endforeach?>
@@ -125,13 +125,13 @@ array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"><
         if($p->seating_class_id==1){
         //echo "Yes!";
         echo '<div class="bl" id="ub4" ><i>&nbsp;&nbsp;<u>'.$cl.'</u></i></div>';
-        echo ' <div id="ub5" class="italic seats">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b></b></div>';
+        echo ' <div id="ub5" class="italic seats">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>'.$p->seat->name.'</b></div>';
         #echo ' <div id="ub5" class="italic seats">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>';
 
         }
         else{
          echo '<div class="bl" id="ub7"><b>&nbsp;&nbsp;'.$cl.'</b></div>';
-         echo ' <div id="ub6" class="seats">&nbsp;&nbsp;&nbsp;&nbsp;<b></b></div>';
+         echo ' <div id="ub6" class="seats">&nbsp;&nbsp;&nbsp;&nbsp;<b>'.$p->seat->name.'</b></div>';
         #echo ' <div id="ub6" class="seats">&nbsp;&nbsp;&nbsp;&nbsp;</div>';
         }
         ?>

@@ -71,7 +71,7 @@
            )
          ),
         'cancel' => array(
-           'label'=>'refund',
+           'label'=>'cancel',
            'icon'=>'icon-trash',
            'url'=>'Yii::app()->createUrl("app/ticketCancel",array("id"=>"$data->id"))',
            'options'=>array(
