@@ -43,7 +43,7 @@ class Waybill extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('cargo_id, voyage_id, cargo_class_id, transaction_no, lading_no, series_no, booking_no, waybill_type_id, price_paid', 'required'),
+			array('cargo_id, voyage_id, cargo_class_id, lading_no, series_no, booking_no, waybill_type_id, price_paid', 'required'),
 			array('cargo_id, voyage_id, stowage_id, cargo_class_id, waybill_type_id, status_id, created_by, client_id', 'numerical', 'integerOnly'=>true),
 			array('transaction_no, lading_no, series_no, booking_no', 'length', 'max'=>32),
 			array('price_paid', 'length', 'max'=>20),

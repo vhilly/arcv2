@@ -13,6 +13,7 @@
       $this->render('ticketingBooth');
     }
     public function actionPassengerTicket($vid=null,$bn=null){
+      $sn = Counter::model()->findByPk(4)->value;
       $selected_voyage='';
       $tickets='';
       $voyages=Voyage::model()->findAll(array('condition'=>'departure_date>CURDATE() - INTERVAL 3 HOUR AND voyage_status_id < 3'));
@@ -56,12 +57,12 @@
           $passenger->last_name=$_POST['Passenger']['last_name'][$k];
           $passenger->age=$_POST['Passenger']['age'][$k];
           $passenger->save();
-          $ticket_no = numberGenerator(2);
           $ticket= new Ticket;
           $ticket->passenger_id=$passenger->id;
           $ticket->voyage_id=$selected_voyage->id;
           $ticket->booking_no=$booking_no;
-          $ticket->ticket_no=$ticket_no;
+          $ticket->ticket_no= numberGenerator(2);;
+          $ticket->series_no= numberGenerator(4,0);;
           $ticket->ticket_type_id=2;
           $ticket->seating_class_id=$class->id;
           $ticket->seat_id=$sl[$k];
@@ -76,11 +77,39 @@
         Yii::app()->user->setFlash('success', '<center>'.Yii::t('app','notice.success.ticket.create').$total_amt.'<center>');
         $this->redirect(array('app/passengerTicket','bn'=>$booking_no));
       }
-      $this->render('passengerTicket',compact('vid','passenger','selected_voyage','voyages','tickets','ptype','ptypes','classes','class','fname','bn','seats_per_class'));
+      $this->render('passengerTicket',compact('vid','passenger','selected_voyage','voyages','tickets','ptype','ptypes','classes','class','fname','bn',
+      'seats_per_class','sn'));
+    }
+    public function actionRollingCargo(){
+      $wb=new Waybill;
+      $cargo=new Cargo;
+      $error=0;
+      if(isset($_POST['Waybill'])){
+        $wb->attributes=$_POST['Waybill'];
+        $cargo->attributes=$_POST['Cargo'];
+        if(!$cargo->validate())
+          $error=1;
+        if(!$wb->validate(array('voyage_id','series_no','cargo_class_id','price_paid')))
+          $error=1;
+
+        if(!$error){
+          $cargo->save();
+          $wb->cargo_id=$cargo->id;
+          $wb->status_id=4;
+          $wb->waybill_type_id=2;
+          $wb->created_by=Yii::app()->user->id;
+          $wb->booking_no = numberGenerator(1);
+          $wb->lading_no = numberGenerator(3);
+          $wb->save();
+          Yii::app()->user->setFlash('success', '<center>'.Yii::t('app','notice.success.cargo.create').'<center>');
+          $this->redirect(array('app/rollingcargo'));
+        }
+      }
+      $this->render('rollingcargo',compact('wb','cargo'));
     }
     public function actionPrint($type=null,$bn=null,$id=null,$options=null){
       $result=array();
-      if($type='tkt'){
+      if($type=='tkt'){
         if($bn)
           $result=Ticket::model()->findAllByAttributes(array('booking_no'=>$bn));
         if($id)
@@ -195,6 +224,14 @@
       $tkt->save(false);
       return true;
     }
+    public function actionWaybillRefund($id){
+      Waybill::model()->updateByPk($id,array('status_id'=>6));
+      return true;
+    }
+    public function actionWaybillCancel($id){
+      Waybill::model()->updateByPk($id,array('status_id'=>7));
+      return true;
+    }
     public function actionTicketStats(){
       $vid=isset($_SESSION['vid'])?$_SESSION['vid']:'';
       $tkts = Ticket::model()->findAll(array('condition'=>"voyage_id = '{$vid}' AND status_id<6",'order'=>'id DESC'));
@@ -216,6 +253,20 @@
       }
       
       return $seat_list;
+    }
+    public function actionSeriesNumber(){
+       $value=isset($_POST['value']) ? $_POST['value'] :'';
+       $series = Counter::model()->findByPk(4);
+       $old = $series->value;
+       $series->value=$value;
+       $error;
+       if($series->save()){
+         $value = $series->value;
+       }else{
+         $value = $old;
+         $error=1;
+       }
+       echo json_encode(compact('value','error'));
     }
   }
 ?>

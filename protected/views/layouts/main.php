@@ -26,6 +26,12 @@
           </a>
         </li>
         <li class='gb_i'>
+          <a  class='gb_a' href=".Yii::app()->createUrl('app/rollingCargo').">
+            <span class='gb_c icon-truck icon-3x'></span>
+            <span class='gb_d'>".Yii::t('app','label.ticket.cargo')."</span>
+          </a>
+        </li>
+        <li class='gb_i'>
           <a class='gb_a' href=".Yii::app()->createUrl('app/checkin').">
             <span class='gb_c icon-check icon-3x'></span>
             <span class='gb_d'>".Yii::t('app','label.checkin')."</span>
@@ -73,8 +79,14 @@
         </li>
         <li class='gb_i'>
           <a class='gb_a' href=".Yii::app()->createUrl('admin/seatingclass').">
-            <span class='gb_c icon-linux icon-3x'></span>
+            <span class='gb_c icon-rocket icon-3x'></span>
             <span class='gb_d'>".Yii::t('app','label.seatingclass')."</span>
+          </a>
+        </li>
+        <li class='gb_i'>
+          <a class='gb_a' href=".Yii::app()->createUrl('admin/seat').">
+            <span class='gb_c icon-linux icon-3x'></span>
+            <span class='gb_d'>".Yii::t('app','label.seat')."</span>
           </a>
         </li>
         <li class='gb_i'>
@@ -91,7 +103,7 @@
         </li>
         <li class='gb_i'>
           <a class='gb_a' href=".Yii::app()->createUrl('admin/cargoClass').">
-            <span class='gb_c icon-tag icon-3x'></span>
+            <span class='gb_c icon-ambulance icon-3x'></span>
             <span class='gb_d'>".Yii::t('app','label.cargoclass')."</span>
           </a>
         </li>
@@ -123,8 +135,7 @@
                 array('icon'=>'icon-user icon-2x','label'=>'('.Yii::app()->user->name.')', 'url'=>'#', 'items'=>array(
                     array('icon'=>'cog','label'=>'SETTINGS'),
                     '---',
-                    array('','label'=>'Vessel', 'url'=>array('/admin/vessel')), 
-                    array('','label'=>'Seat', 'url'=>array('/admin/seat')), 
+                    array('','label'=>'Profile', 'url'=>array('/user/profile')), 
                     array('icon'=>'off','label'=>'Logout', 'url'=>array('/site/logout')), 
                 ),'visible'=>!Yii::app()->user->isGuest ),
             ),
