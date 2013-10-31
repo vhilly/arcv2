@@ -93,6 +93,7 @@
         if(!$error){
           $cargo->save();
           $wb->cargo_id=$cargo->id;
+          $wb->status_id=4;
           $wb->waybill_type_id=2;
           $wb->created_by=Yii::app()->user->id;
           $wb->booking_no = numberGenerator(1);
