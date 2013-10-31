@@ -12,14 +12,20 @@
   array('name'=>'vessel_id','value'=>'$data->vessel->name','filter'=>$vessels),
   array('name'=>'route_id','value'=>'$data->route->name','filter'=>$routes),
   'departure_date',
-  'capacity',
-  'available_seats',
+  array('name'=>'departure_time','value'=>'date("g:i A",strtotime($data->departure_time))'),
+  array('name'=>'arrival_time','value'=>'date("g:i A",strtotime($data->arrival_time))'),
+  array('name'=>'voyage_status_id','value'=>'$data->voyageStatus->name'),
     array(
       'class'=>'bootstrap.widgets.TbButtonColumn',
-      'template'=>'{update}',
+      'template'=>'{update} {close}',
       'buttons'=>array(            
         'update' => array(
            'url'=>'Yii::app()->createUrl("admin/voyageUpdate",array("id"=>"$data->id"))',
+         ),
+        'close' => array(
+           'label'=>'close voyage',
+           'icon'=>'remove-sign',
+           'url'=>'Yii::app()->createUrl("admin/voyageStatus",array("id"=>"$data->id"))',
          ),
       ),
     ),

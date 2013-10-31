@@ -54,6 +54,7 @@ class Voyage extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'vessel' => array(self::BELONGS_TO, 'Vessel', 'vessel_id'),
+			'voyageStatus' => array(self::BELONGS_TO, 'VoyageStatus', 'voyage_status_id'),
 			'route' => array(self::BELONGS_TO, 'Route', 'route_id'),
 		);
 	}

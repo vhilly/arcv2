@@ -337,6 +337,22 @@
       }
       $this->render('add',compact('model'));
     }
+    public function actionVoyageStatus($id){
+      $model=Voyage::model()->findByPk($id);
+      if(isset($_POST['Voyage'])){
+        $model->attributes=$_POST['Voyage'];
+        if($model->save()){
+          unset($_SESSION['vid']);
+          if($model->voyage_status_id != 1){
+            Ticket::model()->updateAll(array( 'status_id' => 5, 'seat_id' => new CDbExpression('NULL')), "status_id < 3 AND voyage_id = {$model->id}" );
+            Waybill::model()->updateAll(array( 'status_id' => 5, 'stowage_id' => new CDbExpression('NULL')), "status_id < 3 AND voyage_id = {$model->id}" );
+          }
+          Yii::app()->user->setFlash('success', Yii::t('app','notice.success.voyage.statusUpdate'));
+          $this->redirect(array('voyageStatus'));
+        }
+      }
+      $this->render('_vstatusForm',array('model'=>$model));
+    }
   }
 ?>
 
