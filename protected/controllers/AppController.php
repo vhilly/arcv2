@@ -161,15 +161,30 @@
       }
     }
 	//seat Map
-	public function actionSeatMap($id){
+	public function actionSeatMap($id,$voyage=NULL){
 	    $model = new Seat;
+		$bookedSeats = Ticket::model()->findAll(array('condition'=>"voyage_id = {$voyage} AND seating_class_id={$id} AND seat_id IS NOT NULL"));
 		$list= Seat::model()->findAll(array('condition'=>"active = 1 AND seating_class={$id}"));
-		$class= SeatingClass::model()->findAll(array('condition'=>"id={$id}"));
-		$this->render('seatMap',array(
-		  'model'=>$model,
-		  'list'=>$list,
-		  'class'=>$class
-		));
+		$class= SeatingClass::model()->findByPk($id);
+		$this->render('seatMap',compact('model','list','class','bookedSeats'));
+	}
+	//seat transfer
+	public function actionTransferForm($id){
+      $model=Ticket::model()->findByPk($id);
+	  $ticket = array_unique($_SESSION['checklist']);
+      if(isset($_POST['Ticket'])){
+        $model->attributes = $_POST['Ticket'];
+        $model->status_id=1;
+		$toUrl = 'Ticket[ticket_no]='.implode('&Ticket[ticket_no]=',$ticket);
+		//echo $toUrl;die();
+        if($model->save()){
+          Yii::app()->user->setFlash('success', "Seat Transfer Successful!");
+          $this->redirect(array('app/checkin&'.$toUrl));
+        }else{
+		  Yii::app()->user->setFlash('error', 'Booking Transfer Failed!');
+		}
+     }
+       $this->render('transferForm',array('model'=>$model,'ticket'=>$ticket));
 	}
     public function actionTickets(){
       $ticket=new Ticket('search');

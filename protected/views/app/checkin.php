@@ -64,10 +64,7 @@ div.normal {font-style:normal;}
 </style>
 
 <?php if(!isset($print)):?>
-<pre>
-<?php //print_r($pass);?>
-</pre>
-<?php //die();?>
+
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
   'id'=>'searchForm',
   'type'=>'search',
@@ -97,6 +94,7 @@ array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"><
             <th>Last Name</th>
             <th>Seat</th>
             <th>Vessel</th>
+            <th>&nbsp;</th>
           </tr>
         <?php foreach($pass as $key=>$p):?>
           <tr>
@@ -105,7 +103,7 @@ array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"><
             <td><?=$p->passenger->last_name?></td>
 	    <td><?=@$p->seat->name?></td>
 	    <td><?=$p->voyage->voyage_number?></td>
-		<td class=tlink id=<?=$p->seating_class_id?>>Transfer<td>
+		<td class=tlink id=<?=$p->id?> v=<?=$p->voyage_id?>>Transfer<td>
           </tr>
         <?php endforeach?>
     </table>
@@ -192,7 +190,7 @@ array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"><
 		var classID = this.id;
       $.ajax({
         type: 'GET',
-        url: '<?php echo Yii::app()->baseUrl;?>?r=app/seatMap&id='+classID,
+        url: '<?php echo Yii::app()->baseUrl;?>?r=app/transferForm&id='+classID,
         success: function (data){
           $('#transferModal .modal-header h4').html('Seat Transfer');
           $('#transferModal .modal-body p').html(data);

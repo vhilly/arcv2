@@ -30,14 +30,14 @@
 	$pl[$bl['id']]['cols'] = $bl['cols'];
   }
   foreach($list as $st){
-    $sp[$st['y']][$st['x']]['name'] = $st['name'];
-	$sp[$st['y']][$st['x']]['id'] = $st['id'];
-    $sp[$st['y']][$st['x']]['class'] = $st['seating_class'];
+    $sp[$st['y']][$st['x']][$st['seating_class']]['name'] = $st['name'];
+	$sp[$st['y']][$st['x']][$st['seating_class']]['id'] = $st['id'];
+    $sp[$st['y']][$st['x']][$st['seating_class']]['class'] = $st['seating_class'];
   }
   foreach($pl as $cls){
     $x = $cls['cols'];
 	$y = $cls['rows'];
-
+    $z = $cls['id'];
     $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
       'title' => $cls['name'],
       'headerIcon' => 'icon-th-list',
@@ -45,13 +45,13 @@
     ));
 
 
-    $body = "<table class=\"seatBlock\">";
+    $body = "<table class=\"seatBlock\" align=center>";
 
     for($i=1;$i<=$y;$i++){
       $body .="<tr>";
       for($j=1;$j<=$x;$j++){
-	    $text = isset($sp[$i][$j]['class']) ? ($sp[$i][$j]['class']==$cls['id']) ? $sp[$i][$j]['name'] : "" : "";
-		$id = isset($sp[$i][$j]['class']) ? ($sp[$i][$j]['class']==$cls['id']) ? $sp[$i][$j]['id'] : 0 : 0;
+	    $text = isset($sp[$i][$j][$z]['class']) ? ($sp[$i][$j][$z]['class']==$cls['id']) ? $sp[$i][$j][$z]['name'] : "" : "";
+		$id = isset($sp[$i][$j][$z]['class']) ? ($sp[$i][$j][$z]['class']==$cls['id']) ? $sp[$i][$j][$z]['id'] : 0 : 0;
 	    $color = $text!="" ? "color" : "";
         $body .= "<td a={$id} x={$j} y={$i} z={$cls['id']} class=\"seatMap {$color}\">{$text}</td>";
       }
