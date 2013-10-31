@@ -131,6 +131,17 @@
         $this->render('advCheckin',compact('pass','tns','ticket'));
       }
     }
+	//seat Map
+	public function actionSeatMap($id){
+	    $model = new Seat;
+		$list= Seat::model()->findAll(array('condition'=>"active = 1 AND seating_class={$id}"));
+		$class= SeatingClass::model()->findAll(array('condition'=>"id={$id}"));
+		$this->render('seatMap',array(
+		  'model'=>$model,
+		  'list'=>$list,
+		  'class'=>$class
+		));
+	}
     public function actionTickets(){
       $ticket=new Ticket('search');
       $ticket->unsetAttributes();  // clear any default values

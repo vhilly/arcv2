@@ -42,10 +42,32 @@ div.normal {font-style:normal;}
 .seats {
   padding:5px;
 }
+  .tlink {
+    color:#00B2EE;
+    font-weight:bold;
+  }   
+  .tlink:hover {
+    color:#FF0000;
+    font-weight:bold;
+    cursor:pointer;
+  } 
+.modal-body {
+    max-height:600px;
+}
+#transferModal {
+        width:850px;
+}
+.modal {
+        margin-left:-430px;
+}
+
 </style>
 
 <?php if(!isset($print)):?>
-
+<pre>
+<?php //print_r($pass);?>
+</pre>
+<?php //die();?>
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
   'id'=>'searchForm',
   'type'=>'search',
@@ -73,14 +95,17 @@ array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"><
             <th>Ticket Number</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Seat</th>
+            <th>Vessel</th>
           </tr>
         <?php foreach($pass as $key=>$p):?>
           <tr>
             <td><?=$p->ticket_no?></td>
             <td><?=$p->passenger->first_name?></td>
             <td><?=$p->passenger->last_name?></td>
-	    <td><?=$p->seat_id?></td>
+	    <td><?=$p->seat->name?></td>
 	    <td><?=$p->voyage->voyage_number?></td>
+		<td class=tlink id=<?=$p->seating_class_id?>>Transfer<td>
           </tr>
         <?php endforeach?>
     </table>
@@ -146,6 +171,38 @@ array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"><
     <script>window.print();window.close();</script>
     <?php endif;?>
 <?php endif;?>
+<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id' => 'transferModal')); ?>
+     
+    <div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h4>Modal header</h4>
+    </div>
+     
+    <div class="modal-body">
+    <p></p>
+    </div>
+     
+     
+    <?php $this->endWidget(); ?>
 <script>
   $('#tkt_no').focus();
+</script>
+<script>
+  $('.tlink').click(function(){
+		var classID = this.id;
+      $.ajax({
+        type: 'GET',
+        url: '<?php echo Yii::app()->baseUrl;?>?r=app/seatMap&id='+classID,
+        success: function (data){
+          $('#transferModal .modal-header h4').html('Seat Transfer');
+          $('#transferModal .modal-body p').html(data);
+        },
+        error: function (xht){
+          alert(this.url);
+        }
+
+      });
+   // $('#transferModal .modal-body p').html('asa');
+    $('#transferModal').modal()
+  });
 </script>
