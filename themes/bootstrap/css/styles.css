@@ -181,6 +181,9 @@ padding: 5px 10px;
 
 }
 .block {
+	min-height:490px;
+	min-height:490px;
+	height:100%;
 	border:2px solid #292929;
 }
 .block>* {
@@ -193,13 +196,13 @@ padding: 5px 10px;
 	background:#E5F5FC;
 }
 .block ul li {
-	background: #575757;
-	background: -moz-linear-gradient(top, #575757 0%, #3d3d3d 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#575757), color-stop(100%,#3d3d3d));
-	background: -webkit-linear-gradient(top, #575757 0%,#3d3d3d 100%);
-	background: -o-linear-gradient(top, #575757 0%,#3d3d3d 100%);
-	background: -ms-linear-gradient(top, #575757 0%,#3d3d3d 100%);
-	background: linear-gradient(top, #575757 0%,#3d3d3d 100%);
+	background: #ff5400;
+	background: -moz-linear-gradient(top, #ff6519 0%, #e54b00 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff5400), color-stop(100%,#e54b00));
+	background: -webkit-linear-gradient(top, #ff6519 0%,#e54b00 100%);
+	background: -o-linear-gradient(top, #ff6519 0%,#e54b00 100%);
+	background: -ms-linear-gradient(top, #ff6519 0%,#e54b00 100%);
+	background: linear-gradient(top, #ff6519 0%,#e54b00 100%);
 }
 .block ul li a {
 	text-decoration:none;
@@ -229,9 +232,65 @@ padding: 5px 10px;
 	
 }
 .block ul li a:hover {
-	background:#3498db;
+	background:#000000;
 	color:white;
 }
 .block ul li a:hover span {
 	display:block;
+}
+
+.container .page-header {
+    margin: 0px;
+    border-bottom: 0px none;
+    padding: 10px 0px 20px;
+}
+
+.container .page-header  ul.stats li {
+    float: left;
+    padding: 5px 10px;
+    height: 34px;
+    margin-left: 15px;
+    border-radius: 2px 2px 2px 2px;
+}
+ul {
+    list-style: none outside none;
+}
+.container .page-header ul.stats li .details {
+    margin-left: 50px;
+}
+.container .page-header ul.stats li .details span {
+    color: white;
+    display: block;
+    font-size: 12px;
+}
+.container .page-header ul.stats .color-first {
+    background: none repeat scroll 0% 0% rgb(113, 197, 134);
+}  
+.container .page-header ul.stats .color-second {
+    background: none repeat scroll 0% 0% rgb(244, 210, 99);
+}
+
+.clearfix {
+clear: both;
+}
+.text-white{
+  color:white;
+}
+ul.stats-overview {
+    border-bottom: 1px solid rgb(232, 232, 232);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+ul.stats-overview li {
+    display: inline-block;
+    text-align: center;
+    padding: 0px 15px;
+    font-size: 14px;
+    border-right: 1px solid rgb(232, 232, 232);
+}
+ul.stats-overview li .value {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
 }

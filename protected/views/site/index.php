@@ -1,44 +1,54 @@
-<style>
-.sched-box img {
-  margin:0 30px;
-}
-.rate-box img {
-  margin:0 10px;
-  height:410px;
-}
-</style>
-<div style="background:#f68937;margin-top:-20px;padding:50px 0;">
-  <div class="container" >
-    <div class="pull-right ">
-	  <h1 class="arcName">FastCat</h1>
-	  <h3 style="color:white;text-shadow:0 0px 0px #111">FerrySafe. FerryFast. FerryConvenient.</h3>
-	</div>
-	<div class="homeHero">
-	</div>
-	
+<div class='page-header'>
+  <div class="pull-right">
+    <ul class="stats">
+      <li class='color-first'>
+        <span class="icon-money icon-3x text-white pull-left"></span>
+        <div class="details">
+          <span class="big">P<?=number_format($tr)?></span>
+          <span>Revenue</span>
+        </div>
+      </li>
+      <li class='color-second'>
+        <span class="icon-calendar icon-3x text-white  pull-left"></span>
+        <div class="details" id="date-time"><span class="big"><?=date('M d, Y')?></span><span> <?=date('D g:i:s A')?></span></div>
+      </li>
+    </ul>
   </div>
-
 </div>
-
-  <div class="container" style="background:#fff;margin-top:-50px;min-height:300px;border:0px solid #f68937;border-top:none;box-shadow: 0px 3px 5px #888888;">
-    <div class="sched-box">
-      <h2>Schedules</h2>
-      <?php
-        echo CHtml::image(Yii::app()->theme->baseUrl."/img/archipelago-M1-Schedule.jpg");
-      ?>
-    </div>
-    <div class="rate-box">
-      <h2>Passenger Rates</h2>
-      <?php
-        echo CHtml::image(Yii::app()->theme->baseUrl."/img/archipelago-rate-passenger-small.jpg");
-        echo CHtml::image(Yii::app()->theme->baseUrl."/img/archipelago-rate-cargo-small.jpg");
-      ?>
-    
-    </div>
-  
-  </div>
-<iframe id=ticketWindow src="http://localhost/arc/index.php?r=QuickTicket/index" width=100% height=1200></iframe>
-<script>
-  var frameBody = $("#ticketWindow")[0];
-  frameBody.contentWindow.focus();
-</script>
+<div class=clearfix></div><br>
+<?php if(count($voyage)):?>
+<?php foreach($voyage as $key=>$v):?>
+<?php $box = $this->beginWidget(
+  'bootstrap.widgets.TbBox',
+  array(
+   'title' => $v['name'],
+   'headerIcon' => 'icon-bar-chart',
+   'htmlOptions' => array('class' => '')
+  )
+);?>
+<div>
+  <ul class="stats-overview">
+    <li>
+      <span>Capacity</span>
+      <span class='value text-success'><?=$v['capacity']?></span>
+    </li>
+    <li>
+      <span>Seats Remaining</span>
+      <span class='value text-success'><?=$v['available_seats']?></span>
+    </li>
+  <?php foreach($v['status'] as $s):?>
+    <li>
+      <span><?=$s['name']?></span>
+      <span class='value text-success'><?=$s['cnt']?></span>
+    </li>
+  <?php endforeach;?>
+    <li>
+      <span> Revenue</span>
+      <span class='value text-success'><?=number_format($v['revenue'])?></span>
+    </li>
+  </ul>
+  <div id='chart_<?=$key?>'></div>
+</div>
+<?php $this->endWidget();?>
+<?php endforeach;?>
+<?php endif;?>

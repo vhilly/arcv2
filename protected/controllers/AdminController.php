@@ -292,9 +292,6 @@
         $_POST['Voyage']['departure_time'] = date('H:i:s',strtotime($dt));
         $_POST['Voyage']['arrival_time'] = date('H:i:s',strtotime($da));
         $model->attributes=$_POST['Voyage'];
-        $capacity=Vessel::model()->findByPk($model->vessel_id)->capacity;
-        $model->capacity=$capacity;
-        $model->available_seats=$capacity;
         try{
           if($model->save()){
             Yii::app()->user->setFlash('success', Yii::t('app','notice.success.voyage.update'));
@@ -348,7 +345,7 @@
             Waybill::model()->updateAll(array( 'status_id' => 5, 'stowage_id' => new CDbExpression('NULL')), "status_id < 3 AND voyage_id = {$model->id}" );
           }
           Yii::app()->user->setFlash('success', Yii::t('app','notice.success.voyage.statusUpdate'));
-          $this->redirect(array('voyageStatus'));
+          $this->redirect(array('admin/voyage'));
         }
       }
       $this->render('_vstatusForm',array('model'=>$model));

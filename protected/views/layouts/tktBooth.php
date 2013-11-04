@@ -14,7 +14,7 @@
 </div>
 <?php $this->endContent(); ?>
 <script type="text/javascript">
-    setInterval(refreshIframe, 60000);
+    setInterval(refreshIframe, 40000);
     function refreshIframe() {
         $("#stats")[0].src = $("#stats")[0].src;
     }

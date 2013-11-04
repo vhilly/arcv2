@@ -49,8 +49,29 @@
     }
     public function actionIndex()
     {
+      $this->layout='main';
+      $voyage=array();
+      $tr=0;
+      $sql="SELECT v.id, v.voyage_number,t.status_id,COUNT(*) cnt,v.capacity,v.available_seats, SUM(t.price_paid) amt,b.name FROM voyage v
+        JOIN ticket t ON t.voyage_id = v.id
+        JOIN booking_status b ON b.id = t.status_id
+        WHERE v.departure_date=CURDATE() AND t.status_id <6
+        GROUP by v.id,t.status_id ";
+      $result=Yii::app()->db->createCommand($sql)->queryAll();
+      if($result){
+        foreach($result as $r){
+          $voyage[$r['id']]['name']=$r['voyage_number'];
+          $voyage[$r['id']]['capacity']=$r['capacity'];
+          $voyage[$r['id']]['available_seats']=$r['available_seats'];
+          @$voyage[$r['id']]['revenue']+=$r['amt'];
+          @$voyage[$r['id']]['total_pass']+=$r['cnt'];
+          @$voyage[$r['id']]['status'][$r['status_id']]['cnt']+=$r['cnt'];
+          @$voyage[$r['id']]['status'][$r['status_id']]['name']=$r['name'];
+          $tr+=$r['amt'];
+        }
+      }
       $this->layout = 'main';
-      $this->render('index');
+      $this->render('index',compact('voyage','tr'));
     }
 
     /**

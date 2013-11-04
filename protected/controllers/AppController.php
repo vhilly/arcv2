@@ -67,7 +67,7 @@
           $ticket->seating_class_id=$class->id;
           $ticket->seat_id=$sl[$k];
           $ticket->passenger_type_id=$v;
-          $ticket->price_paid=$fares[$v];
+          $ticket->price_paid=isset($fares[$v])?$fares[$v]:0;
           $ticket->created_by=Yii::app()->user->id;
           $ticket->save();
           $selected_voyage->available_seats -=1;
@@ -116,6 +116,13 @@
           array_push($result,Ticket::model()->findByPk($id));
         $this->renderPartial('tkt_print',compact('result'));
       }
+      if($type=='wbill'){
+        if($bn)
+          $result=Waybill::model()->findAllByAttributes(array('booking_no'=>$bn));
+        if($id)
+          array_push($result,Waybill::model()->findByPk($id));
+        $this->renderPartial('wbill_print',compact('result'));
+      }
     }
     public function actionCheckin($tns=null,$print=null){
       $ticket=new Ticket;
@@ -160,16 +167,16 @@
         $this->render('advCheckin',compact('pass','tns','ticket'));
       }
     }
-	//seat Map
-	public function actionSeatMap($id,$voyage=NULL){
-	    $model = new Seat;
-		$bookedSeats = Ticket::model()->findAll(array('condition'=>"voyage_id = {$voyage} AND seating_class_id={$id} AND seat_id IS NOT NULL"));
-		$list= Seat::model()->findAll(array('condition'=>"active = 1 AND seating_class={$id}"));
-		$class= SeatingClass::model()->findByPk($id);
-		$this->render('seatMap',compact('model','list','class','bookedSeats'));
-	}
+    //seat Map
+    public function actionSeatMap($id,$voyage=NULL){
+      $model = new Seat;
+      $bookedSeats = Ticket::model()->findAll(array('condition'=>"voyage_id = {$voyage} AND seating_class_id={$id} AND seat_id IS NOT NULL"));
+      $list= Seat::model()->findAll(array('condition'=>"active = 1 AND seating_class={$id}"));
+      $class= SeatingClass::model()->findByPk($id);
+      $this->render('seatMap',compact('model','list','class','bookedSeats'));
+    }
 	//seat transfer
-	public function actionTransferForm($id){
+    public function actionTransferForm($id){
       $model=Ticket::model()->findByPk($id);
 	  $ticket = array_unique($_SESSION['checklist']);
       if(isset($_POST['Ticket'])){
@@ -183,9 +190,9 @@
         }else{
 		  Yii::app()->user->setFlash('error', 'Booking Transfer Failed!');
 		}
-     }
+       }
        $this->render('transferForm',array('model'=>$model,'ticket'=>$ticket));
-	}
+    }
     public function actionTickets(){
       $ticket=new Ticket('search');
       $ticket->unsetAttributes();  // clear any default values
@@ -233,9 +240,10 @@
       return true;
     }
     public function actionTicketStats(){
+      $this->layout='blank2';
       $vid=isset($_SESSION['vid'])?$_SESSION['vid']:'';
       $tkts = Ticket::model()->findAll(array('condition'=>"voyage_id = '{$vid}' AND status_id<6",'order'=>'id DESC'));
-      $this->renderPartial('tkt_stats',compact('tkts'));
+      $this->render('tkt_stats',compact('tkts'));
     }
     public function actionEditableSaver($mName){
       Yii::import('bootstrap.widgets.TbEditableSaver');
@@ -253,6 +261,10 @@
       }
       
       return $seat_list;
+    }
+    public function actionManifest($vid){
+      $mnfst=Ticket::model()->findAll(array('condition'=>"voyage_id='$vid' AND  status_id < 6"));
+      $this->renderPartial('manifest',compact('mnfst'));
     }
     public function actionSeriesNumber(){
        $value=isset($_POST['value']) ? $_POST['value'] :'';

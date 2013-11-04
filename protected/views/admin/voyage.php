@@ -17,10 +17,16 @@
   array('name'=>'voyage_status_id','value'=>'$data->voyageStatus->name'),
     array(
       'class'=>'bootstrap.widgets.TbButtonColumn',
-      'template'=>'{update} {close}',
+      'template'=>'{update} &nbsp;{manifest} &nbsp; {close}',
       'buttons'=>array(            
         'update' => array(
            'url'=>'Yii::app()->createUrl("admin/voyageUpdate",array("id"=>"$data->id"))',
+         ),
+        'manifest' => array(
+           'label'=>'manifest',
+           'icon'=>'file',
+           'url'=>'Yii::app()->createUrl("app/manifest",array("vid"=>"$data->id"))',
+           'options'=>array('target'=>'_blank'),
          ),
         'close' => array(
            'label'=>'close voyage',

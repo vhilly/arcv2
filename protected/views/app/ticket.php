@@ -59,7 +59,7 @@
          ),
         'refund' => array(
            'label'=>'refund',
-           'icon'=>'icon-undo',
+           'icon'=>'icon-share',
            'url'=>'Yii::app()->createUrl("app/ticketRefund",array("id"=>"$data->id"))',
            'options'=>array(
              'confirm'=>'Are you sure?',

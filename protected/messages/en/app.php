@@ -44,6 +44,7 @@
     'label.route.add'=>'Add Route',
     'label.seatingclass.add'=>'Add New',
     'label.passengertype.add'=>'Add New Passenger Type',
+    'label.ticketing.seriesBeginAt'=>'Series Begins At',
     
      'model.voyage.voyageNumber'=>'Voyage Number',
      'model.voyage.vessel_id'=>'Vessel',
@@ -76,6 +77,15 @@
 
     'notice.success.vessel.update'=>'Vessel has been updated!',
     'notice.failed.vessel.update'=>'Unable to update vessel! Vessel name and code must be unique.',
+
+    'notice.success.voyage.create'=>'Voyage has been added!',
+    'notice.failed.voyage.create'=>'Unable to add voyage! Voyage name and code must be unique.',
+
+    'notice.success.voyage.update'=>'Voyage has been updated!',
+    'notice.failed.voyage.update'=>'Unable to update voyage! Voyage name and code must be unique.',
+
+    'notice.failed.ticket.emptySeat'=>'Not enough seat/s available!',
+    'notice.success.ticket.create'=>'Ticket/s successfully created! Total Amount: ',
 
     //alert
     'alert.ticketing.series.beginsAt'=>'Series Begins At',

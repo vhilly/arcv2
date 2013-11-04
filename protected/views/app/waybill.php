@@ -28,19 +28,19 @@
         'print' => array(
            'label'=>'print',
            'icon'=>'icon-print',
-           'url'=>'Yii::app()->createUrl("app/print",array("id"=>"$data->id","type"=>"wb"))',
+           'url'=>'Yii::app()->createUrl("app/print",array("id"=>"$data->id","type"=>"wbill"))',
             'options'=>array('target'=>'_blank'),
          ),
         'refund' => array(
            'label'=>'refund',
-           'icon'=>'icon-undo',
+           'icon'=>'icon-share',
            'url'=>'Yii::app()->createUrl("app/waybillRefund",array("id"=>"$data->id"))',
            'options'=>array(
              'confirm'=>'Are you sure?',
              'ajax'=>array(
                'type'=>'POST',
                'url'=>"js:$(this).attr('href')",
-               'success' => "js:function() { $.fn.yiiGridView.update('ticket-grid') }"
+               'success' => "js:function() { $.fn.yiiGridView.update('waybill-grid') }"
              )
            )
          ),

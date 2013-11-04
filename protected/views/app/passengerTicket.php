@@ -42,8 +42,17 @@
 </div>
 <?php if($selected_voyage):?>
   <?php foreach($classes as $k=>$c):?>
-  <span class='label label-info pull-right side-space' >
-    <?=$c.': '.($seats_per_class[$k][0]-$seats_per_class[$k][1]);?>
+  <?php 
+    $as=$seats_per_class[$k][0]-$seats_per_class[$k][1];
+    $lbl_type='label-info';
+    if($as <= 5)
+      $lbl_type='label-warning';
+    if($as < 1)
+      $lbl_type='label-important';
+  ?>
+  
+  <span class="label <?=$lbl_type?> pull-right side-space" >
+    <?=$c.': '.$as;?>
   </span>
   <?php endforeach;?>
   <span class='label label-info pull-right side-space'>
@@ -60,9 +69,9 @@
   ?>
   <div><?=Yii::t('app','label.ticketing.seriesBeginAt')?>: <input type=text id=series value='<?=$sn?>' class='span3'>&nbsp;<input class='btn btn-primary btn-small' type=button id=setSeries value=Save></div>
    <div id=passengers>
-     <?php echo $form->dropDownListRow($class,'id',$classes,array('id'=>'class'));?><br><br>
+     <?php echo $form->dropDownListRow($class,'id',$classes,array('id'=>'class','class'=>'select'));?><br><br>
      <div id=container1>
-     1. <?php echo $form->dropDownList($ptype,'id[]',$ptypes,array('id'=>'ptype_1'));?> 
+     1. <?php echo $form->dropDownList($ptype,'id[]',$ptypes,array('id'=>'ptype_1','class'=>'select'));?> 
      <?=Yii::t('app','model.passenger.fname')?>  <input class='span2 fname' id=fname_1 type=text name='Passenger[first_name][]' autocomplete='off'> 
      <?=Yii::t('app','model.passenger.lname')?>  <input class=span2 id=lname_1 type=text name='Passenger[last_name][]'> 
      <?=Yii::t('app','model.passenger.age')?>  <input class=span2 id=age_1 type=text name='Passenger[age][]'> 
@@ -116,7 +125,7 @@
   function addSelect(){
     current++;
     var newSelect= $('<div id=container'+current+'>'+current+
-     '.<select id=ptype_'+current+' name=PassengerType[id][]><option></option></select>'+
+     '.<select id="ptype_'+current+'" class="select" name="PassengerType[id][]"><option></option></select>'+
      ' <?=Yii::t('app','model.passenger.fname')?> <input class="span2 fname" id=fname_'+current+' type=text name="Passenger[first_name][]">'+
      ' <?=Yii::t('app','model.passenger.lname')?> <input class=span2 id=lname_'+current+' type=text  name="Passenger[last_name][]">'+
      ' <?=Yii::t('app','model.passenger.age')?> <input class=span2 id=age_'+current+' type=text  name="Passenger[age][]">'+
@@ -149,13 +158,9 @@
   $('select').change(function(){
      $('#fname_'+current).focus();
   });
-$(window).load(function () {
-  $('#progress').modal('hide');
-});
-$('.fname').typeahead({'source':['<?=implode('\',\'',$fname)?>'],'items':4,'matcher':function(item) {
-								return ~item.toLowerCase().indexOf(this.query.toLowerCase());
-							}}
-);
+ $(window).load(function () {
+    $('#progress').modal('hide');
+ });
  <?php if($bn):?>
    var url = '<?=Yii::app()->createUrl('app/print',array('type'=>'tkt','bn'=>$bn))?>';
    window.open(url);
