@@ -1,0 +1,25 @@
+<?php if(count($per_class)):?>
+  
+  <table class='table hover'>
+   <tr>
+    <th>REVENUE</th>
+    <?php foreach($per_voyage as $key=>$r):?>
+     <th><?=$key?></th>
+    <?php endforeach;?>
+     <th>TOTAL</th>
+   <tr>
+  <?php foreach($per_class as $key=>$r):?>
+    <tr><th><?=$key?></th><tr>
+    <?php foreach($r as $key=>$p):?>
+     <?php 
+       $total_amt=0;
+       $total_amt=array_sum($p['amt']);
+       $total_cnt=0;
+       $total_cnt=array_sum($p['cnt']);
+     ?>
+     <tr><td><?=$key?></td><td><?=implode('</td><td>',$p['amt'])?></td><td><?=number_format($total_amt)?></td></tr>
+     <tr><td>No. Of Passengers</td><td><?=implode('</td><td>',$p['cnt'])?></td><td><?=number_format($total_cnt)?></td></tr>
+    <?php endforeach;?>
+  <?php endforeach;?>
+  </table>
+<?php endif;?>
