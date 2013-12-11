@@ -18,24 +18,24 @@
 <div class="block side-space ">
   <table class='table'>
     <tr>
-      <th class=''> TOTAL PASSENGER:</th>
-      <th class=''><?=count($tkts)?></th>
+      <th class='btn-primary'> TOTAL PASSENGER:</th>
+      <th class='btn-warning'><center style="color:#000"><?=count($tkts)?></center></th>
     </tr>
     <tr>
-      <th>
+      <th colspan=2 style="padding:0" class="btn-info">
       <?php foreach($cnt_perclass['cnt'] as $k=>$v):?>
-        <?=$classes[$k]?> <?=$v?>
+        <div style="float:left;width:103px;padding:5px;border-left:1px solid #292929;margin-left:-1px;color:#000" class="text-center"><?=$classes[$k]?> <?=$v?></div>
       <?php endforeach;?>
-      <th>
+      </th>
     </tr>
     <tr>
-      <th class=''> TOTAL REVENUE:</th>
-      <th class=''><?=number_format($total_amt)?></th>
+      <th class='btn-primary'> TOTAL REVENUE:</th>
+      <th class='btn-warning'><center style="color:#000"><?=number_format($total_amt)?></center></th>
     </tr>
     <tr>
-      <th>
+      <th colspan=2 style="padding:0" class="btn-info">
       <?php foreach($cnt_perclass['amt'] as $k=>$v):?>
-        <?=$classes[$k]?> <?=$v?>
+        <div style="float:left;width:103px;padding:5px;border-left:1px solid #292929;margin-left:-1px;color:#000" class="text-center"><?=$classes[$k]?> <?=$v?></div>
       <?php endforeach;?>
       </th>
     </tr>
