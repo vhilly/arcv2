@@ -1,23 +1,30 @@
 <?php
 
 /**
- * This is the model class for table "booking_status".
+ * This is the model class for table "cargo_fare_rates".
  *
- * The followings are the available columns in table 'booking_status':
+ * The followings are the available columns in table 'cargo_fare_rates':
  * @property integer $id
- * @property string $name
- * @property string $desc
- * @property string $color
- * @property integer $active
+ * @property integer $route
+ * @property integer $class
+ * @property integer $lane_meter_rate
+ * @property string $discounted_rate
+ * @property integer $discount
+ * @property string $regular_rate
+ * @property string $active
+ *
+ * The followings are the available model relations:
+ * @property Route $route0
+ * @property CargoClass $class0
  */
-class BookingStatus extends CActiveRecord
+class CargoFareRates extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'booking_status';
+		return 'cargo_fare_rates';
 	}
 
 	/**
@@ -28,14 +35,13 @@ class BookingStatus extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name', 'required'),
-			array('active', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>100),
-			array('color', 'length', 'max'=>32),
-			array('desc', 'safe'),
+			array('route, class', 'required'),
+			array('id,route, class,active, lane_meter_rate, discount', 'numerical', 'integerOnly'=>true),
+			array('discounted_rate, regular_rate', 'length', 'max'=>20),
+			array('active', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, desc, color, active', 'safe', 'on'=>'search'),
+			array('id, route, class, lane_meter_rate, discounted_rate, discount, regular_rate, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,6 +53,8 @@ class BookingStatus extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'route0' => array(self::BELONGS_TO, 'Route', 'route'),
+			'class0' => array(self::BELONGS_TO, 'CargoClass', 'class'),
 		);
 	}
 
@@ -57,9 +65,12 @@ class BookingStatus extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
-			'desc' => 'Desc',
-			'color' => 'Color',
+			'route' => 'Route',
+			'class' => 'Class',
+			'lane_meter_rate' => 'Lane Meter Rate',
+			'discounted_rate' => 'Discounted Rate',
+			'discount' => 'Discount',
+			'regular_rate' => 'Regular Rate',
 			'active' => 'Active',
 		);
 	}
@@ -83,10 +94,13 @@ class BookingStatus extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('desc',$this->desc,true);
-		$criteria->compare('color',$this->color,true);
-		$criteria->compare('active',$this->active);
+		$criteria->compare('route',$this->route);
+		$criteria->compare('class',$this->class);
+		$criteria->compare('lane_meter_rate',$this->lane_meter_rate);
+		$criteria->compare('discounted_rate',$this->discounted_rate,true);
+		$criteria->compare('discount',$this->discount);
+		$criteria->compare('regular_rate',$this->regular_rate,true);
+		$criteria->compare('active',$this->active,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -97,7 +111,7 @@ class BookingStatus extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return BookingStatus the static model class
+	 * @return CargoFareRates the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

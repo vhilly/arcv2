@@ -55,7 +55,7 @@ div.normal {font-style:normal;}
 <?php
   echo $form->textFieldRow($ticket, 'ticket_no',
 array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"></i>'));
-  echo $form->dropDownListRow($ticket,'voyage_id',CHtml::listData(Voyage::model()->findAll(array('condition'=>"departure_date=CURDATE() AND voyage_status_id < 3 ORDER BY id desc")),'id','voyage_number'));
+  echo $form->dropDownListRow($ticket,'voyage',CHtml::listData(Voyage::model()->findAll(array('condition'=>"departure_date>CURDATE() - INTERVAL 3 HOUR AND status < 10 ORDER BY id desc")),'id','number'));
 ?>
 <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'Go')); ?>
 <br>
@@ -78,10 +78,10 @@ array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"><
         <?php foreach($pass as $key=>$p):?>
           <tr>
             <td><?=$p->ticket_no?></td>
-            <td><?=$p->passenger->first_name?></td>
-            <td><?=$p->passenger->last_name?></td>
-	    <td><?=$p->seat_id?></td>
-	    <td><?=$p->voyage->voyage_number?></td>
+            <td><?=$p->passenger0->first_name?></td>
+            <td><?=$p->passenger0->last_name?></td>
+	    <td><?=$p->seat0->name?></td>
+	    <td><?=$p->voyage0->number?></td>
           </tr>
         <?php endforeach?>
     </table>
@@ -101,25 +101,25 @@ array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"><
         <?php foreach($pass as $key=>$p):?>
         <?php for($i=1;$i<=2;$i++){?>
 	<?php
-	$dt=$p->voyage->departure_date;
+	$dt=$p->voyage0->departure_date;
 	$dt=date("d F Y",strtotime($dt));
 	
-	$da=$p->voyage->departure_time;
+	$da=$p->voyage0->departure_time;
 	$da=date("g:i a", strtotime($da));
 
-	$aa=$p->voyage->arrival_time;
+	$aa=$p->voyage0->arrival_time;
         $aa=date("g:i a", strtotime($aa));
 
 
 
-        $arv=$p->voyage->departure_date." ".$p->voyage->departure_time."-".$p->voyage->arrival_time; 
+        $arv=$p->voyage0->departure_date." ".$p->voyage0->departure_time."-".$p->voyage0->arrival_time; 
 	$ot=$dt." ".$da."-".$aa;
 	?>
         <br>
  	<div id="ub1"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FastCat Boarding Pass</b></div>
   	<div id="ub2" class="condensed"><?=$p->passenger->first_name?> <?=$p->passenger->last_name?></div>
-	<div id="ub2"><?=$p->voyage->voyage_number?></div>
-	<div id="ub3" ><?=$p->voyage->route->name?></div>
+	<div id="ub2"><?=$p->voyage0->number?></div>
+	<div id="ub3" ><?=$p->voyage0->route->name?></div>
         <div id="ub3" class="normal" ><?=$ot?></div>         
 	 <?php $cl=$p->seatingClass->name;
         //echo $cl;

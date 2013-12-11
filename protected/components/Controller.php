@@ -20,4 +20,26 @@ class Controller extends RController
 	 * for more details on how to specify this property.
 	 */
 	public $breadcrumbs=array();
+
+        /* 
+          *@METHOD the system variables, all values stored in session sys_var
+          *upon login, all values needed repeatedly in all controllers will be stored in session. 
+          *By doing this, it prevent's me from doing database query over and over again
+          *-Vhilly
+        */
+        //public $sys_vars=isset($_SESSION['sys_vars'])?$_SESSION['sys_vars']:array();
+        protected function sysVars(){
+          return $_SESSION['sys_vars']?$_SESSION['sys_vars']:array();
+        }
+	protected function setSysVars() {
+          $_SESSION['sys_vars']=array(
+            'hasSeatingClass'=>SeatingClass::model()->count() ? true : false,
+            'hasPassengerType'=>PassengerType::model()->count() ? true : false,
+            'hasRoute'=>Route::model()->count() ? true : false,
+            'hasPort'=>Port::model()->count() ? true : false,
+            'hasSeat'=>Seat::model()->count() ? true : false,
+            'hasVessel'=>Vessel::model()->count() ? true : false,
+            'hasCargoClass'=>CargoClass::model()->count() ? true : false,
+          );
+	}
 }

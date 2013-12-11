@@ -43,13 +43,13 @@ class Waybill extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('cargo_id, voyage_id, cargo_class_id, lading_no, series_no, booking_no, waybill_type_id, price_paid', 'required'),
-			array('cargo_id, voyage_id, stowage_id, cargo_class_id, waybill_type_id, status_id, created_by, client_id', 'numerical', 'integerOnly'=>true),
+			array('cargo, voyage,original_price, cargo_class, lading_no, series_no, booking_no, waybill_type, price_paid', 'required'),
+			array('cargo, voyage, stowage,discount, cargo_class, waybill_type, status, created_by, client', 'numerical', 'integerOnly'=>true),
 			array('transaction_no, lading_no, series_no, booking_no', 'length', 'max'=>32),
 			array('price_paid', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, cargo_id, voyage_id, stowage_id, cargo_class_id, transaction_no, lading_no, series_no, booking_no, waybill_type_id, price_paid, status_id, created_by, client_id', 'safe', 'on'=>'search'),
+			array('id, cargo, voyage, stowage, cargo_class, transaction_no, lading_no, series_no, booking_no, waybill_type, price_paid, status, created_by, client', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,9 +62,10 @@ class Waybill extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'createdBy' => array(self::BELONGS_TO, 'Users', 'created_by'),
-			'cargo' => array(self::BELONGS_TO, 'Cargo', 'cargo_id'),
-			'voyage' => array(self::BELONGS_TO, 'Voyage', 'voyage_id'),
-			'cargoClass' => array(self::BELONGS_TO, 'CargoClass', 'cargo_class_id'),
+			'cargo0' => array(self::BELONGS_TO, 'Cargo', 'cargo'),
+			'voyage0' => array(self::BELONGS_TO, 'Voyage', 'voyage'),
+			'status0' => array(self::BELONGS_TO, 'Status', 'status'),
+			'cargoClass' => array(self::BELONGS_TO, 'CargoClass', 'cargo_class'),
 		);
 	}
 
@@ -75,19 +76,19 @@ class Waybill extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'cargo_id' => 'Cargo',
-			'voyage_id' => 'Voyage',
-			'stowage_id' => 'Stowage',
-			'cargo_class_id' => 'Cargo Class',
+			'cargo' => 'Cargo',
+			'voyage' => 'Voyage',
+			'stowage' => 'Stowage',
+			'cargo_class' => 'Cargo Class',
 			'transaction_no' => 'Transaction No',
 			'lading_no' => 'Lading No',
 			'series_no' => 'Series No',
 			'booking_no' => 'Booking No',
-			'waybill_type_id' => 'Waybill Type',
-			'price_paid' => 'Price Paid',
-			'status_id' => 'Status',
+			'waybill_type' => 'Waybill Type',
+			'price_paid' => 'Rate',
+			'status' => 'Status',
 			'created_by' => 'Created By',
-			'client_id' => 'Client',
+			'client' => 'Client',
 		);
 	}
 
@@ -110,19 +111,19 @@ class Waybill extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('cargo_id',$this->cargo_id);
-		$criteria->compare('voyage_id',$this->voyage_id);
-		$criteria->compare('stowage_id',$this->stowage_id);
-		$criteria->compare('cargo_class_id',$this->cargo_class_id);
+		$criteria->compare('cargo',$this->cargo);
+		$criteria->compare('voyage',$this->voyage);
+		$criteria->compare('stowage',$this->stowage);
+		$criteria->compare('cargo_class',$this->cargo_class);
 		$criteria->compare('transaction_no',$this->transaction_no,true);
 		$criteria->compare('lading_no',$this->lading_no,true);
 		$criteria->compare('series_no',$this->series_no,true);
 		$criteria->compare('booking_no',$this->booking_no,true);
-		$criteria->compare('waybill_type_id',$this->waybill_type_id);
+		$criteria->compare('waybill_type',$this->waybill_type);
 		$criteria->compare('price_paid',$this->price_paid,true);
-		$criteria->compare('status_id',$this->status_id);
+		$criteria->compare('status',$this->status);
 		$criteria->compare('created_by',$this->created_by);
-		$criteria->compare('client_id',$this->client_id);
+		$criteria->compare('client',$this->client);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

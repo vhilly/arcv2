@@ -52,21 +52,21 @@
       $this->layout='main';
       $voyage=array();
       $tr=0;
-      $sql="SELECT v.id, v.voyage_number,t.status_id,COUNT(*) cnt,v.capacity,v.available_seats, SUM(t.price_paid) amt,b.name FROM voyage v
-        JOIN ticket t ON t.voyage_id = v.id
-        JOIN booking_status b ON b.id = t.status_id
-        WHERE v.departure_date=CURDATE() AND t.status_id <6
-        GROUP by v.id,t.status_id ";
+      $sql="SELECT v.id, v.number,t.status,COUNT(*) cnt,v.capacity,v.available_seats, SUM(t.price_paid) amt,b.name FROM voyage v
+        JOIN ticket t ON t.voyage= v.id
+        JOIN status b ON b.id = t.status
+        WHERE v.departure_date=CURDATE() AND t.status<6
+        GROUP by v.id,t.status";
       $result=Yii::app()->db->createCommand($sql)->queryAll();
       if($result){
         foreach($result as $r){
-          $voyage[$r['id']]['name']=$r['voyage_number'];
+          $voyage[$r['id']]['name']=$r['number'];
           $voyage[$r['id']]['capacity']=$r['capacity'];
           $voyage[$r['id']]['available_seats']=$r['available_seats'];
           @$voyage[$r['id']]['revenue']+=$r['amt'];
           @$voyage[$r['id']]['total_pass']+=$r['cnt'];
-          @$voyage[$r['id']]['status'][$r['status_id']]['cnt']+=$r['cnt'];
-          @$voyage[$r['id']]['status'][$r['status_id']]['name']=$r['name'];
+          @$voyage[$r['id']]['status'][$r['status']]['cnt']+=$r['cnt'];
+          @$voyage[$r['id']]['status'][$r['status']]['name']=$r['name'];
           $tr+=$r['amt'];
         }
       }
@@ -91,7 +91,6 @@
     public function actionLogin()
     {
       $model=new LoginForm;
-
       // if it is ajax validation request
       if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
       {

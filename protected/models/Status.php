@@ -1,21 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "voyage_status".
+ * This is the model class for table "status".
  *
- * The followings are the available columns in table 'voyage_status':
+ * The followings are the available columns in table 'status':
  * @property integer $id
+ * @property integer $entity_id
  * @property string $name
  * @property string $description
+ * @property string $color
+ * @property integer $active
+ *
+ * The followings are the available model relations:
+ * @property Voyage[] $voyages
  */
-class VoyageStatus extends CActiveRecord
+class Status extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'voyage_status';
+		return 'status';
 	}
 
 	/**
@@ -26,11 +32,14 @@ class VoyageStatus extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, description', 'required'),
+			array('entity_id, name, color', 'required'),
+			array('entity_id, active', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>100),
+			array('color', 'length', 'max'=>20),
+			array('description', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, description', 'safe', 'on'=>'search'),
+			array('id, entity_id, name, description, color, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -42,6 +51,7 @@ class VoyageStatus extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'voyages' => array(self::HAS_MANY, 'Voyage', 'status'),
 		);
 	}
 
@@ -52,8 +62,11 @@ class VoyageStatus extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'entity_id' => 'Entity',
 			'name' => 'Name',
 			'description' => 'Description',
+			'color' => 'Color',
+			'active' => 'Active',
 		);
 	}
 
@@ -76,8 +89,11 @@ class VoyageStatus extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+		$criteria->compare('entity_id',$this->entity_id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('description',$this->description,true);
+		$criteria->compare('color',$this->color,true);
+		$criteria->compare('active',$this->active);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -88,7 +104,7 @@ class VoyageStatus extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return VoyageStatus the static model class
+	 * @return Status the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

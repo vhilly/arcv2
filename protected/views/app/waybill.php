@@ -1,6 +1,7 @@
 <h1>Waybills</h1>
 <?php $sc=CHtml::listData(CargoClass::model()->findAll(),'id','name');?>
-<?php $voyage=CHtml::listData(Voyage::model()->findAll(array('order'=>'id DESC')),'id','voyage_number');?>
+<?php $voyage=CHtml::listData(Voyage::model()->findAll(array('order'=>'id DESC')),'id','number');?>
+<?php $status=CHtml::listData(Status::model()->findAll(array('condition'=>'entity_id=1')),'id','name');?>
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
   'id'=>'waybill-grid',
@@ -16,11 +17,11 @@
       'inputclass' => 'span1'
     )
   ),
-  array('name'=>'voyage_id','value'=>'$data->voyage->voyage_number','filter'=>$voyage),
-  array('name'=>'cargo_class_id','value'=>'$data->cargoClass->name','filter'=>$sc),
-  array('name'=>'waybill_type_id','value'=>'$data->waybill_type_id==1?"Advance":"Walk-in"','filter'=>array(1=>'Advance',2=>'Walk-in')),
+  array('name'=>'voyage','value'=>'$data->voyage0->number','filter'=>$voyage),
+  array('name'=>'cargo_class','value'=>'$data->cargoClass->name','filter'=>$sc),
+  array('name'=>'waybill_type','value'=>'$data->waybill_type==1?"Advance":"Walk-in"','filter'=>array(1=>'Advance',2=>'Walk-in')),
   'price_paid',
-  'status_id',
+  array('name'=>'status','value'=>'$data->status0->name','filter'=>$status),
     array(
       'class'=>'bootstrap.widgets.TbButtonColumn',
       'template'=>'{print}  &nbsp; {refund}  &nbsp; {cancel}',
@@ -38,7 +39,7 @@
            'options'=>array(
              'confirm'=>'Are you sure?',
              'ajax'=>array(
-               'type'=>'POST',
+               'type'=>'GET',
                'url'=>"js:$(this).attr('href')",
                'success' => "js:function() { $.fn.yiiGridView.update('waybill-grid') }"
              )
@@ -51,9 +52,9 @@
            'options'=>array(
              'confirm'=>'Are you sure?',
              'ajax'=>array(
-               'type'=>'POST',
+               'type'=>'GET',
                'url'=>"js:$(this).attr('href')",
-               'success' => "js:function() { $.fn.yiiGridView.update('ticket-grid') }"
+               'success' => "js:function() { $.fn.yiiGridView.update('waybill-grid') }"
              )
            )
          ),

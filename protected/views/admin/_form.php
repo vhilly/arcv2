@@ -11,7 +11,7 @@
 <?php if($mName=='Vessel'):?>
   <?php echo $form->textFieldRow($model,'name',array('class'=>'span3','maxlength'=>100)); ?>
   <?php echo $form->textFieldRow($model,'code',array('class'=>'span2')); ?>
-  <?php echo $form->textFieldRow($model,'capacity',array('class'=>'span1','readonly'=>true)); ?>
+  <?php echo $form->textFieldRow($model,'capacity',array('class'=>'span1')); ?>
 <?php endif;?>
 
 <?php if($mName=='Port'):?>
@@ -22,7 +22,7 @@
 <?php if($mName=='Route'):?>
   <?php $port=CHtml::listData(Port::model()->findAll(),'id','name');?>
   <?php echo $form->textFieldRow($model,'name',array('class'=>'span3','maxlength'=>100)); ?>
-  <?php echo $form->dropDownListRow($model,'source_port',$port,array('class'=>'span3','maxlength'=>100,'readonly'=>true)); ?>
+  <?php echo $form->dropDownListRow($model,'source_port',$port,array('class'=>'span3','maxlength'=>100)); ?>
   <?php echo $form->dropDownListRow($model,'dest_port',$port,array('class'=>'span3','maxlength'=>100)); ?>
 <?php endif;?>
 
@@ -49,14 +49,21 @@
   <?php echo $form->dropDownListRow($model,'active',$active,array('class'=>'span3','maxlength'=>100)); ?>
 <?php endif;?>
 
+<?php if($mName=='BaggageType'):?>
+  <?php echo $form->textFieldRow($model,'weight',array('class'=>'span3','maxlength'=>100)); ?>
+  <?php echo $form->textAreaRow($model,'description',array('class'=>'span2')); ?>
+  <?php echo $form->textFieldRow($model,'price',array('class'=>'span3')); ?>
+  <?php echo $form->dropDownListRow($model,'active',$active,array('class'=>'span3','maxlength'=>100)); ?>
+<?php endif;?>
+
 <?php if($mName=='Voyage'):?>
   <?php
     $vessels=CHtml::listData(Vessel::model()->findAll(),'id','name');
     $routes=CHtml::listData(Route::model()->findAll(),'id','name');
   ?>
-  <?php echo $form->textFieldRow($model,'voyage_number',array('class'=>'span3','maxlength'=>100)); ?>
-  <?php echo $form->dropDownListRow($model,'vessel_id',$vessels,array('class'=>'span3','maxlength'=>100)); ?>
-  <?php echo $form->dropDownListRow($model,'route_id',$routes,array('class'=>'span3','maxlength'=>100)); ?>
+  <?php echo $form->textFieldRow($model,'number',array('class'=>'span3','maxlength'=>100)); ?>
+  <?php echo $form->dropDownListRow($model,'vessel',$vessels,array('class'=>'span3','maxlength'=>100)); ?>
+  <?php echo $form->dropDownListRow($model,'route',$routes,array('class'=>'span3','maxlength'=>100)); ?>
   <?php echo $form->datePickerRow($model, 'departure_date', array('append'=>'<i class="icon-calendar" style="cursor:pointer"></i>','class'=>'span2','options'=>array( 'format' => 'yyyy-mm-dd')));?>
   <?php echo $form->timepickerRow($model, 'departure_time', array('class'=>'span2','options'=>array('template'=>'modal','defaultTime'=>'01:00','minuteStep'=>1,'showMeridian'=>true)));?>
   <?php echo $form->timepickerRow($model, 'arrival_time', array('class'=>'span2','options'=>array('template'=>'modal','defaultTime'=>'01:00','minuteStep'=>1,'showMeridian'=>true)));?>

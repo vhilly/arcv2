@@ -1,12 +1,12 @@
 
-<?php if($model->voyage_status_id!=3):?>
+<?php if($model->status!=3):?>
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 	'id'=>'voyage-form',
 	'enableAjaxValidation'=>false,
 )); ?>
 
-<?php echo $form->dropDownListRow($model,'voyage_status_id',CHtml::listData(VoyageStatus::model()->findAll(array('condition'=>"id > {$model->voyage_status_id}")),'id','name'),array('class'=>'span5')); ?>
-<?php $warn = $model->voyage_status_id == 1 ? "This will free up reserved seats.": "This will free up reserved seats and close the voyage."?>
+<?php echo $form->dropDownListRow($model,'status',CHtml::listData(Status::model()->findAll(array('condition'=>"id > {$model->status}")),'id','name'),array('class'=>'span5')); ?>
+<?php $warn = $model->status == 1 ? "This will free up reserved seats.": "This will free up reserved seats and close the voyage."?>
 <div class="form-actions">
   <?php $this->widget('bootstrap.widgets.TbButton', array('type'=>'primary','buttonType'=>'submit', 'label'=>'Save','htmlOptions'=>array('onclick'=>'return confirm("Are you sure? '.$warn.'");'))); ?>
   <?php $this->widget('bootstrap.widgets.TbButton', array('type'=>'danger','buttonType'=>'link','icon'=>'','url'=>Yii::app()->createUrl('admin/voyage'),'label'=>'Cancel'));?>

@@ -23,6 +23,7 @@
         $model->attributes=$_POST['Vessel'];
         try{
           if($model->save()){
+            $this->setSysVars();
             Yii::app()->user->setFlash('success', Yii::t('app','notice.success.vessel.create'));
             $this->redirect(array('admin/vessel'));
           }
@@ -36,10 +37,7 @@
     public function actionVesselUpdate($id){
       $model=Vessel::model()->findByPk($id);
       if(isset($_POST['Vessel'])){
-        $sql = "SELECT COUNT(*) FROM seat WHERE active=1";
-        $seats = Yii::app()->db->createCommand($sql)->queryScalar();
         $model->attributes=$_POST['Vessel'];
-        $model->capacity=$seats;
         try{
           if($model->save()){
             Yii::app()->user->setFlash('success', Yii::t('app','notice.success.vessel.update'));
@@ -66,6 +64,7 @@
         $model->attributes=$_POST['Port'];
         try{
           if($model->save()){
+            $this->setSysVars();
             Yii::app()->user->setFlash('success', Yii::t('app','notice.success.port.create'));
             $this->redirect(array('admin/port'));
           }
@@ -81,21 +80,28 @@
         $model->attributes=$_POST['Port'];
         try{
           if($model->save()){
-            Yii::app()->user->setFlash('success', Yii::t('app','notice.success.vessel.update'));
+            Yii::app()->user->setFlash('success', Yii::t('app','notice.success.port.update'));
             $this->redirect(array('admin/port'));
           }
         }catch (Exception $e){
-          Yii::app()->user->setFlash('error', Yii::t('app','notice.failed.vessel.update'));
+          Yii::app()->user->setFlash('error', Yii::t('app','notice.failed.port.update'));
         }
       }
       $this->render('update',compact('model'));
     }
     //route
     public function actionRoute(){
+      $error=array();
       $route=new Route('search');
       $route->unsetAttributes();  // clear any default values
-      if(isset($_GET['Route']))
+      if(isset($_GET['Route'])){
         $route->attributes=$_GET['Route'];
+      }else{
+        if(!$this->sysVars()['hasPort'])
+          $error[]=CHtml::link(Yii::t('app','inst.req.port'),array('admin/port'),array('target'=>'_blank'));
+        if(count($error))
+          Yii::app()->user->setFlash('error', '<center><b>'.Yii::t('app','inst.req.following').'</b><br>'.implode('<br>',$error).'<center>');
+      }
       $this->render('route',compact('route'));
     }
     public function actionRouteAdd(){
@@ -104,6 +110,7 @@
         $model->attributes=$_POST['Route'];
         try{
           if($model->save()){
+            $this->setSysVars();
             Yii::app()->user->setFlash('success', Yii::t('app','notice.success.route.create'));
             $this->redirect(array('admin/route'));
           }
@@ -142,6 +149,7 @@
         $model->attributes=$_POST['SeatingClass'];
         try{
           if($model->save()){
+            $this->setSysVars();
             Yii::app()->user->setFlash('success', Yii::t('app','notice.success.seatingclass.create'));
             $this->redirect(array('admin/seatingclass'));
           }
@@ -167,36 +175,32 @@
       $this->render('update',compact('model'));
     }
 	//seat
-	public function actionSeat(){
+    public function actionSeat(){
 	  $model=new Seat;
-      if(isset($_POST['Seat']))
-      {
-		//print_r($_POST);
-		//die();
-		if(!empty($_POST['Seat']['id'])){
-		  $model=Seat::model()->findByPk($_POST['Seat']['id']);
-		}
-        $model->attributes=$_POST['Seat'];
-		if(isset($_POST['remove']))
-		{
-		  $model->active = 0;
-		  $notif = "Seat No. {$model->name} is now remove.";
-		}
-		else
-		{
-			$notif = "Seat No. {$model->name} is now available.";
-		}
-        if($model->save())
-		  Yii::app()->user->setFlash('success', $notif);
-		
-      }
-      $list= Seat::model()->findAll(array('condition'=>"active = 1"));
-      $class= SeatingClass::model()->findAll(array('condition'=>"active = 1"));
-      $this->render('seat',array(
-	    'model'=>$model,
-        'list'=>$list,
-		'class'=>$class
-      ));
+          if(isset($_POST['Seat']))
+          {
+            if(!empty($_POST['Seat']['id'])){
+	      $model=Seat::model()->findByPk($_POST['Seat']['id']);
+	    }
+            $model->attributes=$_POST['Seat'];
+	    if(isset($_POST['remove']))
+	    {
+	      $model->active = 0;
+	      $notif = "Seat No. {$model->name} is now remove.";
+	    }
+	    else
+	    {
+	      $notif = "Seat No. {$model->name} is now available.";
+	    }
+            if($model->save()){
+              $this->setSysVars();
+              Yii::app()->user->setFlash('success', $notif);
+              $this->redirect(array('admin/seat'));
+            }
+          }
+          $list= Seat::model()->findAll(array('condition'=>"active = 1"));
+          $class= SeatingClass::model()->findAll(array('condition'=>"active = 1"));
+          $this->render('seat',compact('model','list','class'));
     }
     //passenger type
     public function actionPassengerType(){
@@ -212,6 +216,7 @@
         $model->attributes=$_POST['PassengerType'];
         try{
           if($model->save()){
+            $this->setSysVars();
             Yii::app()->user->setFlash('success', Yii::t('app','notice.success.passengertype.create'));
             $this->redirect(array('admin/passengertype'));
           }
@@ -237,6 +242,7 @@
       $this->render('update',compact('model'));
     }
     public function actionPassengerFare($rid=null){
+      $error=array();
       $route = $rid ? Route::model()->findByPk($rid) : '';
       if(isset($_POST['PassengerFare'])){
         foreach($_POST['PassengerFare'] as $r){
@@ -250,14 +256,57 @@
       }
       $sc = SeatingClass::model()->findAll(array('condition'=>'active=1'));
       $ft = PassengerType::model()->findAll(array('condition'=>'active=1'));
-      $this->render('fares',array('sc'=>$sc,'ft'=>$ft,'rid'=>$rid,'route'=>$route));
+      if(!$this->sysVars()['hasSeatingClass'])
+        $error[]=CHtml::link(Yii::t('app','inst.req.seatingClass'),array('admin/seatingClass'),array('target'=>'_blank'));
+      if(!$this->sysVars()['hasPassengerType'])
+        $error[]=CHtml::link(Yii::t('app','inst.req.passengerType'),array('admin/passengerType'),array('target'=>'_blank'));
+      if(!$route){
+        if(!$this->sysVars()['hasRoute'])
+          $error[]=CHtml::link(Yii::t('app','inst.req.route'),array('admin/route'),array('target'=>'_blank'));
+      }
+      if(count($error))
+        Yii::app()->user->setFlash('error', '<center><b>'.Yii::t('app','inst.req.following').'</b><br>'.implode('<br>',$error).'<center>');
+      $this->render('fares',compact('sc','ft','rid','route','dataProvider'));
+    }
+    public function actionCargoRate($rid=null){
+      $error=array();
+      $route = $rid ? Route::model()->findByPk($rid) : '';
+      if(isset($_POST['CargoFareRates'])){
+        foreach($_POST['CargoFareRates'] as $r){
+          $rates = new CargoFareRates;
+          $rates->attributes = $r;
+          if($rates->id)
+            $rates->isNewRecord = false;
+          $rates->save();
+        }
+          Yii::app()->user->setFlash('success', Yii::t('app','notice.success.cargoRate.update'));
+      }
+      $cc = CargoClass::model()->findAll(array('condition'=>'active=1'));
+      if(!$this->sysVars()['hasCargoClass'])
+        $error[]=CHtml::link(Yii::t('app','inst.req.cargoClass'),array('admin/seatingClass'),array('target'=>'_blank'));
+      if(!$route){
+        if(!$this->sysVars()['hasRoute'])
+          $error[]=CHtml::link(Yii::t('app','inst.req.route'),array('admin/route'),array('target'=>'_blank'));
+      }
+      if(count($error))
+        Yii::app()->user->setFlash('error', '<center><b>'.Yii::t('app','inst.req.following').'</b><br>'.implode('<br>',$error).'<center>');
+      $this->render('rates',compact('cc','rid','route','dataProvider'));
     }
     //voyage
     public function actionVoyage(){
+      $error=array();
       $voyage=new Voyage('search');
       $voyage->unsetAttributes();  // clear any default values
-      if(isset($_GET['Voyage']))
+      if(isset($_GET['Voyage'])){
         $voyage->attributes=$_GET['Voyage'];
+      }else{
+        if(!$this->sysVars()['hasRoute'])
+          $error[]=CHtml::link(Yii::t('app','inst.req.route'),array('admin/route'),array('target'=>'_blank'));
+        if(!$this->sysVars()['hasVessel'])
+          $error[]=CHtml::link(Yii::t('app','inst.req.vessel'),array('admin/vessel'),array('target'=>'_blank'));
+        if(count($error))
+          Yii::app()->user->setFlash('error', '<center><b>'.Yii::t('app','inst.req.following').'</b><br>'.implode('<br>',$error).'<center>');
+      }
       $this->render('voyage',compact('voyage'));
     }
     public function actionVoyageAdd(){
@@ -268,7 +317,7 @@
         $_POST['Voyage']['departure_time'] = date('H:i:s',strtotime($dt));
         $_POST['Voyage']['arrival_time'] = date('H:i:s',strtotime($da));
         $model->attributes=$_POST['Voyage'];
-        $capacity=Vessel::model()->findByPk($model->vessel_id)->capacity;
+        $capacity=Vessel::model()->findByPk($model->vessel)->capacity;
         $model->capacity=$capacity;
         $model->available_seats=$capacity;
         try{
@@ -328,6 +377,7 @@
       if(isset($_POST['CargoClass'])){
         $model->attributes=$_POST['CargoClass'];
         if($model->save()){
+          $this->setSysVars();
           Yii::app()->user->setFlash('success', Yii::t('app','notice.success.cargoclass.create'));
           $this->redirect(array('admin/cargoclass'));
         }
@@ -340,9 +390,9 @@
         $model->attributes=$_POST['Voyage'];
         if($model->save()){
           unset($_SESSION['vid']);
-          if($model->voyage_status_id != 1){
-            Ticket::model()->updateAll(array( 'status_id' => 5, 'seat_id' => new CDbExpression('NULL')), "status_id < 3 AND voyage_id = {$model->id}" );
-            Waybill::model()->updateAll(array( 'status_id' => 5, 'stowage_id' => new CDbExpression('NULL')), "status_id < 3 AND voyage_id = {$model->id}" );
+          if($model->status != 1){
+            Ticket::model()->updateAll(array( 'status' => 5, 'seat' => new CDbExpression('NULL')), "status< 3 AND voyage= {$model->id}" );
+            Waybill::model()->updateAll(array( 'status' => 5, 'stowage' => new CDbExpression('NULL')), "status< 3 AND voyage= {$model->id}" );
           }
           Yii::app()->user->setFlash('success', Yii::t('app','notice.success.voyage.statusUpdate'));
           $this->redirect(array('admin/voyage'));
@@ -350,6 +400,37 @@
       }
       $this->render('_vstatusForm',array('model'=>$model));
     }
-  }
+    //baggagetype
+    public function actionBaggageType(){
+      $bt=new BaggageType('search');
+      $bt->unsetAttributes();  // clear any default values
+      if(isset($_GET['BaggageType']))
+        $bt->attributes=$_GET['BaggageType'];
+      $this->render('baggagetype',compact('bt'));
+    }
+    public function actionBaggageTypeUpdate($id){
+      $model=BaggageType::model()->findByPk($id);
+      if(isset($_POST['BaggageType'])){
+        $model->attributes=$_POST['BaggageType'];
+        if($model->save()){
+          Yii::app()->user->setFlash('success', Yii::t('app','notice.success.baggagetype.update'));
+          $this->redirect(array('admin/baggagetype'));
+        }
+      }
+      $this->render('update',compact('model'));
+    }
+    public function actionBaggageTypeAdd(){
+      $model=new BaggageType();
+      if(isset($_POST['BaggageType'])){
+        $model->attributes=$_POST['BaggageType'];
+        if($model->save()){
+          $this->setSysVars();
+          Yii::app()->user->setFlash('success', Yii::t('app','notice.success.baggagetype.create'));
+          $this->redirect(array('admin/baggagetype'));
+        }
+      }
+      $this->render('add',compact('model'));
+    }
+}
 ?>
 

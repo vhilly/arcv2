@@ -31,7 +31,7 @@
     <?php foreach($voyages as $v):?>
       <?php $selected=@$selected_voyage->id == $v->id ? 'btn-primary' : ''?>
       <a class="btn span3 <?=$selected;?>" href="<?=Yii::app()->createUrl('app/passengerTicket',array('vid'=>$v->id))?>">
-        <?=$v->voyage_number?> <br>
+        <?=$v->number?> <br>
         <i class='icon-time icon-2x'></i><br>
         <?=Yii::t('app','label.ticketing.departure')?> <br>
         <span class='label label-important'><?=$v->departure_time?></span>

@@ -1,20 +1,21 @@
 SET FOREIGN_KEY_CHECKS=0;
-TRUNCATE authorized_cust_shipper;
-TRUNCATE authorized_cust_vehicle;
-TRUNCATE booking_history;
 TRUNCATE bhistory_upload;
-TRUNCATE booking;
-TRUNCATE passenger;
-TRUNCATE booking_cargo;
 TRUNCATE cargo;
-TRUNCATE paid_misc_fees;
+TRUNCATE passenger;
 TRUNCATE price_history;
-TRUNCATE seat_lock;
-TRUNCATE transaction;
-TRUNCATE upgrades;
+/*TRUNCATE passenger_fare;
+TRUNCATE cargo_fare_rates;
+TRUNCATE cargo_class;
+TRUNCATE passenger_type;
+TRUNCATE port;
+TRUNCATE route;
+TRUNCATE seat;
+TRUNCATE seating_class;
+TRUNCATE vessel;
+*/
+TRUNCATE schedule;
+TRUNCATE ticket;
 TRUNCATE voyage;
-TRUNCATE refunded_tkts;
-/*TRUNCATE route;*/
-/*TRUNCATE vessel;*/
+TRUNCATE waybill;
 
 SET FOREIGN_KEY_CHECKS=1;

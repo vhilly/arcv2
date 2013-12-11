@@ -15,9 +15,9 @@ tr.border td, tr.border th {
   <?php foreach($mnfst as $key=>$b): ?>
   <?php 
     if(!$key){
-      $vessel = isset($b->voyage->vessel->name) ? $b->voyage->vessel->name : '________';
-      $from = isset($b->voyage->route->sourcePort->name) ? $b->voyage->route->sourcePort->name : '________';
-      $dept_date = isset($b->voyage->departure_date) ? $b->voyage->departure_date : '';
+      $vessel = isset($b->voyage0->vessel0->name) ? $b->voyage0->vessel0->name : '________';
+      $from = isset($b->voyage0->route0->sourcePort->name) ? $b->voyage0->route0->sourcePort->name : '________';
+      $dept_date = isset($b->voyage0->departure_date) ? $b->voyage0->departure_date : '';
       $day = date("jS",strtotime($dept_date));
       $month = date("F",strtotime($dept_date));
       $year = date("Y",strtotime($dept_date));
@@ -25,7 +25,7 @@ tr.border td, tr.border th {
       $today = date("jS",strtotime($date));
       $tomonth = date("F",strtotime($date));
       $toyear = date("Y",strtotime($date));
-      $to = isset($b->voyage->route->destPort->name) ? $b->voyage->route->destPort->name : '________';
+      $to = isset($b->voyage0->route0->destPort->name) ? $b->voyage0->route0->destPort->name : '________';
     }
   ?>
 
@@ -61,13 +61,13 @@ tr.border td, tr.border th {
       <tr class="border">
         <td><?=$key+1?>.
          </td>
-        <td> <?=ucwords($b->passenger->first_name)?> <?=ucwords($b->passenger->last_name)?> </td>
-        <td style="text-align:center"> <?=$b->passenger->gender?></td>
-        <td style="text-align:center"> <?=$b->passenger->age?></td>
-        <td style="text-align:center"> <?=$b->passenger->civil_status ?$cs[$b->passenger->civil_status] : ''?> </td>
-        <td style="text-align:center"> <?=$b->passenger->nationality?></td>
-        <td> <?=$b->passenger->address?> </td>
-        <td style="text-align:center"> <?=$b->voyage->route->destPort->name?> </td>
+        <td> <?=ucwords($b->passenger0->first_name)?> <?=ucwords($b->passenger0->last_name)?> </td>
+        <td style="text-align:center"> <?=$b->passenger0->gender?></td>
+        <td style="text-align:center"> <?=$b->passenger0->age?></td>
+        <td style="text-align:center"> <?=$b->passenger0->civil_status ?$cs[$b->passenger0->civil_status] : ''?> </td>
+        <td style="text-align:center"> <?=$b->passenger0->nationality?></td>
+        <td> <?=$b->passenger0->address?> </td>
+        <td style="text-align:center"> <?=$b->voyage0->route0->destPort->name?> </td>
       </tr>
   <?php if($counter==40 || (count($mnfst) == $key+1)):?>
 

@@ -7,11 +7,11 @@
 ?>
 <?php 
    foreach($tkts as $t){
-     array_push($tkt_details,CHtml::link($classes[$t->seating_class_id].'-'.$t->passengerType->code.' | TKT#'.$t->ticket_no.' | P'.$t->price_paid.'
+     array_push($tkt_details,CHtml::link($classes[$t->seating_class].'-'.$t->passengerType->code.' | TKT#'.$t->ticket_no.' | P'.$t->price_paid.'
        <span class=side-print><i class="icon-print"></i></span>',
        array('app/print','id'=>$t->id,'type'=>'tkt'),array('target'=>'_blank')));
-     @$cnt_perclass['cnt'][$t->seating_class_id]+=1;
-     @$cnt_perclass['amt'][$t->seating_class_id]+=$t->price_paid;
+     @$cnt_perclass['cnt'][$t->seating_class]+=1;
+     @$cnt_perclass['amt'][$t->seating_class]+=$t->price_paid;
      $total_amt+=$t->price_paid;
    }
 ?>

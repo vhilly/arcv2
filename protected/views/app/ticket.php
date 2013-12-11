@@ -1,7 +1,8 @@
 <h1>Tickets</h1>
 <?php $sc=CHtml::listData(SeatingClass::model()->findAll(),'id','name');?>
 <?php $ptype=CHtml::listData(PassengerType::model()->findAll(),'id','name');?>
-<?php $voyage=CHtml::listData(Voyage::model()->findAll(array('order'=>'id DESC')),'id','voyage_number');?>
+<?php $voyage=CHtml::listData(Voyage::model()->findAll(array('order'=>'id DESC')),'id','number');?>
+<?php $status=CHtml::listData(Status::model()->findAll(array('condition'=>'entity_id = 1')),'id','name');?>
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
   'id'=>'ticket-grid',
@@ -17,8 +18,8 @@
       'inputclass' => 'span1'
     )
   ),
-  array('name'=>'voyage_id','value'=>'$data->voyage->voyage_number','filter'=>$voyage),
-  array('name'=>'passenger.first_name',
+  array('name'=>'voyage','value'=>'$data->voyage0->number','filter'=>$voyage),
+  array('name'=>'passenger0.first_name',
     'class' => 'bootstrap.widgets.TbEditableColumn',
     'editable' => array(
       'url' => $this->createUrl('app/editableSaver',array('mName'=>'Passenger')),
@@ -26,7 +27,7 @@
       'inputclass' => 'span1'
     )
   ),
-  array('name'=>'passenger.last_name',
+  array('name'=>'passenger0.last_name',
     'class' => 'bootstrap.widgets.TbEditableColumn',
     'editable' => array(
       'url' => $this->createUrl('app/editableSaver',array('mName'=>'Passenger')),
@@ -34,7 +35,7 @@
       'inputclass' => 'span1'
     )
   ),
-  array('name'=>'passenger.age',
+  array('name'=>'passenger0.age',
     'class' => 'bootstrap.widgets.TbEditableColumn',
     'editable' => array(
       'url' => $this->createUrl('app/editableSaver',array('mName'=>'Passenger')),
@@ -42,11 +43,11 @@
       'inputclass' => 'span1'
     )
   ),
-  array('name'=>'passenger_type_id','value'=>'$data->passengerType->name','filter'=>$ptype),
-  array('name'=>'seating_class_id','value'=>'$data->seatingClass->name','filter'=>$sc),
-  array('name'=>'ticket_type_id','value'=>'$data->ticket_type_id==1?"Advance":"Walk-in"','filter'=>array(1=>'Advance',2=>'Walk-in')),
+  array('name'=>'passenger_type','value'=>'$data->passengerType->name','filter'=>$ptype),
+  array('name'=>'seating_class','value'=>'$data->seatingClass->name','filter'=>$sc),
+  array('name'=>'ticket_type','value'=>'$data->ticket_type==1?"Advance":"Walk-in"','filter'=>array(1=>'Advance',2=>'Walk-in')),
   'price_paid',
-  'status_id',
+  array('name'=>'status','value'=>'$data->status0->name','filter'=>$status),
     array(
       'class'=>'bootstrap.widgets.TbButtonColumn',
       'template'=>'{print}  &nbsp; {refund}  &nbsp; {cancel}',

@@ -8,13 +8,13 @@
   'dataProvider'=>$voyage->search(),
   'filter'=>$voyage,
   'columns'=>array(
-  'voyage_number',
-  array('name'=>'vessel_id','value'=>'$data->vessel->name','filter'=>$vessels),
-  array('name'=>'route_id','value'=>'$data->route->name','filter'=>$routes),
+  'number',
+  array('name'=>'vessel','value'=>'$data->vessel0->name','filter'=>$vessels),
+  array('name'=>'route','value'=>'$data->route0->name','filter'=>$routes),
   'departure_date',
   array('name'=>'departure_time','value'=>'date("g:i A",strtotime($data->departure_time))'),
   array('name'=>'arrival_time','value'=>'date("g:i A",strtotime($data->arrival_time))'),
-  array('name'=>'voyage_status_id','value'=>'$data->voyageStatus->name'),
+  array('name'=>'status','value'=>'$data->voyageStatus->name'),
     array(
       'class'=>'bootstrap.widgets.TbButtonColumn',
       'template'=>'{update} &nbsp;{manifest} &nbsp; {close}',

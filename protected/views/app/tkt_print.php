@@ -48,12 +48,12 @@
        <td>
    <div style="position:relative;height:150px;width:560px;">
    <div style="position:absolute;height:140px;width:280px;left:60px;top:35px">
-     <div style="position:absolute;top:5px;"><?=$b->voyage->vessel->name?></div>
-     <div style=position:absolute;top:5px;left:<?=$left_x1?>><?=$b->voyage->voyage_number?></div>
-     <div style=position:absolute;top:25px;left:<?=$left_x?>><?=$b->voyage->departure_date.' '.date('g:i A',strtotime($b->voyage->departure_time))?></div>
-     <div style=position:absolute;top:25px;left:<?=$left_x1?>><?=isset($b->seat->name) ? $b->seat->name : ''?></div>
-     <div style=position:absolute;top:50px;><?=$b->passenger->first_name?> <?=$b->passenger->last_name?></div>
-     <div style=position:absolute;top:70px;><?=$b->passenger->contact?></div>
+     <div style="position:absolute;top:5px;"><?=$b->voyage0->vessel0->name?></div>
+     <div style=position:absolute;top:5px;left:<?=$left_x1?>><?=$b->voyage0->number?></div>
+     <div style=position:absolute;top:25px;left:<?=$left_x?>><?=$b->voyage0->departure_date.' '.date('g:i A',strtotime($b->voyage0->departure_time))?></div>
+     <div style=position:absolute;top:25px;left:<?=$left_x1?>><?=isset($b->seat0->name) ? $b->seat0->name : ''?></div>
+     <div style=position:absolute;top:50px;><?=$b->passenger0->first_name?> <?=$b->passenger0->last_name?></div>
+     <div style=position:absolute;top:70px;><?=$b->passenger0->contact?></div>
      <div style=position:absolute;top:95px;left:<?=$left_x?>>Net Sales &nbsp;<?=$NS?></div>
      <div style=position:absolute;top:95px;left:<?=$left_x1?>>VAT (12%) &nbsp;<?=$VAT?></div>
      <div style=position:absolute;top:113px;left:<?=$left_x?>>Discount:0.00</div>
@@ -63,12 +63,12 @@
      <div style=position:absolute;top:128px;left:<?=$left_x1?>><b><?=$createdBy?></b></div>
    </div>
    <div style="position:absolute;height:140px;width:280px;left:390px;top:35px">
-     <div style="position:absolute;top:5px;"><?=$b->voyage->vessel->name?></div>
-     <div style=position:absolute;top:5px;left:<?=$left_x1?>><?=$b->voyage->voyage_number?></div>
-     <div style=position:absolute;top:25px;left:<?=$left_x?>><?=$b->voyage->departure_date.' '.date('g:i A',strtotime($b->voyage->departure_time))?></div>
+     <div style="position:absolute;top:5px;"><?=$b->voyage0->vessel0->name?></div>
+     <div style=position:absolute;top:5px;left:<?=$left_x1?>><?=$b->voyage0->number?></div>
+     <div style=position:absolute;top:25px;left:<?=$left_x?>><?=$b->voyage0->departure_date.' '.date('g:i A',strtotime($b->voyage0->departure_time))?></div>
      <div style=position:absolute;top:25px;left:<?=$left_x1?>><?=isset($b->seat->name) ? $b->seat->name : ''?></div>
-     <div style=position:absolute;top:50px;><?=$b->passenger->first_name?> <?=$b->passenger->last_name?></div>
-     <div style=position:absolute;top:70px;><?=$b->passenger->contact?></div>
+     <div style=position:absolute;top:50px;><?=$b->passenger0->first_name?> <?=$b->passenger0->last_name?></div>
+     <div style=position:absolute;top:70px;><?=$b->passenger0->contact?></div>
      <div style=position:absolute;top:95px;left:<?=$left_x?>>Net Sales &nbsp;<?=$NS?></div>
      <div style=position:absolute;top:95px;left:<?=$left_x1?>>VAT (12%) &nbsp;<?=$VAT?></div>
      <div style=position:absolute;top:113px;left:<?=$left_x?>>Discount:0.00</div>

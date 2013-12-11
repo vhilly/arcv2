@@ -5,7 +5,7 @@
  *
  * The followings are the available columns in table 'ticket':
  * @property integer $id
- * @property integer $passenger_id
+ * @property integer $passenger
  * @property integer $voyage_id
  * @property integer $seat_id
  * @property integer $seating_class_id
@@ -46,12 +46,12 @@ class Ticket extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('', 'required'),
-			array('passenger_id, voyage_id, seat_id, seating_class_id,created_by, ticket_type_id, passenger_type_id', 'numerical', 'integerOnly'=>true),
-			array('transaction_no, ticket_no, series_no, booking_no', 'length', 'max'=>32),
+			array('passenger, voyage, seat, seating_class,created_by, ticket_type, passenger_type', 'numerical', 'integerOnly'=>true),
+			array('transaction_no, ticket_no, series_no, booking_no', 'length', 'max'=>100),
 			array('price_paid', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, passenger_id, voyage_id, seat_id, seating_class_id, transaction_no, ticket_no, series_no, booking_no, ticket_type_id, passenger_type_id, price_paid,last_name,first_name', 'safe', 'on'=>'search'),
+			array('id, passenger,status, voyage, seat, seating_class, transaction_no, ticket_no, series_no, booking_no, ticket_type, passenger_type, price_paid,last_name,first_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,13 +63,13 @@ class Ticket extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'passengerType' => array(self::BELONGS_TO, 'PassengerType', 'passenger_type_id'),
-			'voyage' => array(self::BELONGS_TO, 'Voyage', 'voyage_id'),
-			'seatingClass' => array(self::BELONGS_TO, 'SeatingClass', 'seating_class_id'),
-			'passenger' => array(self::BELONGS_TO, 'Passenger', 'passenger_id'),
+			'passengerType' => array(self::BELONGS_TO, 'PassengerType', 'passenger_type'),
+			'voyage0' => array(self::BELONGS_TO, 'Voyage', 'voyage'),
+			'seatingClass' => array(self::BELONGS_TO, 'SeatingClass', 'seating_class'),
+			'passenger0' => array(self::BELONGS_TO, 'Passenger', 'passenger'),
 			'createdby' => array(self::BELONGS_TO, 'Users', 'created_by'),
-			'seat' => array(self::BELONGS_TO, 'Seat', 'seat_id'),
-			'status' => array(self::BELONGS_TO, 'BookingStatus', 'status_id'),
+			'seat0' => array(self::BELONGS_TO, 'Seat', 'seat'),
+			'status0' => array(self::BELONGS_TO, 'Status', 'status'),
 		);
 	}
 
@@ -80,16 +80,17 @@ class Ticket extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'passenger_id' => 'Passenger',
-			'voyage_id' => 'Voyage',
-			'seat_id' => 'Seat',
-			'seating_class_id' => 'Seating Class',
+			'passenger' => 'Passenger',
+			'voyage' => 'Voyage',
+			'seat' => 'Seat',
+			'seating_class' => 'Seating Class',
 			'transaction_no' => 'Transaction No',
 			'ticket_no' => 'Ticket No',
 			'series_no' => 'Series No',
+			'status' => 'Status',
 			'booking_no' => 'Booking No',
-			'ticket_type_id' => 'Ticket Type',
-			'passenger_type_id' => 'Passenger Type',
+			'ticket_type' => 'Ticket Type',
+			'passenger_type' => 'Passenger Type',
 			'price_paid' => 'Price Paid',
 			'last_name' => 'Last Name',
 			'first_name' => 'First Name',
@@ -115,7 +116,7 @@ class Ticket extends CActiveRecord
 
 		$criteria=new CDbCriteria;
                 $criteria->with=array(
-                  'passenger'=>array(
+                  'passenger0'=>array(
                     'together'=>false,
                     'select'=>false
                   ),
@@ -123,16 +124,17 @@ class Ticket extends CActiveRecord
 
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('passenger_id',$this->passenger_id);
-		$criteria->compare('voyage_id',$this->voyage_id);
-		$criteria->compare('seat_id',$this->seat_id);
-		$criteria->compare('seating_class_id',$this->seating_class_id);
+		$criteria->compare('passenger',$this->passenger);
+		$criteria->compare('voyage',$this->voyage);
+		$criteria->compare('seat',$this->seat);
+		$criteria->compare('status',$this->status);
+		$criteria->compare('seating_class',$this->seating_class);
 		$criteria->compare('transaction_no',$this->transaction_no,true);
 		$criteria->compare('ticket_no',$this->ticket_no,true);
 		$criteria->compare('series_no',$this->series_no,true);
 		$criteria->compare('booking_no',$this->booking_no,true);
-		$criteria->compare('ticket_type_id',$this->ticket_type_id);
-		$criteria->compare('passenger_type_id',$this->passenger_type_id);
+		$criteria->compare('ticket_type',$this->ticket_type);
+		$criteria->compare('passenger_type',$this->passenger_type);
 		$criteria->compare('price_paid',$this->price_paid,true);
                 $criteria->compare('passenger.first_name',$this->first_name,true);
                 $criteria->compare('passenger.last_name',$this->last_name,true);

@@ -49,6 +49,12 @@
             <span class='gb_d'>".Yii::t('app','label.waybills')."</span>
           </a>
         </li>
+        <li class='gb_i'>
+          <a class='gb_a' href=".Yii::app()->createUrl('app/seatView').">
+            <span class='gb_c icon-table icon-3x'></span>
+            <span class='gb_d'>".Yii::t('app','label.seat-available')."</span>
+          </a>
+        </li>
       </ul>
    ";
    $settings = "
@@ -98,13 +104,25 @@
         <li class='gb_i'>
           <a class='gb_a' href=".Yii::app()->createUrl('admin/passengerFare').">
             <span class='gb_c icon-tag icon-3x'></span>
-            <span class='gb_d'>".Yii::t('app','label.passengertype')."</span>
+            <span class='gb_d'>".Yii::t('app','label.passengerfare')."</span>
           </a>
         </li>
         <li class='gb_i'>
           <a class='gb_a' href=".Yii::app()->createUrl('admin/cargoClass').">
             <span class='gb_c icon-ambulance icon-3x'></span>
             <span class='gb_d'>".Yii::t('app','label.cargoclass')."</span>
+          </a>
+        </li>
+	<li class='gb_i'>
+          <a class='gb_a' href=".Yii::app()->createUrl('admin/cargoRate').">
+            <span class='gb_c icon-ambulance icon-3x'></span>
+            <span class='gb_d'>".Yii::t('app','label.cargoRate')."</span>
+          </a>
+        </li>
+	<li class='gb_i'>
+          <a class='gb_a' href=".Yii::app()->createUrl('admin/baggagetype').">
+            <span class='gb_c icon-suitcase icon-3x'></span>
+            <span class='gb_d'>".Yii::t('app','label.baggagetype')."</span>
           </a>
         </li>
       </ul>
@@ -141,12 +159,12 @@
             ),
         ),
       '<ul class="nav ">
-        <li><a title="" data-original-title="" data-title="&nbsp;" data-placement="bottom" 
+        <li class=\'dropdown\'><a  href=# class=\'dropdown-toggle\' title="" data-original-title="" data-title="&nbsp;" data-placement="bottom" 
             data-content="'.$apps.'" data-toggle="popover" data-html=true id="yw2"><i class="icon-th icon-2x"> </i></a>
         </li>
        </ul>',
-      '<ul class=\'nav pull-right\'>
-        <li><a title="" data-original-title="" data-title="&nbsp;" data-placement="bottom" 
+      '<ul class=\'pull-right nav\'>
+        <li class=\'dropdown\'><a title="" href=# data-original-title="" data-title="&nbsp;" data-placement="bottom" 
             data-content="'.$settings.'" data-toggle="popover" data-html=true id="yw2"><i class="icon-gears icon-2x"> </i></a>
         </li>
        </ul>',

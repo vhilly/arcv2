@@ -25,21 +25,21 @@
    <div class="spacer"></div>
    <table class="table">
       <tr>
-        <td colspan=3><?=$b->voyage->voyage_number?></td>
+        <td colspan=3><?=$b->voyage0->number?></td>
       </tr>
       <tr>
-        <td colspan=2><?=$b->voyage->vessel->name?></td>
-        <td colspan=4><?=$b->voyage->departure_date?> <?=$b->voyage->departure_time?></td>
+        <td colspan=2><?=$b->voyage0->vessel0->name?></td>
+        <td colspan=4><?=$b->voyage0->departure_date?> <?=$b->voyage0->departure_time?></td>
       </tr>
       <tr>
-        <td width=120px><?=$b->cargo->shipper ? $b->cargo->shipper : 'N/A'?></td>
+        <td width=120px><?=$b->cargo0->shipper ? $b->cargo0->shipper : 'N/A'?></td>
         <td width="140px">&nbsp;</td>
-        <td width=120px><?=$b->cargo->address ? $b->cargo->address : 'N/A'?></td>
+        <td width=120px><?=$b->cargo0->address ? $b->cargo0->address : 'N/A'?></td>
       </tr>
       <tr>
-        <td width=120px><?=$b->voyage->route->sourcePort->name?></td>
+        <td width=120px><?=$b->voyage0->route0->sourcePort->name?></td>
         <td width="140px">&nbsp;</td>
-        <td width=120px><?=$b->voyage->route->destPort->name?></td>
+        <td width=120px><?=$b->voyage0->route0->destPort->name?></td>
       </tr>
    </table>
    <br><br>
@@ -49,12 +49,12 @@
         <td width=122px height="50px">
           <?=$b->cargoClass->name?><br>
           <?=$b->cargoClass->description?> meters<br>
-          <?=$b->cargo->article_desc?><br>
-          <?=$b->cargo->plate_num?>
+          <?=$b->cargo0->article_desc?><br>
+          <?=$b->cargo0->plate_num?>
         </td>
         <td width=50px>1</td>
         <td width=50px></td>
-        <td width=50px><?=$b->cargo->weight?></td>
+        <td width=50px><?=$b->cargo0->weight?></td>
         <td width=50px>1</td>
         <td width=50px><?=$b->price_paid?></td>
       </tr>

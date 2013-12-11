@@ -1,8 +1,8 @@
-<?php if($cnt= count($report)):?>
-  <table class=table>
+<?php if(count($report)):?>
+  <table class='table table-hover' border=1>
     <tr>
       <th rowspan=2>REVENUE</th>
-      <th colspan=<?=$cnt-1?>><center>VOYAGE</center></th>
+      <th colspan=<?=count($report['voyage'])?>><center>VOYAGE</center></th>
       <th rowspan=2>TOTAL</th>
     </tr>
     <tr>

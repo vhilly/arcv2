@@ -31,7 +31,7 @@ class Vessel extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, code, capacity', 'required'),
+			array('name, code,capacity', 'required'),
 			array('capacity', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>100),
 			array('code', 'length', 'max'=>32),

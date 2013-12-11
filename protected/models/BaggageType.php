@@ -1,24 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "cargo_class".
+ * This is the model class for table "baggage_type".
  *
- * The followings are the available columns in table 'cargo_class':
+ * The followings are the available columns in table 'baggage_type':
  * @property integer $id
- * @property string $name
+ * @property string $weight
  * @property string $description
- * @property integer $lane_meter
- * @property integer $bundled_passenger
+ * @property string $price
  * @property integer $active
  */
-class CargoClass extends CActiveRecord
+class BaggageType extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'cargo_class';
+		return 'baggage_type';
 	}
 
 	/**
@@ -29,13 +28,13 @@ class CargoClass extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, description', 'required'),
-			array('lane_meter, bundled_passenger, active', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>100),
-			
+			array('weight, price', 'required'),
+			array('active', 'numerical', 'integerOnly'=>true),
+			array('weight', 'length', 'max'=>100),
+			array('price', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, description, lane_meter, bundled_passenger, active', 'safe', 'on'=>'search'),
+			array('id, weight, description, price, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,10 +56,9 @@ class CargoClass extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
+			'weight' => 'Weight',
 			'description' => 'Description',
-			'lane_meter' => 'Lane Meter',
-			'bundled_passenger' => 'Bundled Passenger',
+			'price' => 'Price',
 			'active' => 'Active',
 		);
 	}
@@ -84,10 +82,9 @@ class CargoClass extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
+		$criteria->compare('weight',$this->weight,true);
 		$criteria->compare('description',$this->description,true);
-		$criteria->compare('lane_meter',$this->lane_meter);
-		$criteria->compare('bundled_passenger',$this->bundled_passenger);
+		$criteria->compare('price',$this->price,true);
 		$criteria->compare('active',$this->active);
 
 		return new CActiveDataProvider($this, array(
@@ -99,7 +96,7 @@ class CargoClass extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return CargoClass the static model class
+	 * @return BaggageType the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

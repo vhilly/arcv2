@@ -37,7 +37,7 @@
     $values['id'][$q->y][$q->x] = $q->id;
   } 
   foreach($bookedSeats as $s){
-    $seated[$s->seat->y][$s->seat->x] = $s->seat_id;
+    $seated[$s->seat0->y][$s->seat0->x] = $s->seat;
   }
  // echo "<pre>";
   //print_r($seated);
@@ -121,7 +121,7 @@
  $('.seatMap').click(
    function(){
 	$('#seatValue').html(this.innerHTML);
-	$('#Ticket_seat_id').val($(this).attr('a'));
+	$('#Ticket_seat').val($(this).attr('a'));
    }
  );
 

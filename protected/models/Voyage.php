@@ -37,11 +37,11 @@ class Voyage extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('voyage_number, vessel_id, route_id, departure_date, departure_time, arrival_time', 'required'),
-			array('vessel_id, route_id, capacity, available_seats, voyage_status_id', 'numerical', 'integerOnly'=>true),
+			array('number, vessel, route, departure_date, departure_time, arrival_time', 'required'),
+			array('vessel, route, capacity, available_seats, status', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, voyage_number, vessel_id, route_id, departure_date, departure_time, arrival_time, capacity, available_seats, voyage_status_id', 'safe', 'on'=>'search'),
+			array('id, number, vessel, route, departure_date, departure_time, arrival_time, capacity, available_seats, ', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,9 +53,9 @@ class Voyage extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'vessel' => array(self::BELONGS_TO, 'Vessel', 'vessel_id'),
-			'voyageStatus' => array(self::BELONGS_TO, 'VoyageStatus', 'voyage_status_id'),
-			'route' => array(self::BELONGS_TO, 'Route', 'route_id'),
+			'vessel0' => array(self::BELONGS_TO, 'Vessel', 'vessel'),
+			'voyageStatus' => array(self::BELONGS_TO, 'Status', 'status'),
+			'route0' => array(self::BELONGS_TO, 'Route', 'route'),
 		);
 	}
 
@@ -66,15 +66,15 @@ class Voyage extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'voyage_number' => Yii::t('app','model.voyage.voyageNumber'),
-			'vessel_id' =>  Yii::t('app','model.voyage.vessel_id'), 
-			'route_id' =>  Yii::t('app','model.voyage.route_id'),
+			'number' => Yii::t('app','model.voyage.voyageNumber'),
+			'vessel' =>  Yii::t('app','model.voyage.vessel_id'), 
+			'route' =>  Yii::t('app','model.voyage.route_id'),
 			'departure_date' =>  Yii::t('app','model.voyage.departure_date'),
 			'departure_time' =>  Yii::t('app','model.voyage.departure_time'),
 			'arrival_time' =>  Yii::t('app','model.voyage.arrival_time'),
 			'capacity' =>  Yii::t('app','model.voyage.capacity'),
 			'available_seats' =>  Yii::t('app','model.voyage.available_seats'),
-			'voyage_status_id' =>  Yii::t('app','model.voyage.voyage_status'),
+			'status' =>  Yii::t('app','model.voyage.voyage_status'),
 		);
 	}
 
@@ -97,15 +97,15 @@ class Voyage extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('voyage_number',$this->voyage_number,true);
-		$criteria->compare('vessel_id',$this->vessel_id);
-		$criteria->compare('route_id',$this->route_id);
+		$criteria->compare('number',$this->number,true);
+		$criteria->compare('vessel',$this->vessel);
+		$criteria->compare('route',$this->route);
 		$criteria->compare('departure_date',$this->departure_date,true);
 		$criteria->compare('departure_time',$this->departure_time,true);
 		$criteria->compare('arrival_time',$this->arrival_time,true);
 		$criteria->compare('capacity',$this->capacity);
 		$criteria->compare('available_seats',$this->available_seats);
-		$criteria->compare('voyage_status_id',$this->voyage_status_id);
+		$criteria->compare('status',$this->status);
                 $criteria->order = 'id DESC';
 
 		return new CActiveDataProvider($this, array(

@@ -99,11 +99,11 @@ array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"><
         <?php foreach($pass as $key=>$p):?>
           <tr>
             <td><?=$p->ticket_no?></td>
-            <td><?=$p->passenger->first_name?></td>
-            <td><?=$p->passenger->last_name?></td>
-	    <td><?=@$p->seat->name?></td>
-	    <td><?=$p->voyage->voyage_number?></td>
-		<td class=tlink id=<?=$p->id?> v=<?=$p->voyage_id?>>Transfer<td>
+            <td><?=$p->passenger0->first_name?></td>
+            <td><?=$p->passenger0->last_name?></td>
+	    <td><?=@$p->seat0->name?></td>
+	    <td><?=$p->voyage0->number?></td>
+		<td class=tlink id=<?=$p->id?> v=<?=$p->voyage?>>Transfer<td>
           </tr>
         <?php endforeach?>
     </table>
@@ -132,38 +132,38 @@ array('class'=>'input-large','id'=>'tkt_no','prepend'=>'<i class="icon-search"><
         <?php foreach($pass as $key=>$p):?>
         <?php for($i=1;$i<=2;$i++){?>
 	<?php
-	$dt=$p->voyage->departure_date;
+	$dt=$p->voyage0->departure_date;
 	$dt=date("d F Y",strtotime($dt));
 	
-	$da=$p->voyage->departure_time;
+	$da=$p->voyage0->departure_time;
 	$da=date("g:i a", strtotime($da));
 
-	$aa=$p->voyage->arrival_time;
+	$aa=$p->voyage0->arrival_time;
         $aa=date("g:i a", strtotime($aa));
 
 
 
-        $arv=$p->voyage->departure_date." ".$p->voyage->departure_time."-".$p->voyage->arrival_time; 
+        $arv=$p->voyage0->departure_date." ".$p->voyage0->departure_time."-".$p->voyage0->arrival_time; 
 	$ot=$dt." ".$da."-".$aa;
 	?>
         <br>
  	<div id="ub1"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FastCat Boarding Pass</b></div>
-  	<div id="ub2" class="condensed"><?=$p->passenger->first_name?> <?=$p->passenger->last_name?></div>
-	<div id="ub2"><?=$p->voyage->voyage_number?></div>
-	<div id="ub3" ><?=$p->voyage->route->name?></div>
+  	<div id="ub2" class="condensed"><?=$p->passenger0->first_name?> <?=$p->passenger0->last_name?></div>
+	<div id="ub2"><?=$p->voyage0->number?></div>
+	<div id="ub3" ><?=$p->voyage0->route0->name?></div>
         <div id="ub3" class="normal" ><?=$ot?></div>         
 	 <?php $cl=$p->seatingClass->name;
         //echo $cl;
-        if($p->seating_class_id==1){
+        if($p->seating_class==1){
         //echo "Yes!";
         echo '<div class="bl" id="ub4" ><i>&nbsp;&nbsp;<u>'.$cl.'</u></i></div>';
-        echo ' <div id="ub5" class="italic seats">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>'.$p->seat->name.'</b></div>';
+        echo ' <div id="ub5" class="italic seats">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>'.$p->seat0->name.'</b></div>';
         #echo ' <div id="ub5" class="italic seats">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>';
 
         }
         else{
          echo '<div class="bl" id="ub7"><b>&nbsp;&nbsp;'.$cl.'</b></div>';
-         echo ' <div id="ub6" class="seats">&nbsp;&nbsp;&nbsp;&nbsp;<b>'.$p->seat->name.'</b></div>';
+         echo ' <div id="ub6" class="seats">&nbsp;&nbsp;&nbsp;&nbsp;<b>'.$p->seat0->name.'</b></div>';
         #echo ' <div id="ub6" class="seats">&nbsp;&nbsp;&nbsp;&nbsp;</div>';
         }
         ?>

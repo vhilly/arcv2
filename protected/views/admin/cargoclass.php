@@ -23,5 +23,5 @@
 ?>
 <?php 
   $this->widget('bootstrap.widgets.TbButton', array('type'=>'inverse','buttonType'=>'link','icon'=>'plus',
-    'url'=>Yii::app()->createUrl('admin/cargoclassAdd'),'label'=>Yii::t('app','label.seatingclass.add')));
+    'url'=>Yii::app()->createUrl('admin/cargoclassAdd'),'label'=>Yii::t('app','label.cargoclass.add')));
 ?>
