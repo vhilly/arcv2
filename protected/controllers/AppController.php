@@ -80,8 +80,8 @@
           $ticket->passenger=$passenger->id;
           $ticket->voyage=$selected_voyage->id;
           $ticket->booking_no=$booking_no;
-          $ticket->ticket_no= numberGenerator(2);;
-          $ticket->series_no= numberGenerator(4,0);;
+          $ticket->ticket_no= numberGenerator(2);
+          $ticket->series_no= numberGenerator(4,0)-1;
           $ticket->ticket_type=2;
           $ticket->seating_class=$class->id;
           $ticket->seat=$sl[$k];
