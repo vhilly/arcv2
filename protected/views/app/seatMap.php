@@ -56,6 +56,8 @@
         $spacer = !$values['name'][$i][$j] ? "space" : "";
         $text = $spacer=="space" ? "" : $values['name'][$i][$j];
 		$setID = $values['id'][$i][$j];
+      }else{
+        $setID=0;
       }
 	  $set = isset($seated[$i][$j]) ? "seated" : "seatMap";
 	  $blk = ($spacer=="space" || $set!="") ? "" : "no-seated";
