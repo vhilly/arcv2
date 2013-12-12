@@ -128,6 +128,8 @@
     'notice.success.voyage.statusUpdate'=>'Voyage Status has been updated!',
 
     'notice.failed.ticket.used'=>'Ticket Already Used!',
+    'notice.success.cargoRate.update'=>'Cargo Rate has been updated',
+
     //alert
     'alert.ticketing.series.beginsAt'=>'Series Begins At',
     'alert.ticketing.series.invalidNumber'=>'Invalid Number!',
