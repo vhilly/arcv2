@@ -115,7 +115,7 @@
         </li>
 	<li class='gb_i'>
           <a class='gb_a' href=".Yii::app()->createUrl('admin/cargoRate').">
-            <span class='gb_c icon-ambulance icon-3x'></span>
+            <span class='gb_c icon-tags icon-3x'></span>
             <span class='gb_d'>".Yii::t('app','label.cargoRate')."</span>
           </a>
         </li>

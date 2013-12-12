@@ -33,7 +33,7 @@
             <?php echo $form->textField($rate, "[$i]regular_rate", array('class'=>'span1 rr','id'=>'dsc'.$i.'rr')); ?>
          </td>
          <td>
-            <?php echo $form->textField($rate, "[$i]discounted_rate", array('class'=>'span1 dsc'.$i.'rr','id'=>'dsc'.$i.'dr','readonly'=>true)); ?>
+            <?php echo $form->textField($rate, "[$i]discounted_rate", array('class'=>'span1 dsc'.$i.'rr','id'=>'dsc'.$i.'dr','readonly'=>false)); ?>
          </td>
          <td>
             <?php echo $form->textField($rate, "[$i]discount", array('class'=>'span1 dsc dsc'.$i.'rr','id'=>'dsc'.$i)); ?>
@@ -44,7 +44,7 @@
     <div class="clearfix"></div>
     <div class="form-actions">
       <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit','type'=>'primary', 'label'=>Yii::t('app','label.update'))); ?>
-      <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'link','type'=>'info','url'=>Yii::app()->createUrl('admin/passengerFare'),
+      <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'link','type'=>'info','url'=>Yii::app()->createUrl('admin/cargoRate'),
          'label'=>Yii::t('app','label.back'))); ?>
     </div>
     <?php $this->endWidget();?>

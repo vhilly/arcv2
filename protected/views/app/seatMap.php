@@ -35,7 +35,7 @@
     $values['y'][] = $q->y;
     $values['name'][$q->y][$q->x] = $q->name;
     $values['id'][$q->y][$q->x] = $q->id;
-  } 
+  }
   foreach($bookedSeats as $s){
     $seated[$s->seat0->y][$s->seat0->x] = $s->seat;
   }
@@ -56,6 +56,8 @@
         $spacer = !$values['name'][$i][$j] ? "space" : "";
         $text = $spacer=="space" ? "" : $values['name'][$i][$j];
 		$setID = $values['id'][$i][$j];
+      }else{
+        $setID=0;
       }
 	  $set = isset($seated[$i][$j]) ? "seated" : "seatMap";
 	  $blk = ($spacer=="space" || $set!="") ? "" : "no-seated";

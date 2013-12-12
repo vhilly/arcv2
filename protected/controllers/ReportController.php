@@ -73,7 +73,8 @@ LEFT OUTER JOIN (
   FROM waybill
   WHERE status<6
   GROUP BY 
-  voyage
+  voyage,
+  cargo_class
 ) w
 ON w.voyage= v.id AND w.cargo_class= cc.id 
 WHERE cc.active = 1
@@ -96,6 +97,7 @@ ORDER BY cc.id, v.id
       }
       if($car){
         foreach($car as $c){
+echo $c['cargo_class'];
           $cargo['voyage'][$c['voyage']]=$c['number'];
           @$cargo['voyage_total_amt'][$c['voyage']]+=$c['amount'];
           @$cargo['cargo_total_amt'][$c['cargo_class']][$c['voyage']]+=$c['amount'];

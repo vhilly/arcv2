@@ -15,10 +15,10 @@
 <?php $this->endWidget(); ?>
 
 <script>
- $('#seatBox').load('<?=Yii::app()->baseUrl;?>?r=app/seatMap&id=1&voyage=<?=$model->voyage?>');
+ $('#seatBox').load('<?=Yii::app()->baseUrl;?>?r=app/seatMap&id='+$('#Ticket_seating_class').val()+'&voyage='+$('#Ticket_voyage').val());
 
   $('.seatChange').change(function(){
-    $('#seatBox').load('<?=Yii::app()->baseUrl;?>?r=app/seatMap&id=1&voyage='+this.value);
+    $('#seatBox').load('<?=Yii::app()->baseUrl;?>?r=app/seatMap&id='+$('#Ticket_seating_class').val()+'&voyage='+this.value);
   });
   $('.classChange').change(function(){
     $('#seatBox').load('<?=Yii::app()->baseUrl;?>?r=app/seatMap&id='+this.value+'&voyage='+$('#Ticket_voyage').val());

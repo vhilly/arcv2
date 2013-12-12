@@ -1,21 +1,23 @@
 SET FOREIGN_KEY_CHECKS=0;
-TRUNCATE bhistory_upload;
 TRUNCATE cargo;
 TRUNCATE passenger;
 TRUNCATE price_history;
-/*TRUNCATE passenger_fare;
+/*
+TRUNCATE seat;
+TRUNCATE passenger_fare;
 TRUNCATE cargo_fare_rates;
 TRUNCATE cargo_class;
 TRUNCATE passenger_type;
 TRUNCATE port;
 TRUNCATE route;
-TRUNCATE seat;
 TRUNCATE seating_class;
 TRUNCATE vessel;
-*/
 TRUNCATE schedule;
+*/
 TRUNCATE ticket;
 TRUNCATE voyage;
 TRUNCATE waybill;
+
+UPDATE counter SET value = 0 WHERE value > 0;
 
 SET FOREIGN_KEY_CHECKS=1;
