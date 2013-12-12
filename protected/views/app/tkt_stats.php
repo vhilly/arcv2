@@ -18,24 +18,24 @@
 <div class="block side-space ">
   <table class='table'>
     <tr>
-      <th class='btn-primary'> TOTAL PASSENGER:</th>
-      <th class='btn-warning'><center style="color:#000"><?=count($tkts)?></center></th>
+      <th class=''> TOTAL PASSENGER:</th>
+      <th class=''><?=count($tkts)?></th>
     </tr>
     <tr>
-      <th colspan=2 style="padding:0" class="btn-info">
+      <th>
       <?php foreach($cnt_perclass['cnt'] as $k=>$v):?>
-        <div style="float:left;width:103px;padding:5px;border-left:1px solid #292929;margin-left:-1px;color:#000" class="text-center"><?=$classes[$k]?> <?=$v?></div>
+        <?=$classes[$k]?> <?=$v?>
       <?php endforeach;?>
-      </th>
+      <th>
     </tr>
     <tr>
-      <th class='btn-primary'> TOTAL REVENUE:</th>
-      <th class='btn-warning'><center style="color:#000"><?=number_format($total_amt)?></center></th>
+      <th class=''> TOTAL REVENUE:</th>
+      <th class=''><?=number_format($total_amt)?></th>
     </tr>
     <tr>
-      <th colspan=2 style="padding:0" class="btn-info">
+      <th>
       <?php foreach($cnt_perclass['amt'] as $k=>$v):?>
-        <div style="float:left;width:103px;padding:5px;border-left:1px solid #292929;margin-left:-1px;color:#000" class="text-center"><?=$classes[$k]?> <?=$v?></div>
+        <?=$classes[$k]?> <?=$v?>
       <?php endforeach;?>
       </th>
     </tr>

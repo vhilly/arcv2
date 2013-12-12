@@ -171,17 +171,14 @@ padding: 5px 10px;
 .side-space {
 	margin:5px;
 }
-.side-space .menu-list {
-	max-height:360px;
-	overflow:auto;
-}
 @media (min-height:800px) {
 	.booth-screen  .bootstrap-widget-content iframe{
 		min-height: 700px;
 	}
 	.booth-sidebar iframe {
-		max-height: 900px;
+		min-height: 745px;
 	}
+
 }
 .block {
 	min-height:490px;
@@ -199,13 +196,13 @@ padding: 5px 10px;
 	background:#E5F5FC;
 }
 .block ul li {
-	background: #f68938;
-	background: -moz-linear-gradient(top, #f6b938 0%, #f68938 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f6b938), color-stop(100%,#f68938));
-	background: -webkit-linear-gradient(top, #f6b938 0%,#f68938 100%);
-	background: -o-linear-gradient(top, #f6b938 0%,#f68938 100%);
-	background: -ms-linear-gradient(top, #f6b938 0%,#f68938 100%);
-	background: linear-gradient(top, #f6b938 0%,#f68938 100%);
+	background: #ff5400;
+	background: -moz-linear-gradient(top, #ff6519 0%, #e54b00 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff5400), color-stop(100%,#e54b00));
+	background: -webkit-linear-gradient(top, #ff6519 0%,#e54b00 100%);
+	background: -o-linear-gradient(top, #ff6519 0%,#e54b00 100%);
+	background: -ms-linear-gradient(top, #ff6519 0%,#e54b00 100%);
+	background: linear-gradient(top, #ff6519 0%,#e54b00 100%);
 }
 .block ul li a {
 	text-decoration:none;
@@ -214,7 +211,7 @@ padding: 5px 10px;
 	border-bottom: 1px solid #292D38;
 	-webkit-box-shadow: inset 0px 1px 0px 0px #434756;
 	box-shadow: inset 0px 1px 0px 0px #434756;
-	color: #000;
+	color: #fff;
 	font-size: 12px;
 	font-weight: bold;
 	text-transform: uppercase;

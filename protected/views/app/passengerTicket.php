@@ -4,11 +4,6 @@
 		min-height:500px;
 	}
 }
-.alert {
-	position:absolute;
-	top:0;
-	width:799px;
-}
 </style>
 <?php
   $this->beginWidget(
