@@ -356,5 +356,36 @@
       }
       Yii::app()->end();
     }
+   public function actionUpgrade(){
+     $model=new Upgrades;
+     if(isset($_POST['Upgrades'])){
+       $model->attributes=$_POST['Upgrades'];
+       $from=PassengerFare::model()->findByAttributes(array('type'=>$model->from_fare,'class'=>2));
+       $to=PassengerFare::model()->findByAttributes(array('type'=>$model->from_fare,'class'=>1));
+       $model->from_fare=$from->id;
+       $model->to_fare=$to->id;
+       $model->amt=$to->price-$from->price;
+       if($model->save()){
+         Yii::app()->user->setFlash('success', 'Seat Upgrade Payment has been recorded!');
+         $this->redirect(array('upgrades'));
+       }
+     }
+
+     $this->render('upgrade',array(
+       'model'=>$model,
+     ));
+  }
+  public function actionUpgradeDelete($id){
+    Upgrades::model()->findByPk($id)->delete();
+  }
+  public function actionUpgrades(){
+    $model=new Upgrades('search');
+    $model->unsetAttributes();  // clear any default values
+    if(isset($_GET['Upgrades']))
+      $model->attributes=$_GET['Upgrades'];
+    $this->render('upgrades',array(
+      'model'=>$model,
+    ));
+  }
   }
 ?>

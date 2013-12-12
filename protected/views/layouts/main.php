@@ -66,6 +66,13 @@
             <span class='gb_c icon-list icon-3x'></span>
             <span class='gb_d'>".Yii::t('app','label.report.teller')."</span>
           </a>
+        </li>
+	<li class='gb_i'>
+          <a class='gb_a' href=".Yii::app()->createUrl('app/upgrades').">
+            <span class='gb_c icon-level-up icon-3x'></span>
+            <span class='gb_d'>".Yii::t('app','label.pass.upgrades')."</span>
+          </a>
+        </li>
       </ul>
    ";
    $settings = "

@@ -44,6 +44,7 @@
     'label.seat'=>'Seats',
     'label.seat-available'=>'Seats View',
     'label.passengertype'=>'Pass Type',
+    'label.pass.upgrades'=>'Pass Upgrade',
     'label.passengerfare'=>'Pass Fare',
     'label.baggagetype'=>'Bagg Type',
     'label.cargoclass'=>'Cargo Class',
