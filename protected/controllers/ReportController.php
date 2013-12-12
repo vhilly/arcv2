@@ -97,7 +97,6 @@ ORDER BY cc.id, v.id
       }
       if($car){
         foreach($car as $c){
-echo $c['cargo_class'];
           $cargo['voyage'][$c['voyage']]=$c['number'];
           @$cargo['voyage_total_amt'][$c['voyage']]+=$c['amount'];
           @$cargo['cargo_total_amt'][$c['cargo_class']][$c['voyage']]+=$c['amount'];
