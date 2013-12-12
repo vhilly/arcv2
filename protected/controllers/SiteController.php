@@ -52,7 +52,10 @@
       $this->layout='main';
       $voyage=array();
       $tr=0;
-      $sql="SELECT v.id, v.number,t.status,COUNT(*) cnt,v.capacity,v.available_seats, SUM(t.price_paid) amt,b.name FROM voyage v
+      $sql="SELECT v.id, v.number,t.status,COUNT(*) pass_cnt,v.capacity,v.available_seats, SUM(t.price_paid) pass_revenue,b.name,
+        (SELECT COUNT(*) FROM waybill WHERE voyage=v.id AND status <6) car_cnt,
+        (SELECT SUM(price_paid) FROM waybill WHERE voyage=v.id AND status<6) cargo_revenue
+        FROM voyage v
         JOIN ticket t ON t.voyage= v.id
         JOIN status b ON b.id = t.status
         WHERE v.departure_date=CURDATE() AND t.status<6
@@ -63,11 +66,13 @@
           $voyage[$r['id']]['name']=$r['number'];
           $voyage[$r['id']]['capacity']=$r['capacity'];
           $voyage[$r['id']]['available_seats']=$r['available_seats'];
-          @$voyage[$r['id']]['revenue']+=$r['amt'];
-          @$voyage[$r['id']]['total_pass']+=$r['cnt'];
-          @$voyage[$r['id']]['status'][$r['status']]['cnt']+=$r['cnt'];
+          @$voyage[$r['id']]['prevenue']+=$r['pass_revenue'];
+          @$voyage[$r['id']]['crevenue']+=$r['cargo_revenue'];
+          @$voyage[$r['id']]['total_pass']+=$r['pass_cnt'];
+          @$voyage[$r['id']]['total_car']+=$r['car_cnt'];
+          @$voyage[$r['id']]['status'][$r['status']]['pass_cnt']+=$r['pass_cnt'];
           @$voyage[$r['id']]['status'][$r['status']]['name']=$r['name'];
-          $tr+=$r['amt'];
+          $tr+=$r['pass_revenue']+$r['cargo_revenue'];
         }
       }
       $this->layout = 'main';

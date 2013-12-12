@@ -84,13 +84,21 @@
   <?php foreach($v['status'] as $s):?>
     <li>
       <span><?=$s['name']?></span>
-      <span class='value text-success'><?=$s['cnt']?></span>
+      <span class='value text-success'><?=$s['pass_cnt']?></span>
     </li>
-  <?php array_push($status,array($s['name'],$s['cnt']));?>
+  <?php array_push($status,array($s['name'],$s['pass_cnt']));?>
   <?php endforeach;?>
     <li>
-      <span> Revenue</span>
-      <span class='value text-success'><?=number_format($v['revenue'])?></span>
+      <span>Passenger Revenue</span>
+      <span class='value text-success'><?=number_format($v['prevenue'])?></span>
+    </li>
+    <li>
+      <span>Total Cargo</span>
+      <span class='value text-info'><?=$v['total_car']?></span>
+    </li>
+    <li>
+      <span>Cargo Revenue</span>
+      <span class='value text-info'><?=number_format($v['crevenue'])?></span>
     </li>
   </ul>
   <div id="chart_<?=$key?>" style="width: 900px; height: 300px;"></div>
