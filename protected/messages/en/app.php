@@ -124,6 +124,8 @@
     'notice.failed.port.update'=>'Unable to Update Port! Port name and Code must me unique!',
 
     'notice.success.passengerFare.update'=>'Passenger Fare has been updated!',
+    'notice.success.cargoRate.update'=>'Cargo Rate has been updated!',
+    'notice.success.cargoclass.create'=>'Cargo Classs has been created!',
 
     'notice.success.voyage.statusUpdate'=>'Voyage Status has been updated!',
 
