@@ -131,7 +131,7 @@ ORDER BY cc.id, v.id
           $voyage="AND v.id = '{$rf->voyage}'";
         $sql = "SELECT w.waybill_type,w.cargo_class,v.number voyage,w.price_paid amt,w.lading_no FROM waybill w,voyage v WHERE 
                v.departure_date='{$rf->date}' {$voyage} AND v.id=w.voyage AND v.route='{$rf->route}' AND w.status < 6 ";
-        $sql2="SELECT v.number voyage ,t.series_no,t.price_paid,t.passenger_type,t.seating_class FROM ticket t,voyage v WHERE v.route={$rf->route} {$voyage} AND t.status AND v.id=t.voyage AND v.departure_date='{$rf->date}' < 6 ORDER BY series_no";
+        $sql2="SELECT v.number voyage ,t.series_no,t.price_paid,t.passenger_type,t.seating_class FROM ticket t,voyage v WHERE  t.status {$voyage} AND v.id=t.voyage AND v.departure_date='{$rf->date}' < 6 ORDER BY series_no";
         $ch=Yii::app()->db->createCommand($sql)->queryAll();
         $bh=Yii::app()->db->createCommand($sql2)->queryAll();
         if(count($bh)){
@@ -147,45 +147,37 @@ ORDER BY cc.id, v.id
                $i=0;
              }
              $tmp2=$b['voyage'];
-             $kor=$sc[$b['seating_class']].'-'.$pt[$b['passenger_type']];
-              if($tmp != $kor){
-                $cnt=1;
-                $i++;
-                $output[$b['voyage']][$b['seating_class']][$i][0] = $pt[$b['passenger_type']];
-                $output[$b['voyage']][$b['seating_class']][$i][1] = $b['series_no'];
-                $output[$b['voyage']][$b['seating_class']][$i][2] = '-';
-                $output[$b['voyage']][$b['seating_class']][$i][3] = '';
-                $output[$b['voyage']][$b['seating_class']][$i][4] = $cnt.'x';
-                $output[$b['voyage']][$b['seating_class']][$i][5] = number_format($b['price_paid'],2);
-                $output[$b['voyage']][$b['seating_class']][$i][6] = number_format($b['price_paid']*$cnt,2);
-              }else{
-                $output[$b['voyage']][$b['seating_class']][$i][3] = $b['series_no'];
-                $cnt++;
-                $output[$b['voyage']][$b['seating_class']][$i][4] = $cnt.'x';
-                $output[$b['voyage']][$b['seating_class']][$i][6] = number_format($b['price_paid']*$cnt,2);
-              }
-              $tmp=$kor;
-            }else{
-               $kor2=$sc[$b['seating_class']].'-'.$pt[$b['passenger_type']];
+             @$kor=$sc[$b['seating_class']].'-'.$pt[$b['passenger_type']];
+             if($tmp != $kor){
+               $cnt=1;
+               $i++;
+               $output[$b['voyage']][$i][0] = $kor;
+               $output[$b['voyage']][$i][1] = $b['series_no'];
+               $output[$b['voyage']][$i][2] = '-';
+               $output[$b['voyage']][$i][3] = '';
+               $output[$b['voyage']][$i][4] = $cnt.'x';
+               $output[$b['voyage']][$i][5] = $b['price_paid'];
+               $output[$b['voyage']][$i][6] = number_format($b['price_paid']*$cnt);
+             }else{
+               $output[$b['voyage']][$i][3] = $b['series_no'];
+               $cnt++;
+               $output[$b['voyage']][$i][4] = $cnt.'x';
+               $output[$b['voyage']][$i][6] = number_format($b['price_paid']*$cnt);
+             }
+             $tmp = $kor;
+           }else{
+               @$kor2=$sc[$b['seating_class']].'-'.$pt[$b['passenger_type']];
                @$cnt2[$kor2]++;
-               $output[$b['voyage']][$b['seating_class']][$kor2][0] = $pt[$b['passenger_type']];
-               $output[$b['voyage']][$b['seating_class']][$kor2][1] = '';
-               $output[$b['voyage']][$b['seating_class']][$kor2][2] = '-';
-               $output[$b['voyage']][$b['seating_class']][$kor2][3] = '';
-               $output[$b['voyage']][$b['seating_class']][$kor2][4] = $cnt2[$kor2].'x';
-               $output[$b['voyage']][$b['seating_class']][$kor2][5] = number_format($b['amt'],2);
-               $output[$b['voyage']][$b['seating_class']][$kor2][6] = number_format($b['amt']*$cnt2[$kor2],2);
-            }
-            @$totalPerVoyage[$b['voyage']]['total']+=$b['price_paid'];;
-            @$totalPerVoyage[$b['voyage']][$b['seating_class']]+=$b['price_paid'];;
-            $total+=$b['price_paid'];
-          }
-        }
-        if(count($ch)){
-          foreach($ch as $c){
-            @$output[$c['voyage']]['cargo']['per_cargo'][]=array($c['passenger_type'].','.$c['seating_class'],$c['tkt_no'],'-','','1x',
-            number_format($c['amt'],2),number_format($c['amt'],2));
-            @$output[$c['voyage']]['cargo']['total_revenue']+=$c['amt'];
+               $output[$b['voyage']][$kor2][0] = $kor2;
+               $output[$b['voyage']][$kor2][1] = '';
+               $output[$b['voyage']][$kor2][2] = '-';
+               $output[$b['voyage']][$kor2][3] = '';
+               $output[$b['voyage']][$kor2][4] = $cnt2[$kor2].'x';
+               $output[$b['voyage']][$kor2][5] = $b['price_paid'];
+               $output[$b['voyage']][$kor2][6] = number_format($b['price_paid']*$cnt2[$kor2]);
+           }
+           @$totalPerVoyage[$b['voyage']]+=$b['price_paid'];;
+           $total+=$b['price_paid'];
           }
         }
       }

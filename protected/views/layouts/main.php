@@ -55,6 +55,17 @@
             <span class='gb_d'>".Yii::t('app','label.seat-available')."</span>
           </a>
         </li>
+        <li class='gb_i'>
+          <a class='gb_a' href=".Yii::app()->createUrl('report/dailyRevenue').">
+            <span class='gb_c icon-list-alt icon-3x'></span>
+            <span class='gb_d'>".Yii::t('app','label.report.drevenue')."</span>
+          </a>
+        </li>
+        <li class='gb_i'>
+          <a class='gb_a' href=".Yii::app()->createUrl('report/tellers').">
+            <span class='gb_c icon-list icon-3x'></span>
+            <span class='gb_d'>".Yii::t('app','label.report.teller')."</span>
+          </a>
       </ul>
    ";
    $settings = "

@@ -55,6 +55,8 @@
     'label.passengertype.add'=>'Add New Passenger Type',
     'label.baggagetype.add'=>'Add New Baggage Type',
     'label.ticketing.seriesBeginAt'=>'Series Begins At',
+    'label.report.drevenue'=>'Daily Reveue',
+    'label.report.teller'=>'Tellers Report',
     
      'model.voyage.voyageNumber'=>'Voyage Number',
      'model.voyage.vessel_id'=>'Vessel',

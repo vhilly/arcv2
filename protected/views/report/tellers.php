@@ -1,25 +1,16 @@
 
 <div class=well>
-  <?php if(!$data['excel']):?>
     <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         'id'=>'revenue-report',
         'method'=>'get',
         'type'=>'inline',
         'htmlOptions'=>array('class'=>''),
      )); ?>
-     <?php echo $form->dropDownListRow($data['rf'],'voyage',array(),array('class'=>'span2'))?>
-     <?php echo $form->dropDownListRow($data['rf'],'route',CHtml::listData(Route::model()->findAll(),'id','name'),array('class'=>'span2'))?>
-     <?php echo $form->datePickerRow($data['rf'], 'date', array('append'=>'<i class="icon-calendar" style="cursor:pointer"></i>','class'=>'span2',
-        'options'=>array( 'format' => 'yyyy-mm-dd'),
-        'ajax' => array(
-        'type'=>'POST', //request type
-        'url'=>CController::createUrl('/report/dynamicVoyages'),
-        'update'=>'#ReportForm_voyage'
-      )
-     ));
+        <?php echo $form->datePickerRow($data['rf'], 'date', array('append'=>'<i class="icon-calendar" style="cursor:pointer"></i>','class'=>'span2','options'=>array( 'format' => 'yyyy-mm-dd')));
     $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Generate Report'));
     $this->endWidget();
     ?>
+  <?php if(!$data['excel']):?>
   <?php $this->widget('bootstrap.widgets.TbButton', array('type'=>'success','buttonType'=>'link','icon'=>'share',
   'url'=>Yii::app()->request->url.'&excel=1','label'=>'Export to Excel'));?>
   <br>
@@ -37,60 +28,20 @@
    <tr>
      <th colspan=7 bgcolor=cyan><center> <?=$k?></center></th>
    </tr>
-   <tr><th colspan=7><u>PASSENGERS FARE:</u></th></tr>
-   <?php if(isset($o[1])):?>
-   <tr><td colspan=7>BUSINESS CLASS:</td></tr>
-   <?php foreach($o[1] as $v):?>
-   <tr>
-     <td><?=implode('</td><td>',$v)?></td>
-   </tr>
-   <?php endforeach;?>
-   <tr>
-     <td>TOTAL</td>
-     <td colspan=5></t>
-     <th><?=@number_format($data['totalPerVoyage'][$k][1])?></th>
-   </tr>
-   <?php endif;?>
-   <?php if(isset($o[2])):?>
-   <tr><td colspan=7>PREMIUM ECONOMY:</td></tr>
-   <?php foreach($o[2] as $v):?>
-   <tr>
-     <td><?=implode('</td><td>',$v)?></td>
-   </tr>
-   <?php endforeach;?>
-   <tr>
-     <td>TOTAL</td>
+     <?php foreach($o as $v):?>
+     <tr>
+       <td><?=implode('</td><td>',$v)?></td>
+     </tr>
+     <?php endforeach;?>
+     <th>Total per Voyage</th>
      <th colspan=5></th>
-     <th><?=@number_format($data['totalPerVoyage'][$k][2])?></th>
-   </tr>
-   <tr>
-   <?php endif;?>
-     <td>TOTAL PASSENGER REVENUE</td>
-     <td colspan=5></td>
-     <th><?=@number_format($data['totalPerVoyage'][$k]['total'])?></th>
-   </tr>
-   <?php if(isset($data['output'][$k]['cargo'])):?>
-   <tr>
-     <th><u>VEHICLES FREIGHT</u></th>
-     <td colspan=6></td>
-   </tr>
-   <?php foreach($data['output'][$k]['cargo']['per_cargo'] as $c):?>
-   <tr>
-     <td><?=implode('</td><td>',$c)?></td>
-   </tr>
+     <th><?=number_format($data['totalPerVoyage'][$k])?></th>
    <?php endforeach;?>
    <tr>
-     <td>TOTAL VECHICLE REVENUE</td>
-     <td colspan=5></td>
-     <th><?=number_format($data['output'][$k]['cargo']['total_revenue'],2)?></th>
+     <th>TOTAL</th>
+     <th colspan=5></th>
+     <th><?=number_format($data['total'])?></th>
    </tr>
-  <?php endif;?>
-   <tr>
-     <th>GRAND TOTAL</th>
-     <td colspan=5></td>
-     <th><?=@number_format($data['output'][$k]['cargo']['total_revenue']+$data['totalPerVoyage'][$k]['total'],2)?></th>
-   </tr>
-   <?php endforeach;?>
 </table>
 </div>
   <?php if($data['excel']):?>
@@ -109,8 +60,3 @@
 ?>
   <?php endif;?>
 </div>
-<script>
-jQuery(function($) {
-  jQuery.ajax({'type':'POST','url':'index.php?r=report/dynamicVoyages','cache':false,'data':{'ReportForm[date]':'<?=$data['rf']->date?>'},'success':function(html){jQuery("#ReportForm_voyage").html(html)}});
-});
-</script>

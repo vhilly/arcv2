@@ -81,6 +81,7 @@
     ?>
     <?php $this->endWidget();?>
 <?php endif; ?>
+<!--
 <script>
   $('.dsc').change(function(){
      dsc=parseInt($(this).val());
@@ -93,3 +94,4 @@
     $('.'+this.id).val(0);
   });
 </script>
+--!>
