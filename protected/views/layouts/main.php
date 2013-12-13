@@ -73,6 +73,13 @@
             <span class='gb_d'>".Yii::t('app','label.pass.upgrades')."</span>
           </a>
         </li>
+	<li class='gb_i'>
+          <a class='gb_a' href=".Yii::app()->createUrl('admin/baggage').">
+            <span class='gb_c icon-briefcase icon-3x'></span>
+            <span class='gb_d'>".Yii::t('app','label.baggage')."</span>
+          </a>
+        </li>
+
       </ul>
    ";
    $settings = "
