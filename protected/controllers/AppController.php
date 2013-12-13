@@ -344,7 +344,11 @@
        echo json_encode(compact('value','error'));
     }
     public function actionGetCargoRates($rid){
-      $rates=CargoFareRates::model()->findAll();
+      $dp=isset($this->sysVars()['defaultPort'])?$this->sysVars()['defaultPort']:'';
+      if($dp)
+        $rates=CargoFareRates::model()->findAllByAttributes(array('route'=>$dp));
+      else
+        $rates=CargoFareRates::model()->findAll();
       $rlist=array();
       if($rates){
         echo "<table class='table-striped table-hover span5'><tr><th></th><th>Regular Rate</th><th>Discounted Rate</th></tr>";

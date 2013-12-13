@@ -33,6 +33,7 @@ class Controller extends RController
         }
 	protected function setSysVars() {
           $_SESSION['sys_vars']=array(
+            'defaultPort'=>Sysdefaults::model()->findByPk(1)->value,
             'hasSeatingClass'=>SeatingClass::model()->count() ? true : false,
             'hasPassengerType'=>PassengerType::model()->count() ? true : false,
             'hasRoute'=>Route::model()->count() ? true : false,
