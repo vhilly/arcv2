@@ -63,6 +63,23 @@
   </table>
 <?php endif;?>
 
+<?php if(count($upgrades)):?>
+  <h2>UPGRADES</h2>
+  <table class='table table-hover table-striped' border=1>
+    <tr>
+      <th rowspan=2>REVENUE</th>
+      <th colspan=<?=count($upgrades['voyage'])?>><center>VOYAGE</center></th>
+      <th rowspan=2>TOTAL</th>
+    </tr>
+    <tr>
+      <th><?=implode('</th><th>',$upgrades['voyage'])?></th>
+    </tr>
+    <tr>
+      <th bgcolor=yellow>TOTAL UPGRADE REVENUE</th><th bgcolor=yellow><?=implode('</th><th bgcolor=yellow>',$upgrades['voyage_total_amt'])?></th>
+      <th bgcolor=yellow><?=number_format(array_sum($upgrades['voyage_total_amt']))?></th>
+    </tr>
+  </table>
+<?php endif;?>
 
 <?php if(count($cargo)):?>
   <h2>CARGO REVENUE</h2>
@@ -90,7 +107,7 @@
 <?php endif;?>
 <?php if($export):?>
 <?php
-     $file ='ACCOUNTING_REPORT.xls';
+     $file ='DAILY_REVENUE.xls';
       header('Pragma: public');
       header('Last-Modified: '.gmdate('D, d M Y H:i:s') . ' GMT');
       header('Cache-Control: no-store, no-cache, must-revalidate');

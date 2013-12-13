@@ -16,6 +16,7 @@
       $per_voyage=array();
       $passenger=array();
       $cargo=array();
+      $upgrades=array();
       $sqlpass="
         SELECT
 v.id AS voyage,
@@ -82,13 +83,13 @@ AND v.departure_date=$date_selected
 ORDER BY cc.id, v.id
   ";
   $sqlupgrades="
-  SELECT v.id,v.number,SUM(u.amt)
-FROM voyage v
-LEFT JOIN upgrades u
-ON v.id=u.voyage;
+   SELECT v.id voyage,v.number number,IFNULL((SELECT SUM(amt) FROM upgrades WHERE voyage=v.id),0) amount ,
+   IFNULL((SELECT COUNT(*) FROM upgrades WHERE voyage=v.id),0) cnt
+   FROM voyage v WHERE departure_date=$date_selected ORDER BY v.id
 ";
       $pass=Yii::app()->db->createCommand($sqlpass)->queryAll();
       $car=Yii::app()->db->createCommand($sqlcargo)->queryAll();
+      $ups=Yii::app()->db->createCommand($sqlupgrades)->queryAll();
       if($pass){
         foreach($pass as $r){
           $passenger['voyage'][$r['voyage']]=$r['number'];
@@ -110,10 +111,17 @@ ON v.id=u.voyage;
           $cargo['values'][$c['cargo_class']][$c['voyage']]=$c['amount'];
         }
       }
+      if($ups){
+        foreach($ups as $u){
+          $upgrades['voyage'][$u['voyage']]=$u['number'];
+          $upgrades['count'][$u['voyage']]=$u['cnt'];
+          @$upgrades['voyage_total_amt'][$u['voyage']]+=$u['amount'];
+        }
+      }
       if($export)
-        $this->renderPartial('dailyrevenue',compact('passenger','cargo','model','export'));
+        $this->renderPartial('dailyrevenue',compact('passenger','cargo','model','export','upgrades'));
       else
-        $this->render('dailyrevenue',compact('passenger','cargo','model','export'));
+        $this->render('dailyrevenue',compact('passenger','cargo','model','export','upgrades'));
     }
     public function actionDynamicVoyages(){
        $data=Voyage::model()->findAll(array('condition'=>"departure_date='{$_POST['ReportForm']['date']}'"));
