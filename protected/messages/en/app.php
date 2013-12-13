@@ -55,6 +55,7 @@
     'label.cargoclass.add'=>'Add New Cargo Class',
     'label.passengertype.add'=>'Add New Passenger Type',
     'label.baggagetype.add'=>'Add New Baggage Type',
+    'label.baggage.add'=>'Record Excess Baggage Payment',
     'label.ticketing.seriesBeginAt'=>'Series Begins At',
     'label.report.drevenue'=>'Daily Reveue',
     'label.report.teller'=>'Tellers Report',

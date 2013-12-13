@@ -387,5 +387,39 @@
       'model'=>$model,
     ));
   }
+
+  public function actionBaggageDelete($id){
+    Baggage::model()->findByPk($id)->delete();
   }
+
+  public function actionBaggage(){
+    $b=new Baggage('search');
+    $b->unsetAttributes();  // clear any default values
+    if(isset($_GET['Baggage']))
+      $b->attributes=$_GET['Baggage'];
+    $this->render('baggage',array(
+      'b'=>$b,
+    ));
+  }
+  public function actionExcessBaggage(){
+     $b=new Baggage;
+     if(isset($_POST['Baggage'])){
+       $b->attributes=$_POST['Baggage'];
+       $p=BaggageType::model()->findByAttributes(array('id'=>$b->baggage_type,'active'=>1));
+       $price = $p->price;
+       $b->price_paid = $price;
+       $b->created_by = Yii::app()->user->id;
+       if($b->save()){
+         Yii::app()->user->setFlash('success', 'Excess Baggage Payment has been recorded!');
+         $this->redirect(array('baggage'));
+       }
+     }
+
+     $this->render('excessBaggage',array(
+       'b'=>$b,
+     ));
+  }
+
+  }
+
 ?>
