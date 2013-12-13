@@ -74,7 +74,7 @@
           </a>
         </li>
 	<li class='gb_i'>
-          <a class='gb_a' href=".Yii::app()->createUrl('admin/baggage').">
+          <a class='gb_a' href=".Yii::app()->createUrl('app/baggage').">
             <span class='gb_c icon-briefcase icon-3x'></span>
             <span class='gb_d'>".Yii::t('app','label.baggage')."</span>
           </a>
