@@ -105,6 +105,29 @@
     </tr>
   </table>
 <?php endif;?>
+
+<?php if(count($baggages)):?>
+  <h2>EXTRA BAGGAGES</h2>
+  <table class='table table-hover table-striped' border=1>
+    <tr>
+      <th rowspan=2>REVENUE</th>
+      <th colspan=<?=count($baggages['voyage'])?>><center>VOYAGE</center></th>
+      <th rowspan=2>TOTAL</th>
+    </tr>
+    <tr>
+      <th><?=implode('</th><th>',$baggages['voyage'])?></th>
+    </tr>
+    <tr>
+      <th bgcolor=yellow>TOTAL UPGRADE REVENUE</th><th bgcolor=yellow><?=implode('</th><th bgcolor=yellow>',$baggages['voyage_total_amt'])?></th>
+      <th bgcolor=yellow><?=number_format(array_sum($baggages['voyage_total_amt']))?></th>
+    </tr>
+  </table>
+<?php endif;?>
+
+  <?php
+     $user=Yii::app()->getModule('user')->user()->profile;
+     echo  $user->firstname.' '.$user->lastname;
+  ?>
 <?php if($export):?>
 <?php
      $file ='DAILY_REVENUE.xls';

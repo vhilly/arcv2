@@ -5,7 +5,7 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-<?php echo $form->dropDownListRow($model,'status',CHtml::listData(Status::model()->findAll(array('condition'=>"id > {$model->status}")),'id','name'),array('class'=>'span5')); ?>
+<?php echo $form->dropDownListRow($model,'status',CHtml::listData(Status::model()->findAll(array('condition'=>"id > {$model->status} AND id < 11")),'id','name'),array('class'=>'span5')); ?>
 <?php $warn = $model->status == 1 ? "This will free up reserved seats.": "This will free up reserved seats and close the voyage."?>
 <div class="form-actions">
   <?php $this->widget('bootstrap.widgets.TbButton', array('type'=>'primary','buttonType'=>'submit', 'label'=>'Save','htmlOptions'=>array('onclick'=>'return confirm("Are you sure? '.$warn.'");'))); ?>

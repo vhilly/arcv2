@@ -20,17 +20,18 @@
       'template'=>'{update} &nbsp;{manifest} &nbsp; {close}',
       'buttons'=>array(            
         'update' => array(
+           'icon'=>'pencil 2x',
            'url'=>'Yii::app()->createUrl("admin/voyageUpdate",array("id"=>"$data->id"))',
          ),
         'manifest' => array(
            'label'=>'manifest',
-           'icon'=>'file',
+           'icon'=>'file 2x',
            'url'=>'Yii::app()->createUrl("app/manifest",array("vid"=>"$data->id"))',
            'options'=>array('target'=>'_blank'),
          ),
         'close' => array(
            'label'=>'close voyage',
-           'icon'=>'remove-sign',
+           'icon'=>'remove-sign 2x',
            'url'=>'Yii::app()->createUrl("admin/voyageStatus",array("id"=>"$data->id"))',
          ),
       ),

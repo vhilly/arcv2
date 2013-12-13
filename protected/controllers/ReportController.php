@@ -21,6 +21,7 @@
         SELECT
 v.id AS voyage,
 v.number,
+v.departure_time departure_time,
 sc.id AS seating_class,
 sc.name AS seating_class_name,
 pt.id AS passenger_type,
@@ -87,12 +88,18 @@ ORDER BY cc.id, v.id
    IFNULL((SELECT COUNT(*) FROM upgrades WHERE voyage=v.id),0) cnt
    FROM voyage v WHERE departure_date=$date_selected ORDER BY v.id
 ";
+  $sqlubaggage="
+   SELECT v.id voyage,v.number number,IFNULL((SELECT SUM(price_paid) FROM baggage WHERE voyage=v.id),0) amount ,
+   IFNULL((SELECT COUNT(*) FROM baggage WHERE voyage=v.id),0) cnt
+   FROM voyage v WHERE departure_date=$date_selected ORDER BY v.id
+";
       $pass=Yii::app()->db->createCommand($sqlpass)->queryAll();
       $car=Yii::app()->db->createCommand($sqlcargo)->queryAll();
       $ups=Yii::app()->db->createCommand($sqlupgrades)->queryAll();
+      $bags=Yii::app()->db->createCommand($sqlubaggage)->queryAll();
       if($pass){
         foreach($pass as $r){
-          $passenger['voyage'][$r['voyage']]=$r['number'];
+          $passenger['voyage'][$r['voyage']]=$r['number'].' - '.date('g:i:A',strtotime($r['departure_time']));
           @$passenger['voyage_total_amt'][$r['voyage']]+=$r['amount'];
           @$passenger['voyage_total_cnt'][$r['voyage']]+=$r['passenger_count'];
           @$passenger['sc_total_amt'][$r['seating_class']][$r['voyage']]+=$r['amount'];
@@ -118,10 +125,17 @@ ORDER BY cc.id, v.id
           @$upgrades['voyage_total_amt'][$u['voyage']]+=$u['amount'];
         }
       }
+      if($bags){
+        foreach($bags as $b){
+          $baggages['voyage'][$b['voyage']]=$b['number'];
+          $baggages['count'][$b['voyage']]=$b['cnt'];
+          @$baggages['voyage_total_amt'][$b['voyage']]+=$b['amount'];
+        }
+      }
       if($export)
-        $this->renderPartial('dailyrevenue',compact('passenger','cargo','model','export','upgrades'));
+        $this->renderPartial('dailyrevenue',compact('passenger','cargo','model','export','upgrades','baggages'));
       else
-        $this->render('dailyrevenue',compact('passenger','cargo','model','export','upgrades'));
+        $this->render('dailyrevenue',compact('passenger','cargo','model','export','upgrades','baggages'));
     }
     public function actionDynamicVoyages(){
        $data=Voyage::model()->findAll(array('condition'=>"departure_date='{$_POST['ReportForm']['date']}'"));
