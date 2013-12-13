@@ -38,6 +38,7 @@
     'label.ticket.cargo'=>'Cargo',
     'label.checkin'=>'Checkin',
     'label.tickets'=>'Tickets',
+    'label.advanceticket'=>'AdvanceTicket',
     'label.waybills'=>'Way Bills',
     'label.voyage'=>'Voyage',
     'label.seatingclass'=>'Seat Class',
