@@ -349,8 +349,8 @@
       if($rates){
         echo "<table class='table-striped table-hover span5'><tr><th></th><th>Regular Rate</th><th>Discounted Rate</th></tr>";
         foreach($rates as $r){
-        echo "<tr><td>{$r->class0->name}</td><td><a href=# class='regularrate' data-op={$r->regular_rate} data-cclass={$r->id} data-dismiss=modal>{$r->regular_rate}</a>
-        </td><td><a href=# class='discountedrate' data-op={$r->regular_rate} data-dc={$r->discount} data-cclass={$r->id}  data-dr={$r->discounted_rate}  data-dismiss=modal>{$r->discounted_rate}</a></td></tr>";
+        echo "<tr><td>{$r->class0->name}</td><td><a href=# class='regularrate' data-op={$r->regular_rate} data-cclass={$r->class} data-dismiss=modal>{$r->regular_rate}</a>
+        </td><td><a href=# class='discountedrate' data-op={$r->regular_rate} data-dc={$r->discount} data-cclass={$r->class}  data-dr={$r->discounted_rate}  data-dismiss=modal>{$r->discounted_rate}</a></td></tr>";
         }
         echo "</table>";
       }

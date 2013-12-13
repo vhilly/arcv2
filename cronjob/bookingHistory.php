@@ -1,7 +1,7 @@
 <?php
   
   try{
-    $db=new PDO('mysql:host=localhost;dbname=arcreports','root','mysqladmin');
+    $db=new PDO('mysql:host=localhost;dbname=reports','root','mysqladmin');
     $db2=new PDO('mysql:host=localhost;dbname=archv2','root','mysqladmin');
     $sql = "
 SELECT

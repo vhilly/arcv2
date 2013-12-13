@@ -31,7 +31,7 @@
   <?php echo $form->hiddenField($wb,'original_price',array('id'=>'oprice')); ?>
   <table class='table striped'>
     <tr>
-      <td><?php echo $form->dropDownListRow($wb, 'voyage',CHtml::listData(Voyage::model()->findAll(array('condition'=>'departure_date>CURDATE() - INTERVAL 3 HOUR AND status != 10','order'=>'id DESC')),'id','number'),array('class'=>'span2','id'=>'voyage')); ?></td>
+      <td><?php echo $form->dropDownListRow($wb, 'voyage',CHtml::listData(Voyage::model()->findAll(array('condition'=>'status != 10','order'=>'id DESC')),'id','number'),array('class'=>'span2','id'=>'voyage')); ?></td>
       <td><?php echo $form->textFieldRow($cargo,'plate_num',array('class'=>'span2','maxlength'=>100)); ?></td>
       <td><?php echo $form->textFieldRow($wb,'price_paid',array('class'=>'span2 ','maxlength'=>100,'id'=>'rate_select','readonly'=>true)); ?></td>
       <td><?php echo $form->textFieldRow($wb,'series_no',array('class'=>'span2 ','maxlength'=>100)); ?></td>
