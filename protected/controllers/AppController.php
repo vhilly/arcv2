@@ -33,7 +33,7 @@
       $sn = Counter::model()->findByPk(4)->value;
       $selected_voyage='';
       $tickets='';
-      $voyages=Voyage::model()->findAll(array('condition'=>'departure_date>CURDATE() - INTERVAL 3 HOUR AND status != 10'));
+      $voyages=Voyage::model()->findAll(array('condition'=>'status != 10'));
       $fname=Yii::app()->db->createCommand("SELECT first_name FROM passenger WHERE first_name !='' GROUP BY first_name")->queryColumn();
       if($vid)
         $_SESSION['vid']=$vid;
