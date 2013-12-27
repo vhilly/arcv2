@@ -29,6 +29,37 @@
       $this->layout='tktBooth';
       $this->render('ticketingBooth',compact('error'));
     }
+    public function actionExPassenger($bn=null){
+      if(isset($_SESSION['hash'])){
+        if(isset($_POST['Ticket']) && $_SESSION['hash'] == $_POST['hash']){
+          $selected_voyage=Voyage::model()->findByPk($_POST['Ticket']['voyage']);
+          $pass = new Passenger;
+          $pass->save();
+          $ticket = new Ticket;
+          $ticket->attributes = $_POST['Ticket'];
+          $ticket->passenger = $pass->id;
+          $ticket->seat = NULL;
+          $ticket->booking_no= numberGenerator(1);
+          $ticket->ticket_no= numberGenerator(2);
+          $ticket->series_no= numberGenerator(4,0)-1;
+          $ticket->ticket_type=2;
+          $ticket->excess=1;
+          $fares=CHtml::listData(PassengerFare::model()->findAll(array('condition'=>"class={$ticket->seating_class} AND route={$selected_voyage->route}")),'type','price');
+          $ticket->price_paid = isset($fares[$ticket->passenger_type]) ? $fares[$ticket->passenger_type] : 0;
+          $ticket->created_by=Yii::app()->user->id;
+          $ticket->save();
+          Yii::app()->user->setFlash('success', '<center>'.Yii::t('app','notice.success.ticket.create').$ticket->price_paid.'<center>');
+          $bn=$ticket->booking_no;
+        }
+        unset($_SESSION['hash']);
+      }
+      $sn = Counter::model()->findByPk(4)->value;
+      $voyages=CHtml::listData(Voyage::model()->findAll(array('condition'=>'status != 10')),'id','number');
+      $ptypes=CHtml::listData(PassengerType::model()->findAll(array('condition'=>'active=1')),'id','name');
+      $classes=CHtml::listData(SeatingClass::model()->findAll(array('order'=>'id DESC','condition'=>'active=1')),'id','name');
+      $ticket = new Ticket;
+      $this->render('exPassenger',compact('ticket','sn','voyages','ptypes','classes','bn'));
+    }
     public function actionPassengerTicket($vid=null,$bn=null){
       $sn = Counter::model()->findByPk(4)->value;
       $selected_voyage='';
