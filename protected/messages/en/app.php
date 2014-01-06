@@ -49,6 +49,7 @@
     'label.passengerfare'=>'Pass Fare',
     'label.baggagetype'=>'Bagg Type',
     'label.baggage'=>'Baggage',
+    'label.exPassenger'=>'Passenger',
     'label.cargoclass'=>'Cargo Class',
     'label.voyage.add'=>'Add Voyage',
     'label.vessel.add'=>'Add Vessel',
