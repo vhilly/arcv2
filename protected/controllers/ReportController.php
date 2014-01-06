@@ -159,7 +159,7 @@ ORDER BY cc.id, v.id
           $voyage="AND v.id = '{$rf->voyage}'";
         $sql = "SELECT w.waybill_type,w.cargo_class,v.number voyage,w.price_paid amt,w.lading_no FROM waybill w,voyage v WHERE 
                v.departure_date='{$rf->date}' {$voyage} AND v.id=w.voyage AND v.route='{$rf->route}' AND w.status < 6 ";
-        $sql2="SELECT v.number voyage ,TRIM(t.series_no) series_no,t.price_paid,t.passenger_type,t.seating_class FROM ticket t,voyage v WHERE  t.status < 6 {$voyage} AND v.id=t.voyage AND v.departure_date='{$rf->date}' ORDER BY series_no";
+        $sql2="SELECT v.number voyage ,TRIM(t.series_no) series_no,t.price_paid,t.passenger_type,t.seating_class FROM ticket t,voyage v WHERE  t.status < 6 {$voyage} AND v.id=t.voyage AND v.departure_date='{$rf->date}' ORDER BY TRIM(series_no),voyage";
         $ch=Yii::app()->db->createCommand($sql)->queryAll();
         $bh=Yii::app()->db->createCommand($sql2)->queryAll();
         if(count($bh)){
