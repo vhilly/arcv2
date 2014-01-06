@@ -17,6 +17,7 @@
       $passenger=array();
       $cargo=array();
       $upgrades=array();
+      $baggages=array();
       $sqlpass="
         SELECT
 v.id AS voyage,
