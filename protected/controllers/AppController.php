@@ -22,7 +22,9 @@
     }
     public function actionTicketingBooth(){
       $error=array();
-      if(!$this->sysVars()['hasSeat'])
+      $sysVars = $this->sysVars();
+
+      if(!$sysVars['hasSeat'])
         $error[]=CHtml::link(Yii::t('app','inst.req.seat'),array('admin/seat'),array('target'=>'_blank'));
       if(count($error))
         Yii::app()->user->setFlash('error', '<center><b>'.Yii::t('app','inst.req.following').'</b><br>'.implode('<br>',$error).'<center>');
@@ -344,7 +346,8 @@
        echo json_encode(compact('value','error'));
     }
     public function actionGetCargoRates($rid){
-      $dp=isset($this->sysVars()['defaultPort'])?$this->sysVars()['defaultPort']:'';
+      $sysVars = $this->sysVars();
+      $dp=isset($sysVars['defaultPort'])?$sysVars['defaultPort']:'';
       if($dp)
         $rates=CargoFareRates::model()->findAllByAttributes(array('route'=>$dp));
       else

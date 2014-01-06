@@ -91,13 +91,14 @@
     }
     //route
     public function actionRoute(){
+      $sysVars = $this->sysVars();
       $error=array();
       $route=new Route('search');
       $route->unsetAttributes();  // clear any default values
       if(isset($_GET['Route'])){
         $route->attributes=$_GET['Route'];
       }else{
-        if(!$this->sysVars()['hasPort'])
+        if(!$sysVars['hasPort'])
           $error[]=CHtml::link(Yii::t('app','inst.req.port'),array('admin/port'),array('target'=>'_blank'));
         if(count($error))
           Yii::app()->user->setFlash('error', '<center><b>'.Yii::t('app','inst.req.following').'</b><br>'.implode('<br>',$error).'<center>');
@@ -105,6 +106,7 @@
       $this->render('route',compact('route'));
     }
     public function actionRouteAdd(){
+      $sysVars = $this->sysVars();
       $model=new Route();
       if(isset($_POST['Route'])){
         $model->attributes=$_POST['Route'];
@@ -242,6 +244,7 @@
       $this->render('update',compact('model'));
     }
     public function actionPassengerFare($rid=null){
+      $sysVars = $this->sysVars();
       $error=array();
       $route = $rid ? Route::model()->findByPk($rid) : '';
       if(isset($_POST['PassengerFare'])){
@@ -256,12 +259,12 @@
       }
       $sc = SeatingClass::model()->findAll(array('condition'=>'active=1'));
       $ft = PassengerType::model()->findAll(array('condition'=>'active=1'));
-      if(!$this->sysVars()['hasSeatingClass'])
+      if(!$sysVars['hasSeatingClass'])
         $error[]=CHtml::link(Yii::t('app','inst.req.seatingClass'),array('admin/seatingClass'),array('target'=>'_blank'));
-      if(!$this->sysVars()['hasPassengerType'])
+      if(!$sysVars['hasPassengerType'])
         $error[]=CHtml::link(Yii::t('app','inst.req.passengerType'),array('admin/passengerType'),array('target'=>'_blank'));
       if(!$route){
-        if(!$this->sysVars()['hasRoute'])
+        if(!$sysVars['hasRoute'])
           $error[]=CHtml::link(Yii::t('app','inst.req.route'),array('admin/route'),array('target'=>'_blank'));
       }
       if(count($error))
@@ -269,6 +272,7 @@
       $this->render('fares',compact('sc','ft','rid','route','dataProvider'));
     }
     public function actionCargoRate($rid=null){
+      $sysVars = $this->sysVars();
       $error=array();
       $route = $rid ? Route::model()->findByPk($rid) : '';
       if(isset($_POST['CargoFareRates'])){
@@ -282,10 +286,10 @@
           Yii::app()->user->setFlash('success', Yii::t('app','notice.success.cargoRate.update'));
       }
       $cc = CargoClass::model()->findAll(array('condition'=>'active=1'));
-      if(!$this->sysVars()['hasCargoClass'])
+      if(!$sysVars['hasCargoClass'])
         $error[]=CHtml::link(Yii::t('app','inst.req.cargoClass'),array('admin/seatingClass'),array('target'=>'_blank'));
       if(!$route){
-        if(!$this->sysVars()['hasRoute'])
+        if(!$sysVars['hasRoute'])
           $error[]=CHtml::link(Yii::t('app','inst.req.route'),array('admin/route'),array('target'=>'_blank'));
       }
       if(count($error))
@@ -294,15 +298,16 @@
     }
     //voyage
     public function actionVoyage(){
+      $sysVars = $this->sysVars();
       $error=array();
       $voyage=new Voyage('search');
       $voyage->unsetAttributes();  // clear any default values
       if(isset($_GET['Voyage'])){
         $voyage->attributes=$_GET['Voyage'];
       }else{
-        if(!$this->sysVars()['hasRoute'])
+        if(!$sysVars['hasRoute'])
           $error[]=CHtml::link(Yii::t('app','inst.req.route'),array('admin/route'),array('target'=>'_blank'));
-        if(!$this->sysVars()['hasVessel'])
+        if(!$sysVars['hasVessel'])
           $error[]=CHtml::link(Yii::t('app','inst.req.vessel'),array('admin/vessel'),array('target'=>'_blank'));
         if(count($error))
           Yii::app()->user->setFlash('error', '<center><b>'.Yii::t('app','inst.req.following').'</b><br>'.implode('<br>',$error).'<center>');

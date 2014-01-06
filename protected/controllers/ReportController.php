@@ -147,8 +147,8 @@ ORDER BY cc.id, v.id
     }
     public function actionTellers($excel=null){
       $rf = new ReportForm;
-      $sc = array(1=>'BC',2=>'PE');
-      $pt = array(1=>'FULL',2=>'STUDENT',3=>'SENIOR',4=>'CHILDREN',5=>'INFANT',6=>'PWD',7=>'W/PASS','8'=>'Weekday',9=>'Weekday',10=>'DRIVER/ASSISTANT');
+      $sc = CHtml::listData(SeatingClass::model()->findAll(),'id','code');
+      $pt = CHtml::listData(PassengerType::model()->findAll(),'id','name');
       $output = array();
       $total=0;
       if(isset($_GET['ReportForm'])){
@@ -159,7 +159,7 @@ ORDER BY cc.id, v.id
           $voyage="AND v.id = '{$rf->voyage}'";
         $sql = "SELECT w.waybill_type,w.cargo_class,v.number voyage,w.price_paid amt,w.lading_no FROM waybill w,voyage v WHERE 
                v.departure_date='{$rf->date}' {$voyage} AND v.id=w.voyage AND v.route='{$rf->route}' AND w.status < 6 ";
-        $sql2="SELECT v.number voyage ,t.series_no,t.price_paid,t.passenger_type,t.seating_class FROM ticket t,voyage v WHERE  t.status < 6 {$voyage} AND v.id=t.voyage AND v.departure_date='{$rf->date}' ORDER BY series_no";
+        $sql2="SELECT v.number voyage ,TRIM(t.series_no) series_no,t.price_paid,t.passenger_type,t.seating_class FROM ticket t,voyage v WHERE  t.status < 6 {$voyage} AND v.id=t.voyage AND v.departure_date='{$rf->date}' ORDER BY series_no";
         $ch=Yii::app()->db->createCommand($sql)->queryAll();
         $bh=Yii::app()->db->createCommand($sql2)->queryAll();
         if(count($bh)){
