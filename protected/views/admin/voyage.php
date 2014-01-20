@@ -17,7 +17,7 @@
   array('name'=>'status','value'=>'$data->voyageStatus->name'),
     array(
       'class'=>'bootstrap.widgets.TbButtonColumn',
-      'template'=>'{update} &nbsp;{manifest} &nbsp; {close}',
+      'template'=>'{update} &nbsp;{manifest} &nbsp; {checked-in} &nbsp; {close}',
       'buttons'=>array(            
         'update' => array(
            'icon'=>'pencil 2x',
@@ -28,6 +28,11 @@
            'icon'=>'file 2x',
            'url'=>'Yii::app()->createUrl("app/manifest",array("vid"=>"$data->id"))',
            'options'=>array('target'=>'_blank'),
+         ),
+        'checked-in' => array(
+           'label'=>'Board all reserved tickets',
+           'icon'=>'check 2x',
+           'url'=>'Yii::app()->createUrl("admin/checkedAll",array("id"=>"$data->id"))',
          ),
         'close' => array(
            'label'=>'close voyage',

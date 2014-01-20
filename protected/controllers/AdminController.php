@@ -405,6 +405,12 @@
       }
       $this->render('_vstatusForm',array('model'=>$model));
     }
+    public function actionCheckedAll($id){
+      $model=Voyage::model()->findByPk($id);
+      Ticket::model()->updateAll(array( 'status' => 4), "status< 4 AND voyage= {$model->id}" );
+      Yii::app()->user->setFlash('success', 'All reserved tickets mark as boarded');
+      $this->redirect(array('admin/voyage'));
+    }
     //baggagetype
     public function actionBaggageType(){
       $bt=new BaggageType('search');
